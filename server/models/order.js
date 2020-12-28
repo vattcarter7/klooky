@@ -13,13 +13,14 @@ const orderSchema = new mongoose.Schema(
           type: ObjectId,
           ref: 'Package'
         },
-        quantity: [
+        amount: [
           {
             quantityName: String,
+            quantity: Number,
             pricePerUnit: Number
           }
         ],
-        total: Number
+        totalPrice: Number
       }
     ]
   },
