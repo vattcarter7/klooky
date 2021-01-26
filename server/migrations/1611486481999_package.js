@@ -7,7 +7,7 @@ exports.up = (pgm) => {
     CREATE TABLE packages (
       id SERIAL PRIMARY KEY,
       name VARCHAR,
-      quantity JSON,
+      price_model JSON,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );

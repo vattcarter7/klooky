@@ -1,12 +1,17 @@
+const pool = require('../pool');
+
 exports.createPackage = async (req, res) => {
   try {
-    console.log(req.body);
-    req.body.slug = slugify(req.body.title);
-    const newProduct = await new Product(req.body).save();
-    res.json(newProduct);
+    const {
+      rows
+    } = await pool.query(
+      'INSERT INTO packages (name, price_model) VALUES ($1, $2) RETURNING *;',
+      [req.body.name, JSON.stringify(req.body.price_model)]
+    );
+
+    res.send(rows[0]);
   } catch (err) {
     console.log(err);
-    // res.status(400).send("Create product failed");
     res.status(400).json({
       err: err.message
     });
