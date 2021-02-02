@@ -18,7 +18,7 @@ exports.up = (pgm) => {
       is_fixed_date_ticket BOOLEAN DEFAULT FALSE,
       is_collect_pysical_ticket BOOLEAN DEFAULT FALSE,
       is_location_meetup BOOLEAN DEFAULT FALSE,
-      package_duration NUMBER, 
+      package_duration INT, 
       pickup_info JSON,
       free_cancelation_max_day INT,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
