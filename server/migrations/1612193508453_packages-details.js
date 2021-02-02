@@ -16,7 +16,7 @@ exports.up = (pgm) => {
       cancelation_policy JSON,
       is_pickup BOOLEAN DEFAULT FALSE,
       is_fixed_date_ticket BOOLEAN DEFAULT FALSE,
-      is_collect_pysical_ticket BOOLEAN DEFAULT FALSE,
+      is_collect_physical_ticket BOOLEAN DEFAULT FALSE,
       is_location_meetup BOOLEAN DEFAULT FALSE,
       package_duration INT, 
       pickup_info JSON,
