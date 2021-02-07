@@ -6,12 +6,14 @@ const router = express.Router();
 // controller
 const {
   createPackage,
-  createPackageDetail
+  createPackageDetail,
+  editPackageDetail
 } = require('../controllers/package');
 
 // routes
 // router.post('/product', authCheck, adminCheck, create);
 router.post('/packages', createPackage);
 router.post('/package-detail', createPackageDetail);
+router.put('/package-detail/:id', editPackageDetail);
 
 module.exports = router;
