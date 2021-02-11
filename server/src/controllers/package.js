@@ -1,5 +1,5 @@
 const pool = require('../pool');
-const { convertJavascriptToPosgresTimestamp } = require('../utils/time-util');
+const { toPgTimestamp } = require('../utils/time-util');
 
 exports.createPackage = async (req, res) => {
   try {
@@ -125,7 +125,7 @@ exports.editPackageDetail = async (req, res) => {
         JSON.stringify(response.rows[0].pickup_info),
       req.body.free_cancelation_max_day ||
         response.rows[0].free_cancelation_max_day,
-      convertJavascriptToPosgresTimestamp(Date.now()),
+      toPgTimestamp(Date.now()),
       req.params.id
     ];
 

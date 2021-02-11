@@ -1,3 +1,3 @@
-exports.convertJavascriptToPosgresTimestamp = (javascriptDateNow) => {
+exports.toPgTimestamp = (javascriptDateNow) => {
   return javascriptDateNow / 1000;
 };
