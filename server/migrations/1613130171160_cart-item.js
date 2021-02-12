@@ -7,7 +7,7 @@ exports.up = (pgm) => {
   pgm.sql(`
     CREATE TABLE cart_items (
       id SERIAL PRIMARY KEY,
-      quantity_price_modle JSONB,
+      quantity_price_model JSONB,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
