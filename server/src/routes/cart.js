@@ -8,6 +8,6 @@ const { createCartItem } = require('../controllers/cart');
 
 // routes
 // router.post('/product', authCheck, adminCheck, create);
-router.post('/cart', createPackage);
+router.post('/cart', createCartItem);
 
 module.exports = router;

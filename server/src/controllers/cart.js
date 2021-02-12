@@ -6,8 +6,8 @@ exports.createCartItem = async (req, res) => {
     const {
       rows
     } = await pool.query(
-      'INSERT INTO packages (quantity_price_model) VALUES ($1) RETURNING *;',
-      [JSON.stringify(req.body.price_model)]
+      'INSERT INTO cart_items (quantity_price_model) VALUES ($1) RETURNING *;',
+      [JSON.stringify(req.body.quantity_price_model)]
     );
 
     res.send(rows[0]);
