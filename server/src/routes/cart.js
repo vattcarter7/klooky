@@ -4,10 +4,10 @@ const router = express.Router();
 // middlewares
 
 // controller
-const { createCartItem } = require('../controllers/cartItem');
+const { createCartItem } = require('../controllers/cart');
 
 // routes
 // router.post('/product', authCheck, adminCheck, create);
-router.post('/packages', createPackage);
+router.post('/cart', createPackage);
 
 module.exports = router;
