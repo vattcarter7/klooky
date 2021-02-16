@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const { validate } = require('../validators');
-const {} = require('../validators/package/packageCheckRules');
+const {
+  createPackageCheckRules
+} = require('../validators/package/packageCheckRules');
 
 // middlewares
 
@@ -15,7 +17,7 @@ const {
 
 // routes
 // router.post('/product', authCheck, adminCheck, create);
-router.post('/packages', createPackage);
+router.post('/packages', [createPackageCheckRules, validate], createPackage);
 router.post('/package-detail', createPackageDetail);
 router.put('/package-detail/:id', editPackageDetail);
 
