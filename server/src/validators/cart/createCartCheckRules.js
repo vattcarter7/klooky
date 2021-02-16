@@ -1,6 +1,6 @@
 const { check } = require('express-validator');
 
-exports.rules = (() => {
+exports.createCartCheckRules = (() => {
   return [
     check('quantity_price_model.*.name')
       .not()
