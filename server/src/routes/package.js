@@ -25,7 +25,7 @@ const {
 // @access    Private
 router.post('/packages', [createPackageCheckRules, validate], createPackage);
 
-// @desc      make a purchase detail
+// @desc      make a package detail
 // @route     POST /api/package-detail
 // @access    Private
 router.post(
@@ -34,7 +34,7 @@ router.post(
   createPackageDetail
 );
 
-// @desc      update a purchase detail
+// @desc      update a package detail
 // @route     POST /api/package-detail/:id
 // @access    Private
 router.put(
