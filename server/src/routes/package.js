@@ -20,17 +20,23 @@ const {
 // routes
 // router.post('/product', authCheck, adminCheck, create);
 
-// create a package
+// @desc      make a package
+// @route     POST /api/packages
+// @access    Private
 router.post('/packages', [createPackageCheckRules, validate], createPackage);
 
-// create a package detail
+// @desc      make a purchase detail
+// @route     POST /api/package-detail
+// @access    Private
 router.post(
   '/package-detail',
   [createPackageDetailCheckRules, validate],
   createPackageDetail
 );
 
-// update a package detail
+// @desc      update a purchase detail
+// @route     POST /api/package-detail/:id
+// @access    Private
 router.put(
   '/package-detail/:id',
   [editPackageDetailCheckRules, validate],
