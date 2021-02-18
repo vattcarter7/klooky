@@ -4,7 +4,8 @@ const router = express.Router();
 const { validate } = require('../validators');
 const {
   createPackageCheckRules,
-  createPackageDetailCheckRules
+  createPackageDetailCheckRules,
+  editPackageDetailCheckRules
 } = require('../validators/package/packageCheckRules');
 
 // middlewares
@@ -18,12 +19,22 @@ const {
 
 // routes
 // router.post('/product', authCheck, adminCheck, create);
+
+// create a package
 router.post('/packages', [createPackageCheckRules, validate], createPackage);
+
+// create a package detail
 router.post(
   '/package-detail',
-  [createPackageCheckRules, validate],
+  [createPackageDetailCheckRules, validate],
   createPackageDetail
 );
-router.put('/package-detail/:id', editPackageDetail);
+
+// update a package detail
+router.put(
+  '/package-detail/:id',
+  [editPackageDetailCheckRules, validate],
+  editPackageDetail
+);
 
 module.exports = router;
