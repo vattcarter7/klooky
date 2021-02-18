@@ -11,6 +11,10 @@ const { createCartItem } = require('../controllers/cart');
 
 // routes
 // router.post('/product', authCheck, adminCheck, create);
+
+// @desc      make a cart
+// @route     POST /api/cart
+// @access    Private
 router.post('/cart', [createCartCheckRules, validate], createCartItem);
 
 module.exports = router;
