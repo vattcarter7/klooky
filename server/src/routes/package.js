@@ -17,9 +17,6 @@ const {
   editPackageDetail
 } = require('../controllers/package');
 
-// routes
-// router.post('/product', authCheck, adminCheck, create);
-
 // @desc      make a package
 // @route     POST /api/packages
 // @access    Private
