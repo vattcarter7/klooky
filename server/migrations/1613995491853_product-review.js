@@ -8,7 +8,7 @@ exports.up = (pgm) => {
     CREATE TABLE product_reviews (
       id SERIAL PRIMARY KEY,
       rating SMALLINT NOT NULL,
-
+      comment VARCHAR,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
