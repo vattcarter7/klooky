@@ -1,6 +1,6 @@
 const { check } = require('express-validator');
 
-exports.createPackageCheckRules = (() => {
+exports.createProductReviewCheckRules = (() => {
   return [
     check('rating')
       .isInt()
