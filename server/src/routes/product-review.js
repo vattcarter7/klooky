@@ -3,9 +3,9 @@ const router = express.Router();
 
 const { validate } = require('../validators');
 
-// const {
-
-// } = require('../validators/purchase/purchaseCheckRules');
+const {
+  createProductReviewCheckRules
+} = require('../validators/product-review/productReviewCheckRules');
 
 // middlewares
 
@@ -18,6 +18,10 @@ const { createReview } = require('../controllers/product-review');
 // @desc      create a product review
 // @route     POST /api/product-reviews
 // @access    Private
-router.post('/product-reviews', createReview);
+router.post(
+  '/product-reviews',
+  [createProductReviewCheckRules, validate],
+  createReview
+);
 
 module.exports = router;
