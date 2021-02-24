@@ -25,7 +25,8 @@ router.post(
 );
 
 // @desc      update a product review
-// @route     POST /api/product-reviews
+// @route     PUT /api/product-reviews
 // @access    Private
+router.put('/product-reviews/:id', editReview);
 
 module.exports = router;
