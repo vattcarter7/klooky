@@ -10,7 +10,7 @@ const {
 // middlewares
 
 // controller
-const { createReview } = require('../controllers/product-review');
+const { createReview, editReview } = require('../controllers/product-review');
 
 // routes
 // router.post('/product', authCheck, adminCheck, create);
@@ -23,5 +23,9 @@ router.post(
   [createProductReviewCheckRules, validate],
   createReview
 );
+
+// @desc      update a product review
+// @route     POST /api/product-reviews
+// @access    Private
 
 module.exports = router;

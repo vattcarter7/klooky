@@ -18,3 +18,46 @@ exports.createReview = async (req, res) => {
     });
   }
 };
+
+exports.editReview = async (req, res) => {
+  try {
+    const textQuery = `SELECT * FROM product_reviews where id=$1`;
+    const response = await pool.query(textQuery, [req.params.id]);
+    if (!response.rows[0]) {
+      return res.status(404).json({
+        errorMsg: 'package not found'
+      });
+    }
+
+    const updateQuery = `UPDATE product_reviews SET
+                            rating            =$1,
+                            comment           =$2,
+                            photos            =$3,
+                            updated_at        =to_timestamp($4)
+                          WHERE id = $5 returning *;
+                        `;
+
+    const updateValues = [
+      req.body.rating,
+      req.body.comment,
+      JSON.stringify(req.body.photos),
+      toPgTimestamp(Date.now()),
+      req.params.id
+    ];
+
+    const { rows } = await pool.query(updateQuery, updateValues);
+    if (!rows[0]) {
+      return res.status(400).json({
+        err: err.message,
+        errorMsg: 'unable to update review rating'
+      });
+    }
+
+    res.send(rows[0]);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message
+    });
+  }
+};
