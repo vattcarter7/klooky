@@ -10,7 +10,11 @@ const {
 // middlewares
 
 // controller
-const { createReview, editReview } = require('../controllers/product-review');
+const {
+  createReview,
+  editReview,
+  deleteReview
+} = require('../controllers/product-review');
 
 // routes
 // router.post('/product', authCheck, adminCheck, create);
@@ -25,8 +29,13 @@ router.post(
 );
 
 // @desc      update a product review
-// @route     PUT /api/product-reviews
+// @route     PUT /api/product-reviews/:id
 // @access    Private
 router.put('/product-reviews/:id', editReview);
+
+// @desc      delte a product review
+// @route     DELETE /api/product-reviews/:id
+// @access    Private
+router.delete('/product-reviews/:id', deleteReview);
 
 module.exports = router;
