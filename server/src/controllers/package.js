@@ -145,3 +145,25 @@ exports.editPackageDetail = async (req, res) => {
     });
   }
 };
+
+exports.deletePackage = async (req, res) => {
+  try {
+    const {
+      rows
+    } = await pool.query('DELETE FROM packages WHERE id=$1 returning *', [
+      req.params.id
+    ]);
+
+    if (!rows[0])
+      return res.status(404).json({
+        errorMsg: 'cannot delete that package'
+      });
+
+    res.send(rows[0]);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message
+    });
+  }
+};
