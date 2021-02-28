@@ -18,3 +18,5 @@ exports.createProduct = async (req, res) => {
     });
   }
 };
+
+//TODO: edit a product
