@@ -45,7 +45,7 @@ exports.editProduct = async (req, res) => {
     if (!rows[0]) {
       return res.status(400).json({
         err: err.message,
-        errorMsg: 'unable to update package detail'
+        errorMsg: 'unable to update product'
       });
     }
 
