@@ -29,7 +29,7 @@ exports.editProduct = async (req, res) => {
       });
     }
 
-    const updateQuery = `UPDATE packages_details SET
+    const updateQuery = `UPDATE products SET
                           name                            =$1,
                           updated_at                      =to_timestamp($2)
                         WHERE id = $3 returning *;
