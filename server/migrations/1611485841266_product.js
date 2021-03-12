@@ -13,6 +13,7 @@ exports.up = (pgm) => {
       is_location_meetup BOOLEAN DEFAULT FALSE,
       is_joined_and_private_available BOOLEAN DEFAULT FALSE,
       is_hotel_pickup BOOLEAN DEFAULT FALSE,
+      product_duration INT, 
       product_validity JSONB,
       product_overview TEXT,
       product_highlights JSON,
