@@ -7,6 +7,10 @@ exports.up = (pgm) => {
     CREATE TABLE products (
       id SERIAL PRIMARY KEY,
       name VARCHAR UNIQUE,
+      is_pickup BOOLEAN DEFAULT FALSE,
+      is_fixed_date_ticket BOOLEAN DEFAULT FALSE,
+      is_collect_physical_ticket BOOLEAN DEFAULT FALSE,
+      is_location_meetup BOOLEAN DEFAULT FALSE,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
