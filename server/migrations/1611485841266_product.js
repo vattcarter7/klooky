@@ -11,6 +11,11 @@ exports.up = (pgm) => {
       is_fixed_date_ticket BOOLEAN DEFAULT FALSE,
       is_collect_physical_ticket BOOLEAN DEFAULT FALSE,
       is_location_meetup BOOLEAN DEFAULT FALSE,
+      validity JSONB,
+      prohibition_limitation_policy JSONB,
+      confirmation JSONB,
+      free_cancelation_max_day INT,
+      cancelation_policy JSONB,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
