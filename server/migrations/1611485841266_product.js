@@ -5,14 +5,7 @@ exports.shorthands = undefined;
 exports.up = (pgm) => {
   pgm.sql(`
     CREATE TABLE products (
-      id SERIAL PRIMARY KEY,
       product_name VARCHAR UNIQUE,
-      is_pickup BOOLEAN DEFAULT FALSE,
-      is_fixed_date_ticket BOOLEAN DEFAULT FALSE,
-      is_collect_physical_ticket BOOLEAN DEFAULT FALSE,
-      is_location_meetup BOOLEAN DEFAULT FALSE,
-      is_joined_and_private_available BOOLEAN DEFAULT FALSE,
-      is_hotel_pickup BOOLEAN DEFAULT FALSE,
       product_duration INT, 
       product_validity JSONB,
       product_overview TEXT,
@@ -24,6 +17,13 @@ exports.up = (pgm) => {
       product_free_cancelation_max_day INT,
       product_cancelation_policy JSONB,
       product_additional_info JSON,
+      id SERIAL PRIMARY KEY,
+      is_pickup BOOLEAN DEFAULT FALSE,
+      is_fixed_date_ticket BOOLEAN DEFAULT FALSE,
+      is_collect_physical_ticket BOOLEAN DEFAULT FALSE,
+      is_location_meetup BOOLEAN DEFAULT FALSE,
+      is_joined_and_private_available BOOLEAN DEFAULT FALSE,
+      is_hotel_pickup BOOLEAN DEFAULT FALSE,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
