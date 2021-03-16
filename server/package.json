@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "migrate": "node-pg-migrate",
     "migrate:up": "DATABASE_URL=postgres://vattsopheak:@localhost:5432/klooky npm run migrate up",
     "migrate:down": "DATABASE_URL=postgres://vattsopheak:@localhost:5432/klooky npm run migrate down",
-    "start": "nodemon index.js",
+    "dev": "nodemon index.js",
     "test": "jest --no-cache --runInBand"
   },
   "author": "",
