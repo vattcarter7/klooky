@@ -5,6 +5,7 @@ exports.shorthands = undefined;
 exports.up = (pgm) => {
   pgm.sql(`
     CREATE TABLE products (
+      id SERIAL PRIMARY KEY,
       product_name VARCHAR UNIQUE,
       product_duration INT, 
       product_validity JSONB,
@@ -17,7 +18,6 @@ exports.up = (pgm) => {
       product_free_cancelation_max_day INT,
       product_cancelation_policy JSONB,
       product_additional_info JSON,
-      id SERIAL PRIMARY KEY,
       is_pickup BOOLEAN DEFAULT FALSE,
       is_fixed_date_ticket BOOLEAN DEFAULT FALSE,
       is_collect_physical_ticket BOOLEAN DEFAULT FALSE,
