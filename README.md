@@ -9,8 +9,6 @@ postgresql://dbuser:secretpassword@database.server.com:3211/mydb
 
 
 
-
-<h4 align="center">TODO</h4>
 ##### Backend Testing
 > suppertest
 
@@ -19,3 +17,7 @@ postgresql://dbuser:secretpassword@database.server.com:3211/mydb
 > Reference: 
 > https://github.com/cypress-io/cypress-example-todomvc-redux [with redux]
 > https://www.youtube.com/watch?v=dVRivkL5eGc&ab_channel=BasaratAli [set up cypress testing from youtube]
+
+
+##### database diagram
+> https://app.diagrams.net/?src=about#G1p_r4AR2hlwR-bIIqNQf-k4Q0QuuSztu8
