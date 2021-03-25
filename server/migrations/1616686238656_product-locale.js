@@ -5,6 +5,7 @@ exports.shorthands = undefined;
 exports.up = (pgm) => {
   pgm.sql(`
     CREATE TABLE product_locale (
+      id SERIAL PRIMARY KEY,
       product_id INT REFERENCES product(id) NOT NULL,
       language_id INT REFERENCES language(id) NOT NULL,
       product_name VARCHAR UNIQUE NOT NULL,

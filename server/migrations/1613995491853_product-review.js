@@ -3,13 +3,13 @@
 exports.shorthands = undefined;
 
 exports.up = (pgm) => {
-  //TODO: add product_id, reviewer_id, host_id on the product_reviews table
+  //TODO: add reviewer_id, host_id on the product_reviews table
   pgm.sql(`
-    CREATE TABLE product_reviews (
+    CREATE TABLE product_review (
       id SERIAL PRIMARY KEY,
+      product_id INT REFERENCES product(id) NOT NULL,
       rating SMALLINT NOT NULL,
       comment VARCHAR,
-      photos JSONB,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
@@ -18,6 +18,6 @@ exports.up = (pgm) => {
 
 exports.down = (pgm) => {
   pgm.sql(`
-    DROP TABLE product_reviews;
+    DROP TABLE product_review;
   `);
 };

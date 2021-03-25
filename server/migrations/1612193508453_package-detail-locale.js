@@ -6,8 +6,8 @@ exports.up = (pgm) => {
   pgm.sql(`
     CREATE TABLE package_detail_locale (
       id SERIAL PRIMARY KEY,
-      package_id PK FK,
-      language_id PK FK,
+      package_id INT REFERENCES package(id) NOT NULL,
+      language_id INT REFERENCES language(id) NOT NULL,
       package_name VARCHAR,
       package_includes JSONB,
       package_excludes JSONB,
