@@ -4,20 +4,11 @@ exports.shorthands = undefined;
 
 exports.up = (pgm) => {
   pgm.sql(`
-    CREATE TABLE products (
+    CREATE TABLE product (
       id SERIAL PRIMARY KEY,
-      product_name VARCHAR UNIQUE,
       product_duration INT, 
-      product_validity JSONB,
-      product_overview TEXT,
-      product_highlights JSONB,
       product_location JSONB,
-      product_photos_with_description JSONB,
-      product_prohibition_limitation JSONB,
-      product_confirmation JSONB,
       product_free_cancelation_max_day INT,
-      product_cancelation_policy JSONB,
-      product_additional_info JSONB,
       is_pickup BOOLEAN DEFAULT FALSE,
       is_fixed_date_ticket BOOLEAN DEFAULT FALSE,
       is_collect_physical_ticket BOOLEAN DEFAULT FALSE,
@@ -32,6 +23,6 @@ exports.up = (pgm) => {
 
 exports.down = (pgm) => {
   pgm.sql(`
-    DROP TABLE products;
+    DROP TABLE product;
   `);
 };

@@ -6,8 +6,6 @@ exports.up = (pgm) => {
   pgm.sql(`
     CREATE TABLE packages (
       id SERIAL PRIMARY KEY,
-      name VARCHAR,
-      price_model JSONB,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
