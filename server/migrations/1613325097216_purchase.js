@@ -3,7 +3,7 @@
 exports.shorthands = undefined;
 
 exports.up = (pgm) => {
-  //TODO: add package_id, user_id on the purchases table
+  //TODO: add user_id on the purchases table
   pgm.sql(`
     CREATE TABLE purchase (
       id SERIAL PRIMARY KEY,
