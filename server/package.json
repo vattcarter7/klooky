@@ -11,7 +11,7 @@
     "dev": "nodemon index.js",
     "test": "jest --no-cache --runInBand"
   },
-  "author": "",
+  "author": "vatt sopheak",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
