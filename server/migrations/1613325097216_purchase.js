@@ -17,7 +17,8 @@ exports.up = (pgm) => {
     );
 
     INSERT INTO purchase (package_id, user_id, language_id, quantity_price_model, total)
-                VALUES   (1, 1, 1, '[{ "name": "adult", "price": 15, "pax": 3 }, { "name": "kid", "price": 10, "pax": 1 } ]', 100)
+                VALUES   (1, 1, 1, '[{ "name": "adult", "price": 15, "pax": 3 }, { "name": "kid", "price": 10, "pax": 1 } ]', 100),
+                         (1, 2, 2, '[{ "name": "성인", "price": 15, "pax": 3 }, { "name": "아동", "price": 10, "pax": 1 } ]', 100);
 
   `);
 };
