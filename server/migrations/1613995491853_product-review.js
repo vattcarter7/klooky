@@ -14,6 +14,10 @@ exports.up = (pgm) => {
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
+
+    INSERT INTO product_review (product_id, reviewer_id, host_id, rating, comment)
+    VALUES (1, 1, 2, 5, 'nice tour. highly recommend'),
+           (1, 2, 1, 4, '좋은 시간을 보냈습니다. 추천합니다');
   `);
 };
 
