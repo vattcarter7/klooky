@@ -6,9 +6,12 @@ exports.up = (pgm) => {
   pgm.sql(`
     CREATE TABLE package (
       id SERIAL PRIMARY KEY,
+      published BOOLEAN DEFAULT FALSE,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
+
+    INSERT INTO package (published) VALUES (true);
   `);
 };
 

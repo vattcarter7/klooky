@@ -18,6 +18,9 @@ exports.up = (pgm) => {
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
+
+    INSERT INTO product (product_duration, product_location, product_free_cancelation_max_day)
+    VALUES (2, '{ "lat": 123456789, "lng": 987654321 }', 7);
   `);
 };
 
