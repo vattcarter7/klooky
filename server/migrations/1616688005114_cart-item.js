@@ -12,6 +12,10 @@ exports.up = (pgm) => {
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
+
+    INSERT INTO cart_item (package_id, user_id, quantity_price_model)
+    VALUES (1, 1, '[{ "name": "adult", "price": 15, "pax": 3 }, { "name": "kid", "price": 10, "pax": 1 }]'),
+           (1, 1, '[{ "name": "성인", "price": 15, "pax": 3 }, { "name": "아동", "price": 10, "pax": 1 }]');
   `);
 };
 
