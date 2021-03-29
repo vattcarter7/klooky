@@ -12,6 +12,10 @@ exports.up = (pgm) => {
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
+
+    INSERT INTO package_price_locale (package_id, language_id, price_model)
+    VALUES (1, 1, '[{ "name": "adult", "price": 15 }, { "name": "kid", "price": 10 }]'),
+           (1, 2, '[{ "name": "성인", "price": 15 }, { "name": "아동", "price": 10 }]');
   `);
 };
 
