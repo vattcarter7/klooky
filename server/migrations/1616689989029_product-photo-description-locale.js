@@ -16,6 +16,10 @@ exports.up = (pgm) => {
 
     ALTER TABLE product_photo_description_locale ADD CONSTRAINT product_photo_description_locale_unique UNIQUE (product_photo_id, language_id); 
 
+    CREATE INDEX product_photo_description_locale_product_photo_id_idx ON product_photo_description_locale(product_photo_id);
+    CREATE INDEX product_photo_description_locale_user_id_idx ON product_photo_description_locale(user_id);
+    CREATE INDEX product_photo_description_locale_language_id_idx ON product_photo_description_locale(language_id);
+
     INSERT INTO product_photo_description_locale (product_photo_id, user_id, language_id, description)
     VALUES (1, 1, 1, 'picture1 description'),
            (1, 1, 2, 'picture1 설명서'),

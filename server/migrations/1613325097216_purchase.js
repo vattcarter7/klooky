@@ -16,6 +16,10 @@ exports.up = (pgm) => {
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
 
+    CREATE INDEX purchase_package_id_idx ON purchase(package_id);
+    CREATE INDEX purchase_user_id_idx ON purchase(user_id);
+    CREATE INDEX purchase_language_id_idx ON purchase(language_id);
+
     INSERT INTO purchase (package_id, user_id, language_id, quantity_price_model, total)
                 VALUES   (1, 1, 1, '[{ "name": "adult", "price": 15, "pax": 3 }, { "name": "kid", "price": 10, "pax": 1 } ]', 100),
                          (1, 2, 2, '[{ "name": "성인", "price": 15, "pax": 3 }, { "name": "아동", "price": 10, "pax": 1 } ]', 100);

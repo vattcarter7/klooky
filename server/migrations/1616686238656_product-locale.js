@@ -22,6 +22,9 @@ exports.up = (pgm) => {
 
     ALTER TABLE product_locale ADD CONSTRAINT product_locale_unique UNIQUE (product_id, language_id);
 
+    CREATE INDEX product_locale_product_id_idx ON product_locale(product_id);
+    CREATE INDEX product_locale_language_id_idx ON product_locale(language_id);
+
     INSERT INTO product_locale (product_id, language_id, product_name, product_validity, 
       product_overview, product_highlights, product_prohibition_limitation, product_confirmation, 
       product_cancelation_policy, product_additional_info)

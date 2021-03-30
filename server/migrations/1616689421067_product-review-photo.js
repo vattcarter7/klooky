@@ -13,6 +13,9 @@ exports.up = (pgm) => {
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
 
+    CREATE INDEX product_review_photo_product_id_idx ON product_review_photo(product_id);
+    CREATE INDEX product_review_photo_reviewer_id_idx ON product_review_photo(reviewer_id);
+
     INSERT INTO product_review_photo (product_id, reviewer_id, photo_url)
     VALUES (1, 1, 'image1.jpg'),
            (1, 1, 'image2.jpg');
