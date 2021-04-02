@@ -6,9 +6,9 @@ exports.up = (pgm) => {
   pgm.sql(`
     CREATE TABLE product (
       id SERIAL PRIMARY KEY,
-      product_duration INT, 
+      product_duration INT NOT NULL, 
       product_location JSONB,
-      product_free_cancelation_max_day INT,
+      product_free_cancelation_max_day INT DEFAULT 0,
       is_pickup BOOLEAN DEFAULT FALSE,
       is_fixed_date_ticket BOOLEAN DEFAULT FALSE,
       is_collect_physical_ticket BOOLEAN DEFAULT FALSE,
