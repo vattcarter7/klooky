@@ -20,14 +20,14 @@ exports.createProduct = async (req, res) => {
       [
         req.body.product_duration,
         JSON.stringify(req.body.product_location),
-        req.body.product_free_cancelation_max_day,
-        req.body.published,
-        req.body.is_pickup,
-        req.body.is_fixed_date_ticket,
-        req.body.is_collect_physical_ticket,
-        req.body.is_location_meetup,
-        req.body.is_joined_and_private_available,
-        req.body.is_hotel_pickup
+        req.body.product_free_cancelation_max_day || 0,
+        req.body.published || false,
+        req.body.is_pickup || false,
+        req.body.is_fixed_date_ticket || false,
+        req.body.is_collect_physical_ticket || false,
+        req.body.is_location_meetup || false,
+        req.body.is_joined_and_private_available || false,
+        req.body.is_hotel_pickup || false
       ]
     );
 
