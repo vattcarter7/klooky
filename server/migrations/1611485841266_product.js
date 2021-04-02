@@ -7,7 +7,7 @@ exports.up = (pgm) => {
     CREATE TABLE product (
       id SERIAL PRIMARY KEY,
       product_duration INT NOT NULL, 
-      product_location JSONB,
+      product_location JSONB NOT NULL,
       product_free_cancelation_max_day INT DEFAULT 0,
       published BOOLEAN DEFAULT FALSE,
       is_pickup BOOLEAN DEFAULT FALSE,
@@ -21,7 +21,7 @@ exports.up = (pgm) => {
     );
 
     INSERT INTO product (product_duration, product_location, product_free_cancelation_max_day)
-    VALUES (2, '{ "lat": 123456789, "lng": 987654321 }', 7);
+    VALUES (2, '[{ "lat": 123456789, "lng": 987654321 }]', 7);
   `);
 };
 
