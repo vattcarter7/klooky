@@ -3,11 +3,30 @@ const { toPgTimestamp } = require('../utils/time-util');
 
 exports.createProduct = async (req, res) => {
   try {
-    const {
-      rows
-    } = await pool.query(
-      'INSERT INTO products (name) VALUES ($1) RETURNING *;',
-      [req.body.name]
+    const { rows } = await pool.query(
+      `INSERT INTO products 
+      (
+        product_duration,
+        product_location,
+        product_free_cancelation_max_day,
+        is_pickup,
+        is_fixed_date_ticket,
+        is_collect_physical_ticket,
+        is_location_meetup,
+        is_joined_and_private_available,
+        is_hotel_pickup
+      ) VALUES ($1) RETURNING *;`,
+      [
+        req.body.product_duration,
+        req.body.product_location,
+        req.body.product_free_cancelation_max_day,
+        req.body.is_pickup,
+        req.body.is_fixed_date_ticket,
+        req.body.is_collect_physical_ticket,
+        req.body.is_location_meetup,
+        req.body.is_joined_and_private_available,
+        req.body.is_hotel_pickup
+      ]
     );
 
     res.send(rows[0]);
