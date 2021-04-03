@@ -42,7 +42,7 @@ exports.createProduct = async (req, res) => {
 
 exports.editProduct = async (req, res) => {
   try {
-    const textQuery = `SELECT * FROM products where id=$1`;
+    const textQuery = `SELECT * FROM product where id=$1`;
     const response = await pool.query(textQuery, [req.params.id]);
     if (!response.rows[0]) {
       return res.status(404).json({
@@ -50,14 +50,37 @@ exports.editProduct = async (req, res) => {
       });
     }
 
-    const updateQuery = `UPDATE products SET
-                          name                            =$1,
-                          updated_at                      =to_timestamp($2)
-                        WHERE id = $3 returning *;
+    const updateQuery = `UPDATE product SET
+                          product_duration                    =$1,
+                          product_location                    =$2,
+                          product_free_cancelation_max_day    =$3,
+                          published                           =$4,
+                          is_pickup                           =$5,
+                          is_fixed_date_ticket                =$6,
+                          is_collect_physical_ticket          =$7,
+                          is_location_meetup                  =$8,
+                          is_joined_and_private_available     =$9,
+                          is_hotel_pickup                     =$10,
+                          updated_at                          =to_timestamp($11)
+                        WHERE id = $12 returning *;
                         `;
 
     const updateValues = [
-      req.body.name,
+      JSON.stringify(req.body.product_duration) ||
+        JSON.stringify(response.rows[0].product_duration),
+      JSON.stringify(req.body.product_location) ||
+        JSON.stringify(response.rows[0].product_location),
+      req.body.product_free_cancelation_max_day ||
+        response.rows[0].product_free_cancelation_max_day,
+      req.body.published || response.rows[0].published,
+      req.body.is_pickup || response.rows[0].is_pickup,
+      req.body.is_fixed_date_ticket || response.rows[0].is_fixed_date_ticket,
+      req.body.is_collect_physical_ticket ||
+        response.rows[0].is_collect_physical_ticket,
+      req.body.is_location_meetup || response.rows[0].is_location_meetup,
+      req.body.is_joined_and_private_available ||
+        response.rows[0].is_joined_and_private_available,
+      req.body.is_hotel_pickup || response.rows[0].is_hotel_pickup,
       toPgTimestamp(Date.now()),
       req.params.id
     ];
