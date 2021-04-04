@@ -89,7 +89,6 @@ exports.editProduct = async (req, res) => {
     const { rows } = await pool.query(updateQuery, updateValues);
     if (!rows[0]) {
       return res.status(400).json({
-        err: err.message,
         errorMsg: 'unable to update product'
       });
     }
@@ -98,7 +97,8 @@ exports.editProduct = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).json({
-      errorMsg: err.message
+      err: err.message,
+      errorMsg: 'unable to update product'
     });
   }
 };
