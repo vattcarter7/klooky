@@ -35,7 +35,8 @@ exports.createProduct = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).json({
-      err: err.message
+      err: err.message,
+      errorMsg: 'unable to add a product'
     });
   }
 };
