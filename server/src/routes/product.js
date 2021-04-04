@@ -3,7 +3,8 @@ const router = express.Router();
 
 const { validate } = require('../validators');
 const {
-  createProductCheckRules
+  createProductCheckRules,
+  editProductCheckRules
 } = require('../validators/product/productCheckRules');
 
 // middlewares
@@ -19,6 +20,6 @@ router.post('/products', [createProductCheckRules, validate], createProduct);
 // @desc      edit a product
 // @route     PUT /api/products/:id
 // @access    Private
-router.put('/products/:id', editProduct);
+router.put('/products/:id', [editProductCheckRules, validate], editProduct);
 
 module.exports = router;
