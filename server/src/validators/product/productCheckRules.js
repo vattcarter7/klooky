@@ -3,9 +3,8 @@ const { check } = require('express-validator');
 exports.createProductCheckRules = (() => {
   return [
     check('product_duration')
-      .not()
-      .isEmpty()
-      .withMessage('product duration is required'),
+      .isInt()
+      .withMessage('product duration is integer and required'),
 
     check('product_location.*.lat')
       .isInt()
