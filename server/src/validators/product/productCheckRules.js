@@ -20,6 +20,11 @@ exports.createProductCheckRules = (() => {
       .isInt()
       .withMessage('product cancellation max day must be integer number'),
 
+    check('product_validity_period')
+      .optional()
+      .isInt()
+      .withMessage('product validity period must be integer number'),
+
     check('published')
       .optional()
       .isBoolean()
@@ -74,6 +79,11 @@ exports.editProductCheckRules = (() => {
       .optional()
       .isInt()
       .withMessage('product cancellation max day must be integer number'),
+
+    check('product_validity_period')
+      .optional()
+      .isInt()
+      .withMessage('product validity period must be integer number'),
 
     check('published')
       .optional()
