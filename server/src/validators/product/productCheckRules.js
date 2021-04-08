@@ -8,10 +8,12 @@ exports.createProductCheckRules = (() => {
       .withMessage('product duration is integer and required'),
 
     check('product_location.*.lat')
+      .optional()
       .isInt()
       .withMessage('latitude must be integer number'),
 
     check('product_location.*.lng')
+      .optional()
       .isInt()
       .withMessage('longitude must be integer number'),
 
