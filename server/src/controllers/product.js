@@ -120,8 +120,6 @@ exports.editProduct = async (req, res) => {
       req.params.id
     ];
 
-    console.log(updateValues);
-
     const { rows } = await pool.query(updateQuery, updateValues);
     if (!rows[0]) {
       return res.status(400).json({
