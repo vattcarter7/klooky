@@ -10,7 +10,10 @@ const { validate } = require('../validators');
 // middlewares
 
 // controller
-const { createProductLocale } = require('../controllers/product-locale');
+const {
+  createProductLocale,
+  editProductLocale
+} = require('../controllers/product-locale');
 
 // @desc      make a product locale
 // @route     POST /api/product-locale
@@ -18,8 +21,8 @@ const { createProductLocale } = require('../controllers/product-locale');
 router.post('/product-locale', createProductLocale);
 
 // @desc      edit a product
-// @route     PUT /api/products/:id
+// @route     PUT /api/product-locale/:id
 // @access    Private
-// router.put('/products/:id', [editProductCheckRules, validate], editProduct);
+router.put('/product-locale/:id', editProductLocale);
 
 module.exports = router;
