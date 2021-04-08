@@ -9,6 +9,7 @@ exports.createProduct = async (req, res) => {
         product_duration,
         product_location,
         product_free_cancelation_max_day,
+        product_validity_period,
         published,
         is_pickup,
         is_fixed_date_ticket,
@@ -16,11 +17,12 @@ exports.createProduct = async (req, res) => {
         is_location_meetup,
         is_joined_and_private_available,
         is_hotel_pickup
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *;`,
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *;`,
       [
         req.body.product_duration,
         JSON.stringify(req.body.product_location),
         req.body.product_free_cancelation_max_day || 0,
+        req.body.product_validity_period || 0,
         req.body.published || false,
         req.body.is_pickup || false,
         req.body.is_fixed_date_ticket || false,
@@ -51,40 +53,74 @@ exports.editProduct = async (req, res) => {
       });
     }
 
+    console.log(response.rows[0]);
+
     const updateQuery = `UPDATE product SET
                           product_duration                    =$1,
                           product_location                    =$2,
                           product_free_cancelation_max_day    =$3,
-                          published                           =$4,
-                          is_pickup                           =$5,
-                          is_fixed_date_ticket                =$6,
-                          is_collect_physical_ticket          =$7,
-                          is_location_meetup                  =$8,
-                          is_joined_and_private_available     =$9,
-                          is_hotel_pickup                     =$10,
-                          updated_at                          =to_timestamp($11)
-                        WHERE id = $12 returning *;
+                          product_validity_period             =$4,
+                          published                           =$5,
+                          is_pickup                           =$6,
+                          is_fixed_date_ticket                =$7,
+                          is_collect_physical_ticket          =$8,
+                          is_location_meetup                  =$9,
+                          is_joined_and_private_available     =$10,
+                          is_hotel_pickup                     =$11,
+                          updated_at                          =to_timestamp($12)
+                        WHERE id = $13 returning *;
                         `;
 
     const updateValues = [
-      JSON.stringify(req.body.product_duration) ||
-        JSON.stringify(response.rows[0].product_duration),
-      JSON.stringify(req.body.product_location) ||
-        JSON.stringify(response.rows[0].product_location),
-      req.body.product_free_cancelation_max_day ||
-        response.rows[0].product_free_cancelation_max_day,
-      req.body.published || response.rows[0].published,
-      req.body.is_pickup || response.rows[0].is_pickup,
-      req.body.is_fixed_date_ticket || response.rows[0].is_fixed_date_ticket,
-      req.body.is_collect_physical_ticket ||
-        response.rows[0].is_collect_physical_ticket,
-      req.body.is_location_meetup || response.rows[0].is_location_meetup,
-      req.body.is_joined_and_private_available ||
-        response.rows[0].is_joined_and_private_available,
-      req.body.is_hotel_pickup || response.rows[0].is_hotel_pickup,
+      req.body.product_duration === undefined
+        ? response.rows[0].product_duration
+        : req.body.product_duration,
+
+      req.body.product_location === undefined
+        ? response.rows[0].product_location
+        : JSON.stringify(req.body.product_location),
+
+      req.body.product_free_cancelation_max_day === undefined
+        ? response.rows[0].product_free_cancelation_max_day
+        : req.body.product_free_cancelation_max_day,
+
+      req.body.product_validity_period === undefined
+        ? response.rows[0].product_validity_period
+        : req.body.product_validity_period,
+
+      req.body.published === undefined
+        ? response.rows[0].published
+        : req.body.published,
+
+      req.body.is_pickup === undefined
+        ? response.rows[0].is_pickup
+        : req.body.is_pickup,
+
+      req.body.is_fixed_date_ticket === undefined
+        ? response.rows[0].is_fixed_date_ticket
+        : req.body.is_fixed_date_ticket,
+
+      req.body.is_collect_physical_ticket === undefined
+        ? response.rows[0].is_collect_physical_ticket
+        : req.body.is_collect_physical_ticket,
+
+      req.body.is_location_meetup === undefined
+        ? response.rows[0].is_location_meetup
+        : req.body.is_location_meetup,
+
+      req.body.is_joined_and_private_available === undefined
+        ? response.rows[0].is_joined_and_private_available
+        : req.body.is_joined_and_private_available,
+
+      req.body.is_hotel_pickup === undefined
+        ? response.rows[0].is_hotel_pickup
+        : req.body.is_hotel_pickup,
+
       toPgTimestamp(Date.now()),
       req.params.id
     ];
+
+    console.log(updateValues);
 
     const { rows } = await pool.query(updateQuery, updateValues);
     if (!rows[0]) {
