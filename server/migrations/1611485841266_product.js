@@ -7,7 +7,7 @@ exports.up = (pgm) => {
     CREATE TABLE product (
       id SERIAL PRIMARY KEY,
       product_duration INT NOT NULL, 
-      product_location JSONB NOT NULL,
+      product_location JSONB,
       product_free_cancelation_max_day INT NOT NULL DEFAULT 0,
       product_validity_period INT NOT NULL DEFAULT 0,
       published BOOLEAN NOT NULL DEFAULT FALSE,
