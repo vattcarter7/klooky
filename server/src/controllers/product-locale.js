@@ -13,7 +13,7 @@ exports.createProductLocale = async (req, res) => {
         product_highlights,
         product_prohibition_limitation,
         product_additional_info
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;`,
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`,
       [
         req.body.product_id,
         req.body.language_id,
