@@ -77,7 +77,7 @@ exports.editProduct = async (req, res) => {
         : req.body.product_duration,
 
       req.body.product_location === undefined
-        ? response.rows[0].product_location
+        ? JSON.stringify(response.rows[0].product_location)
         : JSON.stringify(req.body.product_location),
 
       req.body.product_free_cancelation_max_day === undefined
