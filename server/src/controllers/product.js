@@ -53,8 +53,6 @@ exports.editProduct = async (req, res) => {
       });
     }
 
-    console.log(response.rows[0]);
-
     const updateQuery = `UPDATE product SET
                           product_duration                    =$1,
                           product_location                    =$2,
