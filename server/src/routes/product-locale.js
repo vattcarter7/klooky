@@ -3,7 +3,8 @@ const router = express.Router();
 
 const { validate } = require('../validators');
 const {
-  createProductLocaleCheckRules
+  createProductLocaleCheckRules,
+  editProductLocaleCheckRules
 } = require('../validators/product-locale/productLocaleCheckRules');
 
 // middlewares
@@ -26,6 +27,10 @@ router.post(
 // @desc      edit a product
 // @route     PUT /api/product-locale/:id
 // @access    Private
-router.put('/product-locale/:id', editProductLocale);
+router.put(
+  '/product-locale/:id',
+  [editProductLocaleCheckRules, validate],
+  editProductLocale
+);
 
 module.exports = router;
