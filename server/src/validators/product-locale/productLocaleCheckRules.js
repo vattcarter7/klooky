@@ -21,3 +21,28 @@ exports.createProductLocaleCheckRules = (() => {
       .withMessage('product highlights required')
   ];
 })();
+
+//-- check rules for editing a product locale
+exports.editProductLocaleCheckRules = (() => {
+  return [
+    check('product_id')
+      .optional()
+      .isInt()
+      .withMessage('a valid product ID is required'),
+
+    check('language_id')
+      .optional()
+      .isInt()
+      .withMessage('a valid language ID is required'),
+
+    check('product_name')
+      .optional()
+      .isString()
+      .withMessage('a valid product name is required'),
+
+    check('product_overview')
+      .optional()
+      .isString()
+      .withMessage('a valid product overview is required')
+  ];
+})();
