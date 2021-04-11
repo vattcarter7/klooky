@@ -3,6 +3,7 @@ const { toPgTimestamp } = require('../utils/time-util');
 
 exports.createProduct = async (req, res) => {
   try {
+    //-- Begin transaction
     await pool.query('BEGIN');
 
     // 1. create a product
@@ -37,7 +38,6 @@ exports.createProduct = async (req, res) => {
     );
 
     // 2. create a product locale
-
     const productLocaleResponse = await pool.query(
       `INSERT INTO product_locale
       (
@@ -60,6 +60,7 @@ exports.createProduct = async (req, res) => {
       ]
     );
 
+    //-- Commit transaction
     await pool.query('COMMIT');
 
     res.send({
@@ -69,7 +70,7 @@ exports.createProduct = async (req, res) => {
       ...productLocaleResponse.rows[0]
     });
   } catch (err) {
-    console.log(err);
+    //-- Rollback transaction
     await pool.query('ROLLBACK');
     res.status(400).json({
       err: err.message,
