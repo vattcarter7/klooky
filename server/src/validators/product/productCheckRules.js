@@ -55,7 +55,22 @@ exports.createProductCheckRules = (() => {
     check('is_hotel_pickup')
       .optional()
       .isBoolean()
-      .withMessage('is_hotel_pickup must be boolean')
+      .withMessage('is_hotel_pickup must be boolean'),
+
+    check('language_id').isInt().withMessage('a valid language ID is required'),
+
+    check('product_name')
+      .isString()
+      .withMessage('a valid product name is required'),
+
+    check('product_overview')
+      .isString()
+      .withMessage('a valid product overview is required'),
+
+    check('product_highlights')
+      .not()
+      .isEmpty()
+      .withMessage('product highlights required')
   ];
 })();
 

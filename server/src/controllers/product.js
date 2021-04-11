@@ -74,7 +74,11 @@ exports.createProduct = async (req, res) => {
     await pool.query('ROLLBACK');
     res.status(400).json({
       err: err.message,
-      errorMsg: 'unable to add a product'
+      errorMsg:
+        err.message ===
+        'duplicate key value violates unique constraint "product_locale_product_name_key"'
+          ? 'product name must be unique. please change another name'
+          : 'unable to add a product'
     });
   }
 };
