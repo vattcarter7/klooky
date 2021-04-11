@@ -19,7 +19,7 @@ exports.createProductLocale = async (req, res) => {
         req.body.product_id,
         req.body.language_id,
         req.body.product_name,
-        JSON.stringify(req.body.product_overview),
+        req.body.product_overview,
         JSON.stringify(req.body.product_highlights),
         JSON.stringify(req.body.product_prohibition_limitation),
         JSON.stringify(req.body.product_additional_info)
