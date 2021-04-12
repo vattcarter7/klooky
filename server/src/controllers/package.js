@@ -1,6 +1,7 @@
 const pool = require('../pool');
 const { toPgTimestamp } = require('../utils/time-util');
 
+// create a new package with package detail locale
 exports.createPackage = async (req, res) => {
   try {
     //-- Begin transaction
@@ -69,6 +70,50 @@ exports.createPackage = async (req, res) => {
     res.status(400).json({
       err: err.message,
       errMsg: 'Unable to create a package'
+    });
+  }
+};
+
+// edit a package
+exports.editPackage = async (req, res) => {
+  try {
+    const textQuery = `SELECT * FROM package where id=$1`;
+    const response = await pool.query(textQuery, [req.params.id]);
+    if (!response.rows[0]) {
+      return res.status(404).json({
+        errorMsg: 'package not found'
+      });
+    }
+
+    const updateQuery = `UPDATE package SET
+                          published             =$1,
+                          updated_at            =to_timestamp($2)
+                        WHERE id = $3 returning *;
+                        `;
+
+    const updateValues = [
+      req.body.published === undefined
+        ? response.rows[0].published
+        : req.body.published,
+
+      toPgTimestamp(Date.now()),
+
+      req.params.id
+    ];
+
+    const { rows } = await pool.query(updateQuery, updateValues);
+    if (!rows[0]) {
+      return res.status(400).json({
+        errorMsg: 'unable to update package'
+      });
+    }
+
+    res.send(rows[0]);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+      errorMsg: 'unable to update package'
     });
   }
 };
