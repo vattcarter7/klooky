@@ -25,6 +25,15 @@ exports.createPackageCheckRules = (() => {
   ];
 })();
 
+exports.editPackageCheckRules = (() => {
+  return [
+    check('published')
+      .optional()
+      .isBoolean()
+      .withMessage('published value must be a boolean')
+  ];
+})();
+
 exports.createPackageDetailCheckRules = (() => {
   //TODO add other fields later
   return [
