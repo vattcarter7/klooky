@@ -3,18 +3,72 @@ const { toPgTimestamp } = require('../utils/time-util');
 
 exports.createPackage = async (req, res) => {
   try {
-    const {
-      rows
-    } = await pool.query(
-      'INSERT INTO packages (name, price_model) VALUES ($1, $2) RETURNING *;',
-      [req.body.name, JSON.stringify(req.body.price_model)]
+    //-- Begin transaction
+    await pool.query('BEGIN');
+
+    // 1. create a package
+    const packageResponse = await pool.query(
+      `INSERT INTO package
+      (
+        product_id,
+        published
+      ) VALUES ($1, $2) RETURNING *;`,
+      [req.body.product_id, req.body.published || false]
     );
 
-    res.send(rows[0]);
+    if (!packageResponse.rows[0]) {
+      await pool.query('ROLLBACK');
+      return res.status(400).json({
+        errMsg: 'Unable to create a package'
+      });
+    }
+
+    // 2. create a package detail locale
+    const packageDetailLocaleResponse = await pool.query(
+      `INSERT INTO package_detail_locale
+      (
+        package_id,
+        language_id,
+        package_name,
+        package_includes,
+        package_excludes,
+        package_itinerary,
+        package_pickup_info,
+        package_additional_info
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;`,
+      [
+        packageResponse.rows[0].id,
+        req.body.language_id,
+        req.body.package_name,
+        JSON.stringify(req.body.package_includes),
+        JSON.stringify(req.body.package_excludes),
+        JSON.stringify(req.body.package_itinerary),
+        JSON.stringify(req.body.package_pickup_info),
+        JSON.stringify(req.body.package_additional_info)
+      ]
+    );
+
+    //-- Commit transaction
+    await pool.query('COMMIT');
+
+    const response = {
+      package_id: packageResponse.rows[0].id,
+      ...packageResponse.rows[0],
+      package_detail_locale_id: packageDetailLocaleResponse.rows[0].id,
+      ...packageDetailLocaleResponse.rows[0]
+    };
+
+    // remove id of package_id from response because we assigned package_id instead
+    response.id = undefined;
+
+    res.send(response);
   } catch (err) {
+    //-- Rollback transaction
+    await pool.query('ROLLBACK');
     console.log(err);
     res.status(400).json({
-      err: err.message
+      err: err.message,
+      errMsg: 'Unable to create a package'
     });
   }
 };
