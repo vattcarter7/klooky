@@ -4,6 +4,7 @@ const router = express.Router();
 const { validate } = require('../validators');
 const {
   createPackageCheckRules,
+  editPackageCheckRules,
   createPackageDetailCheckRules,
   editPackageDetailCheckRules
 } = require('../validators/package/packageCheckRules');
@@ -13,6 +14,7 @@ const {
 // controller
 const {
   createPackage,
+  editPackage,
   createPackageDetail,
   editPackageDetail
 } = require('../controllers/package');
@@ -21,6 +23,11 @@ const {
 // @route     POST /api/packages
 // @access    Private
 router.post('/packages', [createPackageCheckRules, validate], createPackage);
+
+// @desc      edit a package
+// @route     PUT /api/packages/:id
+// @access    Private
+router.put('/packages/:id', [editPackageCheckRules, validate], editPackage);
 
 // @desc      make a package detail
 // @route     POST /api/package-detail
