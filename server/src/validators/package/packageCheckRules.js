@@ -2,14 +2,26 @@ const { check } = require('express-validator');
 
 exports.createPackageCheckRules = (() => {
   return [
-    check('name').not().isEmpty().withMessage('name is required'),
-    check('price_model.*.name')
+    check('language_id').not().isEmpty().withMessage('language ID is required'),
+    check('published')
+      .optional()
+      .isBoolean()
+      .withMessage('published value must be a boolean'),
+    check('package_name')
+      .isString()
+      .withMessage('a valid package name is required'),
+    check('package_includes')
       .not()
       .isEmpty()
-      .withMessage('price model name is required'),
-    check('price_model.*.price')
-      .isNumeric()
-      .withMessage('price must be number and is required')
+      .withMessage('inclusive is required'),
+    check('package_excludes')
+      .not()
+      .isEmpty()
+      .withMessage('exclusive is required'),
+    check('package_itinerary')
+      .not()
+      .isEmpty()
+      .withMessage('itenerary is required')
   ];
 })();
 
