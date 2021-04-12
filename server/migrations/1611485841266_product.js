@@ -22,7 +22,8 @@ exports.up = (pgm) => {
     );
 
     INSERT INTO product (product_duration, product_location, product_free_cancelation_max_day)
-    VALUES (2, '[{ "lat": 123456789, "lng": 987654321 }]', 7);
+    VALUES (2, '[{ "lat": 123456789, "lng": 987654321 }]', 7),
+           (8, '[{ "lat": 123456789, "lng": 987654321 }]', 5);
   `);
 };
 
