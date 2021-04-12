@@ -63,12 +63,17 @@ exports.createProduct = async (req, res) => {
     //-- Commit transaction
     await pool.query('COMMIT');
 
-    res.send({
+    const response = {
       product_id: productResponse.rows[0].id,
       ...productResponse.rows[0],
       product_locale_id: productLocaleResponse.rows[0].id,
       ...productLocaleResponse.rows[0]
-    });
+    };
+
+    // remove id of product_id from response because we assigned product_id instead
+    response.id = undefined;
+
+    res.send(response);
   } catch (err) {
     //-- Rollback transaction
     await pool.query('ROLLBACK');
