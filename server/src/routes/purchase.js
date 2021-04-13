@@ -4,7 +4,7 @@ const router = express.Router();
 const { validate } = require('../validators');
 const {
   createPurchaseCheckRules
-} = require('../validators/purchase/purchaseCheckRules');
+} = require('../validators/purchase/purchase-check-rules');
 
 // middlewares
 

@@ -5,7 +5,7 @@ const { validate } = require('../validators');
 const {
   createProductLocaleCheckRules,
   editProductLocaleCheckRules
-} = require('../validators/product-locale/productLocaleCheckRules');
+} = require('../validators/product-locale/product-locale-check-rules');
 
 // middlewares
 

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { validate } = require('../validators');
-const { createCartCheckRules } = require('../validators/cart/cartCheckRules');
+const { createCartCheckRules } = require('../validators/cart/cart-check-rules');
 
 // middlewares
 

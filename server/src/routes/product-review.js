@@ -5,7 +5,7 @@ const { validate } = require('../validators');
 
 const {
   createProductReviewCheckRules
-} = require('../validators/product-review/productReviewCheckRules');
+} = require('../validators/product-review/product-review-check-rules');
 
 // middlewares
 

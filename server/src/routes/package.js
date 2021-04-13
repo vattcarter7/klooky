@@ -7,7 +7,7 @@ const {
   editPackageCheckRules,
   createPackageDetailCheckRules,
   editPackageDetailCheckRules
-} = require('../validators/package/packageCheckRules');
+} = require('../validators/package/package-check-rules');
 
 // middlewares
 
