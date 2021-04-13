@@ -10,7 +10,8 @@ const {
 
 // controller
 const {
-  createPackageDetailLocale
+  createPackageDetailLocale,
+  editPackageDetailLocale
 } = require('../controllers/package-detail-locale');
 
 // @desc      make a package detail locale
@@ -25,6 +26,6 @@ router.post(
 // @desc      edit a package detail locale
 // @route     PUT /api/package-detail-locale/:id
 // @access    Private
-// router.put('/package-detail-locale/:id', [editPackageCheckRules, validate], editPackage);
+router.put('/package-detail-locale/:id', editPackageDetailLocale);
 
 module.exports = router;
