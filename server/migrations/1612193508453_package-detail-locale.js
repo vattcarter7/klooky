@@ -13,7 +13,7 @@ exports.up = (pgm) => {
       package_excludes JSONB NOT NULL,
       package_itinerary JSONB NOT NULL,
       package_pickup_info JSONB,
-      package_additional_info JSON,
+      package_additional_info JSONB,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
