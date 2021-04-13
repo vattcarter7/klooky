@@ -3,7 +3,8 @@ const router = express.Router();
 
 const { validate } = require('../validators');
 const {
-  createPackageDetailLocaleCheckRules
+  createPackageDetailLocaleCheckRules,
+  editPackageDetailLocaleCheckRules
 } = require('../validators/package-detail-locale/package-detail-locale-check-rules');
 
 // middlewares
@@ -26,6 +27,10 @@ router.post(
 // @desc      edit a package detail locale
 // @route     PUT /api/package-detail-locale/:id
 // @access    Private
-router.put('/package-detail-locale/:id', editPackageDetailLocale);
+router.put(
+  '/package-detail-locale/:id',
+  [editPackageDetailLocaleCheckRules, validate],
+  editPackageDetailLocale
+);
 
 module.exports = router;
