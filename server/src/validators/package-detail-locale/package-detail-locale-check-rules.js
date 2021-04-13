@@ -21,3 +21,12 @@ exports.createPackageDetailLocaleCheckRules = (() => {
       .withMessage('itenerary is required')
   ];
 })();
+
+exports.editPackageDetailLocaleCheckRules = (() => {
+  return [
+    check('package_name')
+      .optional()
+      .isString()
+      .withMessage('a valid package name is required')
+  ];
+})();
