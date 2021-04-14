@@ -8,7 +8,8 @@ exports.up = (pgm) => {
       id SERIAL PRIMARY KEY,
       package_id INT REFERENCES package(id) NOT NULL,
       language_id INT REFERENCES language(id) NOT NULL,
-      price_model JSONB NOT NULL,
+      package_price_name VARCHAR NOT NULL,
+      price REAL NOT NULL,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
@@ -17,26 +18,11 @@ exports.up = (pgm) => {
 
     CREATE INDEX package_price_locale_language_id_idx ON package_price_locale(language_id);
 
-    ALTER TABLE package_price_locale 
-    ADD CONSTRAINT package_price_locale_price_model_price_is_positive_number
-    CHECK (
-      (price_model->'price') IS NOT NULL
-        AND
-      jsonb_typeof(price_model->'price') = 'number'
-        AND
-      (price_model->'price')::INT > 0
-    );
-
-    ALTER TABLE package_price_locale 
-    ADD CONSTRAINT package_price_locale_price_model_name_is_string
-    CHECK (
-      (price_model->'name') IS NOT NULL
-        AND
-      jsonb_typeof(price_model->'name') = 'string'
-    );
-
-    INSERT INTO package_price_locale (package_id, language_id, price_model)
-    VALUES (1, 1, '{ "name": "adult", "price": 15 }');
+    INSERT INTO package_price_locale (package_id, language_id, package_price_name, price)
+    VALUES (1, 1, 'adult', 15.75),
+           (1, 1, 'kid', 7),
+           (1, 2, '성인', 15.75),
+           (1, 2, '아동', 7);
           
   `);
 };
