@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const { validate } = require('../validators');
-// const {
-//   createPackageDetailLocaleCheckRules,
-//   editPackageDetailLocaleCheckRules
-// } = require('../validators/package-detail-locale/package-detail-locale-check-rules');
+const {
+  createPackagePriceLocaleCheckRules
+} = require('../validators/package-price-locale/package-price-locale-check-rules');
 
 // middlewares
 
@@ -19,7 +18,7 @@ const {
 // @access    Private
 router.post(
   '/package-price-locale',
-  // [createPackageDetailLocaleCheckRules, validate],
+  [createPackagePriceLocaleCheckRules, validate],
   createPackagePriceLocale
 );
 
