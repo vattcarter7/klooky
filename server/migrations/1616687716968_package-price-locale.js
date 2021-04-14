@@ -13,6 +13,8 @@ exports.up = (pgm) => {
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
 
+    ALTER TABLE package_price_locale ADD CONSTRAINT package_price_locale_unique UNIQUE (package_id, language_id);
+
     CREATE INDEX package_price_locale_package_id_idx ON package_price_locale(package_id);
     CREATE INDEX package_price_locale_language_id_idx ON package_price_locale(language_id);
 
