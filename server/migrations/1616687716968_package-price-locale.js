@@ -13,14 +13,31 @@ exports.up = (pgm) => {
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
 
-    ALTER TABLE package_price_locale ADD CONSTRAINT package_price_locale_unique UNIQUE (package_id, language_id);
-
     CREATE INDEX package_price_locale_package_id_idx ON package_price_locale(package_id);
+
     CREATE INDEX package_price_locale_language_id_idx ON package_price_locale(language_id);
 
+    ALTER TABLE package_price_locale 
+    ADD CONSTRAINT package_price_locale_price_model_price_is_positive_number
+    CHECK (
+      (price_model->'price') IS NOT NULL
+        AND
+      jsonb_typeof(price_model->'price') = 'number'
+        AND
+      (price_model->'price')::INT > 0
+    );
+
+    ALTER TABLE package_price_locale 
+    ADD CONSTRAINT package_price_locale_price_model_name_is_string
+    CHECK (
+      (price_model->'name') IS NOT NULL
+        AND
+      jsonb_typeof(price_model->'name') = 'string'
+    );
+
     INSERT INTO package_price_locale (package_id, language_id, price_model)
-    VALUES (1, 1, '[{ "name": "adult", "price": 15 }, { "name": "kid", "price": 10 }]'),
-           (1, 2, '[{ "name": "성인", "price": 15 }, { "name": "아동", "price": 10 }]');
+    VALUES (1, 1, '{ "name": "adult", "price": 15 }');
+          
   `);
 };
 
