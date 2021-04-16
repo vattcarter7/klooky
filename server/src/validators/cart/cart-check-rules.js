@@ -2,10 +2,15 @@ const { check } = require('express-validator');
 
 exports.createCartCheckRules = (() => {
   return [
-    check('package_id')
+    check('product_locale_id')
       .not()
       .isEmpty()
-      .withMessage('valid package ID is required'),
+      .withMessage('valid product locale ID is required'),
+
+    check('package_detail_locale_id')
+      .not()
+      .isEmpty()
+      .withMessage('valid package detail locale ID is required'),
 
     check('user_id').not().isEmpty().withMessage('valid user ID is required'),
 
