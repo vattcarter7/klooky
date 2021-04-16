@@ -9,9 +9,6 @@ const { createCartCheckRules } = require('../validators/cart/cart-check-rules');
 // controller
 const { createCartItem } = require('../controllers/cart');
 
-// routes
-// router.post('/product', authCheck, adminCheck, create);
-
 // @desc      make a cart
 // @route     POST /api/cart
 // @access    Private
