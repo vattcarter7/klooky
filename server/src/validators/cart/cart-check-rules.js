@@ -2,19 +2,23 @@ const { check } = require('express-validator');
 
 exports.createCartCheckRules = (() => {
   return [
-    check('quantity_price_model.*.name')
+    check('package_id')
       .not()
       .isEmpty()
-      .withMessage('name is required'),
+      .withMessage('valid package ID is required'),
+
+    check('user_id').not().isEmpty().withMessage('valid user ID is required'),
+
+    check('quantity_price_model.*.name')
+      .isString()
+      .withMessage('valid name is required'),
+
     check('quantity_price_model.*.price')
       .isNumeric()
-      .not()
-      .isEmpty()
-      .withMessage('price is required'),
+      .withMessage('valid price is required'),
+
     check('quantity_price_model.*.pax')
       .isInt()
-      .not()
-      .isEmpty()
-      .withMessage('pax is required')
+      .withMessage('valid pax number is required')
   ];
 })();
