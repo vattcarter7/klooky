@@ -1,6 +1,7 @@
 const pool = require('../pool');
 const { toPgTimestamp } = require('../utils/time-util');
 
+// add purchase order
 exports.createPurchase = async (req, res) => {
   try {
     const { rows } = await pool.query(
