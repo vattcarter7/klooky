@@ -3,6 +3,7 @@ const { toPgTimestamp } = require('../utils/time-util');
 
 // add purchase order
 exports.createPurchase = async (req, res) => {
+  // TODO: make a transaction for database
   try {
     // make sure the cart item quantity is greater than 0
     const cartItemQuery = `SELECT
@@ -13,12 +14,36 @@ exports.createPurchase = async (req, res) => {
                           FROM cart_item
                           WHERE user_id = $1;
                           `;
-    // TODO: change value or cartItemValue from 1 to req.user.id with middleware
+    // TODO: change value of cartItemValue from 1 to req.user.id with middleware
     const cartItemValue = [1];
 
     const cartItemResponse = await pool.query(cartItemQuery, cartItemValue);
 
-    console.log(cartItemResponse.rows);
+    if (!cartItemResponse.rows || cartItemResponse.rows.length === 0) {
+      return res.status(404).json({
+        errMsg: 'No cart items found to purchase'
+      });
+    }
+
+    let purchaseValues = [];
+
+    cartItemResponse.rows.map((v) => {
+      let cartItemTotalPrice = 0;
+      v.quantity_price_model.map((p) => {
+        cartItemTotalPrice += p.pax * p.price;
+      });
+      // TODO: add v.discount here
+      v.total = cartItemTotalPrice;
+      purchaseValues.push(Object.values(v));
+    });
+
+    console.log('PURCHASE_VALUES:', JSON.stringify(purchaseValues, null, 2));
+
+    // cartItemResponse.rows[3].quantity_price_model.map((p) => {
+    //   cartItemTotalPrice += p.pax * p.price;
+    // });
+
+    // console.log('cartItemTotalPrice', cartItemTotalPrice);
 
     return res.send(cartItemResponse.rows);
 
