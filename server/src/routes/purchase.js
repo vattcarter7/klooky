@@ -17,6 +17,6 @@ const { createPurchase } = require('../controllers/purchase');
 // @desc      make a purchase order
 // @route     POST /api/purchase
 // @access    Private
-router.post('/purchase', [createPurchaseCheckRules, validate], createPurchase);
+router.post('/purchase', createPurchase);
 
 module.exports = router;
