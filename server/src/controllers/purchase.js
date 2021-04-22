@@ -65,7 +65,7 @@ exports.createPurchase = async (req, res) => {
     // TODO: change the value 1 on the delete cart items to req.user.id
     await pool.query(`DELETE FROM cart_item WHERE user_id = $1`, [1]);
 
-    // TODO: charge for the purchase made with stipe
+    // TODO: charge for the purchase made with stipe or bongloy
 
     await pool.query('COMMIT');
 
