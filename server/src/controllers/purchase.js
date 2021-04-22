@@ -35,8 +35,8 @@ exports.createPurchase = async (req, res) => {
       v.quantity_price_model.map((p) => {
         cartItemTotalPrice += p.pax * p.price;
       });
-      // TODO: modified v.discount here
       v.quantity_price_model = { ...v.quantity_price_model };
+      // TODO: modified v.discount here
       v.discount = 0;
       v.total = cartItemTotalPrice;
       purchaseValues.push(Object.values(v));
