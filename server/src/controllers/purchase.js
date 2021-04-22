@@ -69,7 +69,8 @@ exports.createPurchase = async (req, res) => {
     console.log(err);
     await pool.query('ROLLBACK');
     res.status(400).json({
-      err: err.message
+      err: err.message,
+      errMsg: 'unable to make a purchase'
     });
   }
 };
