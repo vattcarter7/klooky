@@ -1,7 +1,6 @@
+require('dotenv').config();
 const app = require('./src/app.js');
 const pool = require('./src/pool');
-
-require('dotenv').config();
 
 pool
   .connect({
