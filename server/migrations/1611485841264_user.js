@@ -5,6 +5,7 @@ exports.shorthands = undefined;
 exports.up = (pgm) => {
   pgm.sql(`
     CREATE TYPE sigin_in_method_type AS ENUM ('email', 'facebook', 'google');
+    CREATE TYPE gender_type AS ENUM ('male', 'female', 'other');
 
     CREATE TABLE users (
       id                        SERIAL PRIMARY KEY,
@@ -14,7 +15,7 @@ exports.up = (pgm) => {
       social_network_user_id    BIGINT,
       firstname                 VARCHAR(100),
       lastname                  VARCHAR(100),
-      gender                    VARCHAR(10),
+      gender                    gender_type,
       user_role                 VARCHAR(50) DEFAULT 'subscriber',
       contact_email             VARCHAR(150) check (contact_email ~* '^.+@.+\..+$'),
       contact_phone             VARCHAR(30),
