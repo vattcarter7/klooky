@@ -6,6 +6,8 @@ const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
+const keys = require('./config/social-network-keys');
+
 module.exports = () => {
   passport.serializeUser((user, cb) => {
     cb(null, user);
@@ -24,7 +26,7 @@ module.exports = () => {
         callbackURL: '/auth/facebook/callback'
       },
       (accessToken, refreshToken, profile, cb) => {
-        console.log(chalk.blue(JSON.stringify(profile)));
+        console.log(JSON.stringify(profile));
         user = { ...profile };
         return cb(null, profile);
       }
@@ -40,7 +42,7 @@ module.exports = () => {
         callbackURL: '/auth/google/callback'
       },
       (accessToken, refreshToken, profile, cb) => {
-        console.log(chalk.blue(JSON.stringify(profile)));
+        console.log(JSON.stringify(profile));
         user = { ...profile };
         return cb(null, profile);
       }
