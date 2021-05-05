@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 exports.hashPassword = async (password) => {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(process.env.SALT));
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 };
 
 exports.comparePassword = async (password, hashPassword) => {
