@@ -2,33 +2,9 @@ const { promisify } = require('util');
 
 const pool = require('../pool');
 const { toPgTimestamp } = require('../utils/time-util');
-const {
-  hashPassword,
-  generateSignedJwtToken,
-  comparePassword
-} = require('../utils/auth-util');
+const { hashPassword, comparePassword } = require('../utils/auth-util');
 
-const sendTokenResponse = (user, statusCode, res) => {
-  const token = generateSignedJwtToken(user.id, user.signin_method);
-  const cookieOptions = {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-    ),
-    httpOnly: true
-  };
-
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
-
-  user.password = undefined;
-  user.password_reset_token = undefined;
-  user.password_reset_expires = undefined;
-
-  return res.status(statusCode).cookie('jwt', token, cookieOptions).json({
-    success: true,
-    token,
-    user
-  });
-};
+const { sendTokenResponse } = require('../utils/auth-util');
 
 exports.registerWithEmailAndPassword = async (req, res) => {
   try {
