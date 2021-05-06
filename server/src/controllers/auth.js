@@ -56,3 +56,34 @@ exports.registerWithEmailAndPassword = async (req, res) => {
     });
   }
 };
+
+exports.loginWithEmailAndPassword = async (req, res) => {
+  try {
+    const query = 'SELECT * FROM users WHERE login_email = $1';
+    const { rows } = await pool.query(query, [
+      req.body.login_email.trim().toLowerCase()
+    ]);
+    if (!rows[0]) {
+      return res.status(400).json({
+        errorMsg: 'Invalid credentials'
+      });
+    }
+    if (
+      !(await comparePassword(req.body.login_password, rows[0].login_password))
+    ) {
+      return res.status(400).json({
+        errorMsg: 'Invalid credentials'
+      });
+    }
+
+    const user = rows[0];
+
+    sendTokenResponse(user, 200, res);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+      errorMsg: 'unable to log in'
+    });
+  }
+};
