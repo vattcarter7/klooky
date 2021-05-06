@@ -7,11 +7,19 @@ const router = express.Router();
 // // middlewares
 
 // controller
-const { registerWithEmailAndPassword } = require('../controllers/auth');
+const {
+  registerWithEmailAndPassword,
+  loginWithEmailAndPassword
+} = require('../controllers/auth');
 
 // @desc      register a user
-// @route     POST /api/auth/email
+// @route     POST /api/auth/email/register
 // @access    Private
-router.post('/auth/email', registerWithEmailAndPassword);
+router.post('/auth/email/register', registerWithEmailAndPassword);
+
+// @desc      login a user
+// @route     POST /api/auth/email/login
+// @access    Private
+router.post('/auth/email/login', loginWithEmailAndPassword);
 
 module.exports = router;
