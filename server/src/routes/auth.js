@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-// const { validate } = require('../validators');
-// const { createCartCheckRules } = require('../validators/cart/cart-check-rules');
+const { validate } = require('../validators');
+const {
+  registerWithEmailAndPasswordCheckRules,
+  loginWithEmailAndPasswordCheckRules
+} = require('../validators/auth/auth-check-rules');
 
 // // middlewares
 
@@ -15,11 +18,19 @@ const {
 // @desc      register a user
 // @route     POST /api/auth/email/register
 // @access    Private
-router.post('/auth/email/register', registerWithEmailAndPassword);
+router.post(
+  '/auth/email/register',
+  [registerWithEmailAndPasswordCheckRules, validate],
+  registerWithEmailAndPassword
+);
 
 // @desc      login a user
 // @route     POST /api/auth/email/login
 // @access    Private
-router.post('/auth/email/login', loginWithEmailAndPassword);
+router.post(
+  '/auth/email/login',
+  [loginWithEmailAndPasswordCheckRules, validate],
+  loginWithEmailAndPassword
+);
 
 module.exports = router;
