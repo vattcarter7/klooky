@@ -22,6 +22,8 @@ postgresql://dbuser:secretpassword@database.server.com:3211/mydb
 ##### database diagram
 > https://app.diagrams.net/?src=about#G1p_r4AR2hlwR-bIIqNQf-k4Q0QuuSztu8
 
+##### passport.js full explaination on youtube
+> https://www.youtube.com/watch?v=RGJFAfvhQZg&list=PL4cUxeGkcC9jdm7QX143aMLAqyM-jTZ2x&index=14&ab_channel=TheNetNinja
 
 
 ###### price_model JSONB constraint commands
