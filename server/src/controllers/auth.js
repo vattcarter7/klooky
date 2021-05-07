@@ -27,16 +27,14 @@ exports.registerWithEmailAndPassword = async (req, res) => {
                           login_email, 
                           login_password,
                           signin_method,
-                          firstname,
-                          lastname,
+                          fullname,
                           gender
-                        ) VALUES($1, $2, $3, $4, $5, $6) returning *`;
+                        ) VALUES($1, $2, $3, $4, $5) returning *`;
     const registerUserValues = [
       req.body.login_email.trim().toLowerCase(),
       hashedPassword,
       'email',
-      req.body.firstname.trim().toLowerCase(),
-      req.body.lastname.trim().toLowerCase(),
+      req.body.fullname.trim().toLowerCase(),
       req.body.gender
     ];
 
