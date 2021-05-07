@@ -5,6 +5,7 @@ const { toPgTimestamp } = require('../utils/time-util');
 const { hashPassword, comparePassword } = require('../utils/auth-util');
 
 const { sendTokenResponse } = require('../utils/auth-util');
+const { SIGNIN_METHOD } = require('../constants/signin-method');
 
 exports.registerWithEmailAndPassword = async (req, res) => {
   try {
@@ -33,7 +34,7 @@ exports.registerWithEmailAndPassword = async (req, res) => {
     const registerUserValues = [
       req.body.login_email.trim().toLowerCase(),
       hashedPassword,
-      'email',
+      SIGNIN_METHOD.EMAIL,
       req.body.fullname.trim().toLowerCase(),
       req.body.gender
     ];
