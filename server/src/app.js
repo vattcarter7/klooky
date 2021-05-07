@@ -9,6 +9,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const keys = require('./config/social-network-keys');
 
 module.exports = () => {
+  let user = {};
   passport.serializeUser((user, cb) => {
     cb(null, user);
   });
