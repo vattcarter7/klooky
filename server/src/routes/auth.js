@@ -7,7 +7,7 @@ const {
   loginWithEmailAndPasswordCheckRules
 } = require('../validators/auth/auth-check-rules');
 
-// // middlewares
+// middlewares
 
 // controller
 const {
