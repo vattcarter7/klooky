@@ -86,3 +86,35 @@ exports.loginWithEmailAndPassword = async (req, res) => {
     });
   }
 };
+
+exports.findOrCreateSocialUser = async (
+  socialNetworkUserId,
+  signinMethod,
+  insertValues
+) => {
+  //**  check if user already exists in the database
+  const query = `SELECT * FROM users WHERE social_network_user_id=$1 AND signin_method=$2`;
+  const params = [socialNetworkUserId, signinMethod];
+  try {
+    const { rows } = await pool.query(query, params);
+    //**  check if the user not exist, add the new user to the database
+    if (!rows[0]) {
+      const insertUserQuery = `
+      INSERT INTO users (social_network_user_id, signin_method) 
+      VALUES ($1, $2) returning *;                       
+    `;
+      const newUserResponse = await pool.query(insertUserQuery, insertValues);
+      if (!newUserResponse.rows[0]) {
+        throw new Error('unable to register');
+      }
+      console.log('New User', newUserResponse.rows[0]);
+      return newUserResponse.rows[0];
+    } else {
+      //** if there is already a user in the database
+      console.log('Old User', rows[0]);
+      return rows[0];
+    }
+  } catch (err) {
+    throw new Error(`unable to authenticate with ${signinMethod} account`);
+  }
+};
