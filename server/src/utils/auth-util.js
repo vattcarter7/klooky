@@ -42,3 +42,5 @@ exports.sendTokenResponse = (user, statusCode, res) => {
     user
   });
 };
+
+exports.generateSignedJwtToken = generateSignedJwtToken;
