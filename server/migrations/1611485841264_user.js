@@ -12,7 +12,7 @@ exports.up = (pgm) => {
       login_email               VARCHAR(150) UNIQUE check (login_email ~* '^.+@.+\..+$'),
       login_password            VARCHAR(128),
       signin_method             sigin_in_method_type,
-      social_network_user_id    BIGINT,
+      social_network_user_id    VARCHAR(100),
       fullname                  VARCHAR(100),
       gender                    gender_type,
       user_role                 VARCHAR(50) DEFAULT 'subscriber',
