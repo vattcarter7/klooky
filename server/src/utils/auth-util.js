@@ -45,7 +45,7 @@ exports.sendEmailTokenResponse = (user, res) => {
 exports.sendSocialTokenResponse = (user, res) => {
   const token = generateSignedJwtToken(user.id, user.signin_method);
   res.cookie('jwt', token, cookieOptions);
-  res.redirect('/profile');
+  res.redirect('/api/profile');
 };
 
 exports.generateSignedJwtToken = generateSignedJwtToken;
