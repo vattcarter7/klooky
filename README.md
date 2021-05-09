@@ -25,8 +25,9 @@ postgresql://dbuser:secretpassword@database.server.com:3211/mydb
 ##### passport.js full explaination on youtube
 > https://www.youtube.com/watch?v=RGJFAfvhQZg&list=PL4cUxeGkcC9jdm7QX143aMLAqyM-jTZ2x&index=14&ab_channel=TheNetNinja
 
-##### google cloud api and service oauth2
+##### google and facebook api and service oauth2
 > https://console.cloud.google.com/apis/dashboard (maxcarter.us@gmail.com)
+> https://developers.facebook.com/apps/ (maxcarter.us@gmail.com)
 
 
 ###### price_model JSONB constraint commands
