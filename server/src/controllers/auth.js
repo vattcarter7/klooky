@@ -4,7 +4,7 @@ const pool = require('../pool');
 const { toPgTimestamp } = require('../utils/time-util');
 const { hashPassword, comparePassword } = require('../utils/auth-util');
 
-const { sendTokenResponse } = require('../utils/auth-util');
+const { sendEmailTokenResponse } = require('../utils/auth-util');
 const { SIGNIN_METHOD } = require('../constants/signin-method');
 
 exports.registerWithEmailAndPassword = async (req, res) => {
@@ -45,8 +45,7 @@ exports.registerWithEmailAndPassword = async (req, res) => {
     }
 
     const user = rows[0];
-
-    sendTokenResponse(user, 201, res);
+    sendEmailTokenResponse(user, res);
   } catch (err) {
     console.log(err);
     res.status(400).json({
@@ -76,8 +75,7 @@ exports.loginWithEmailAndPassword = async (req, res) => {
     }
 
     const user = rows[0];
-
-    sendTokenResponse(user, 200, res);
+    sendEmailTokenResponse(user, res);
   } catch (err) {
     console.log(err);
     res.status(400).json({
@@ -90,7 +88,7 @@ exports.loginWithEmailAndPassword = async (req, res) => {
 exports.findOrCreateSocialUser = async (
   socialNetworkUserId,
   signinMethod,
-  insertValues
+  userFieldValues
 ) => {
   //**  check if user already exists in the database
   const query = `SELECT * FROM users WHERE social_network_user_id=$1 AND signin_method=$2`;
@@ -101,9 +99,12 @@ exports.findOrCreateSocialUser = async (
     if (!rows[0]) {
       const insertUserQuery = `
       INSERT INTO users (social_network_user_id, signin_method) 
-      VALUES ($1, $2) returning *;                       
+      VALUES ($1, $2) RETURNING *;                       
     `;
-      const newUserResponse = await pool.query(insertUserQuery, insertValues);
+      const newUserResponse = await pool.query(
+        insertUserQuery,
+        userFieldValues
+      );
       if (!newUserResponse.rows[0]) {
         throw new Error('unable to register');
       }
