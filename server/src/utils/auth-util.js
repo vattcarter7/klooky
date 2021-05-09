@@ -21,26 +21,31 @@ const generateSignedJwtToken = (id, signin_method) => {
   return token;
 };
 
-exports.sendTokenResponse = (user, statusCode, res) => {
+const ONE_DAY = 24 * 60 * 60 * 1000;
+
+const cookieOptions = {
+  expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * ONE_DAY),
+  httpOnly: true
+};
+
+if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+
+exports.sendEmailTokenResponse = (user, res) => {
   const token = generateSignedJwtToken(user.id, user.signin_method);
-  const cookieOptions = {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-    ),
-    httpOnly: true
-  };
-
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
-
   user.password = undefined;
   user.password_reset_token = undefined;
   user.password_reset_expires = undefined;
 
-  return res.status(statusCode).cookie('jwt', token, cookieOptions).json({
-    success: true,
+  return res.cookie('jwt', token, cookieOptions).json({
     token,
     user
   });
+};
+
+exports.sendSocialTokenResponse = (user, res) => {
+  const token = generateSignedJwtToken(user.id, user.signin_method);
+  res.cookie('jwt', token, cookieOptions);
+  res.redirect('/profile');
 };
 
 exports.generateSignedJwtToken = generateSignedJwtToken;
