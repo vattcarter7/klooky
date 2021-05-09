@@ -2,7 +2,6 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const { readdirSync } = require('fs');
-const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -10,11 +9,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const app = express();
 const keys = require('./config/social-network-keys');
 const { SIGNIN_METHOD } = require('./constants/signin-method');
-const pool = require('./pool');
-const {
-  sendTokenResponse,
-  generateSignedJwtToken
-} = require('./utils/auth-util');
+const { sendSocialTokenResponse } = require('./utils/auth-util');
 const { findOrCreateSocialUser } = require('./controllers/auth');
 
 module.exports = () => {
@@ -42,7 +37,7 @@ module.exports = () => {
   //       callbackURL: '/auth/facebook/redirect'
   //     },
   //     (accessToken, refreshToken, profile, cb) => {
-  //       console.log(JSON.stringify(profile));
+  //       console.log('Facebook Profile:', profile);
   //       user = { ...profile };
   //       return cb(null, profile);
   //     }
@@ -58,7 +53,7 @@ module.exports = () => {
         callbackURL: '/auth/google/redirect'
       },
       async (accessToken, refreshToken, profile, cb) => {
-        console.log('Profile:', profile);
+        console.log('Google Profile:', profile);
         user = await findOrCreateSocialUser(profile.id, SIGNIN_METHOD.GOOGLE, [
           profile.id,
           SIGNIN_METHOD.GOOGLE
@@ -70,30 +65,18 @@ module.exports = () => {
 
   app.get(
     '/auth/google',
-    passport.authenticate('google', {
+    passport.authenticate(SIGNIN_METHOD.GOOGLE, {
       scope: ['profile', 'email']
     })
   );
+
   app.get(
     '/auth/google/redirect',
-    passport.authenticate('google', { session: false }),
+    passport.authenticate(SIGNIN_METHOD.GOOGLE, { session: false }),
     async (req, res) => {
       console.log('::::: user in the redirect', req.user);
       try {
-        const token = generateSignedJwtToken(
-          req.user.id,
-          req.user.signin_method
-        );
-        const cookieOptions = {
-          expires: new Date(
-            Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-          ),
-          httpOnly: true
-        };
-        if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
-        res.cookie('jwt', token, cookieOptions);
-        // sendTokenResponse(req.user, 200, res);
-        res.redirect('/profile');
+        sendSocialTokenResponse(req.user, res);
       } catch (err) {
         console.log(err);
         res.status(403).json({
