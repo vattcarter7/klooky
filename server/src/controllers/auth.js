@@ -98,8 +98,8 @@ exports.findOrCreateSocialUser = async (
     //**  check if the user not exist, add the new user to the database
     if (!rows[0]) {
       const insertUserQuery = `
-      INSERT INTO users (social_network_user_id, signin_method) 
-      VALUES ($1, $2) RETURNING *;                       
+      INSERT INTO users (social_network_user_id, signin_method, avatar, fullname) 
+      VALUES ($1, $2, $3, $4) RETURNING *;                       
     `;
       const newUserResponse = await pool.query(
         insertUserQuery,
@@ -118,4 +118,15 @@ exports.findOrCreateSocialUser = async (
   } catch (err) {
     throw new Error(`unable to authenticate with ${signinMethod} account`);
   }
+};
+
+exports.logout = async (req, res, next) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 3 * 1000), // expires in 3 seconds
+    httpOnly: true
+  });
+
+  res.status(200).json({
+    user: {}
+  });
 };
