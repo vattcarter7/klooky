@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const app = express();
-
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -18,8 +16,12 @@ const {
   loginWithEmailAndPasswordCheckRules
 } = require('../validators/auth/auth-check-rules');
 
-// middlewares
-app.use(passport.initialize());
+// controller
+const {
+  registerWithEmailAndPassword,
+  loginWithEmailAndPassword,
+  logout
+} = require('../controllers/auth');
 
 // passport strategies social network user obj
 let user = {};
@@ -31,26 +33,6 @@ passport.serializeUser((user, cb) => {
 passport.deserializeUser((user, cb) => {
   cb(null, user);
 });
-
-// Facebook Strategy
-passport.use(
-  new FacebookStrategy(
-    {
-      clientID: keys.FACEBOOK.clientID,
-      clientSecret: keys.FACEBOOK.clientSecret,
-      callbackURL: '/api/auth/facebook/redirect',
-      profileFields: ['id', 'displayName', 'photos', 'email', 'gender']
-    },
-    async (accessToken, refreshToken, profile, cb) => {
-      console.log('Facebook Profile:', profile);
-      user = await findOrCreateSocialUser(profile.id, SIGNIN_METHOD.FACEBOOK, [
-        profile.id,
-        SIGNIN_METHOD.FACEBOOK
-      ]);
-      cb(null, user);
-    }
-  )
-);
 
 // Google Strategy
 passport.use(
@@ -64,18 +46,36 @@ passport.use(
       console.log('Google Profile:', profile);
       user = await findOrCreateSocialUser(profile.id, SIGNIN_METHOD.GOOGLE, [
         profile.id,
-        SIGNIN_METHOD.GOOGLE
+        SIGNIN_METHOD.GOOGLE,
+        profile.photos[0].value,
+        profile.displayName
       ]);
       cb(null, user);
     }
   )
 );
 
-// controller
-const {
-  registerWithEmailAndPassword,
-  loginWithEmailAndPassword
-} = require('../controllers/auth');
+// Facebook Strategy
+passport.use(
+  new FacebookStrategy(
+    {
+      clientID: keys.FACEBOOK.clientID,
+      clientSecret: keys.FACEBOOK.clientSecret,
+      callbackURL: '/api/auth/facebook/redirect',
+      profileFields: ['id', 'displayName', 'photos']
+    },
+    async (accessToken, refreshToken, profile, cb) => {
+      console.log('Facebook Profile:', profile);
+      user = await findOrCreateSocialUser(profile.id, SIGNIN_METHOD.FACEBOOK, [
+        profile.id,
+        SIGNIN_METHOD.FACEBOOK,
+        profile.photos[0].value,
+        profile.displayName
+      ]);
+      cb(null, user);
+    }
+  )
+);
 
 // @desc      register a user
 // @route     POST /api/auth/email/register
@@ -139,5 +139,7 @@ router.get(
 router.get('/profile', (req, res) => {
   res.send(user);
 });
+
+router.get('/logout', logout);
 
 module.exports = router;
