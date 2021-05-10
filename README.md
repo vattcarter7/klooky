@@ -29,6 +29,10 @@ postgresql://dbuser:secretpassword@database.server.com:3211/mydb
 > https://console.cloud.google.com/apis/dashboard (maxcarter.us@gmail.com)
 > https://developers.facebook.com/apps/ (maxcarter.us@gmail.com)
 
+##### test users for facebook
+test_otexcsg_sopheak@tfbnw.net (123456!@#)
+
+
 
 ###### price_model JSONB constraint commands
     ALTER TABLE package_price_locale 
