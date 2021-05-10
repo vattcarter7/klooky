@@ -3,6 +3,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const { readdirSync } = require('fs');
 
+const errorHandler = require('./middlewares/error');
+
 const app = express();
 
 module.exports = () => {
@@ -14,6 +16,9 @@ module.exports = () => {
   readdirSync('./src/routes').map((r) =>
     app.use('/api', require('./routes/' + r))
   );
+
+  // error fallback
+  app.use(errorHandler);
 
   return app;
 };
