@@ -4,7 +4,7 @@ const pool = require('../pool');
 // Protect routes
 exports.protect = async (req, res, next) => {
   let token;
-  // console.log(req.cookies.jwt);
+  console.log(req.cookies.jwt);
 
   if (
     req.headers.authorization &&
@@ -12,6 +12,11 @@ exports.protect = async (req, res, next) => {
   ) {
     // Set token from Bearer token in header
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt && req.cookies.jwt !== 'loggedout') {
+    // Set token from cookie
+    token = req.cookies.jwt;
+  } else {
+    token = null;
   }
 
   if (!token) {
