@@ -15,7 +15,7 @@ exports.createCartItem = async (req, res) => {
       [
         req.body.product_locale_id,
         req.body.package_detail_locale_id,
-        req.body.user_id,
+        req.user.userId,
         JSON.stringify(req.body.quantity_price_model)
       ]
     );
