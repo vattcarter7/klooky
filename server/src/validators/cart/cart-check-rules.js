@@ -12,8 +12,6 @@ exports.createCartCheckRules = (() => {
       .isEmpty()
       .withMessage('valid package detail locale ID is required'),
 
-    check('user_id').not().isEmpty().withMessage('valid user ID is required'),
-
     check('quantity_price_model.*.name')
       .isString()
       .withMessage('valid name is required'),
