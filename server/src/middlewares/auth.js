@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const { promisify } = require('util');
 const pool = require('../pool');
 
 // Protect routes
