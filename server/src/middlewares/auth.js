@@ -21,8 +21,6 @@ exports.protect = async (req, res, next) => {
       .json({ errorMsg: 'Not authorized to access this route' });
   }
 
-  console.log('token:', token);
-
   jwt.verify(token, process.env.JWT_PRIVATE_KEY, async (error, decoded) => {
     if (error) {
       return res.status(403).json({
