@@ -21,6 +21,7 @@ exports.up = (pgm) => {
       contact_email             VARCHAR(150) check (contact_email ~* '^.+@.+\..+$'),
       contact_phone             VARCHAR(30),
       active                    BOOLEAN DEFAULT true,
+      banned                    BOOLEAN DEFAULT false,
       password_reset_token      VARCHAR(200),
       password_reset_expires    TIMESTAMPTZ,
       created_at                TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
