@@ -22,8 +22,9 @@ exports.up = (pgm) => {
       contact_phone             VARCHAR(30),
       active                    BOOLEAN DEFAULT true,
       banned                    BOOLEAN DEFAULT false,
+      password_changed_at       TIMESTAMP WITH TIME ZONE,
       password_reset_token      VARCHAR(200),
-      password_reset_expires    TIMESTAMPTZ,
+      password_reset_expires    TIMESTAMP WITH TIME ZONE,
       created_at                TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at                TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
