@@ -13,13 +13,18 @@ const { findOrCreateSocialUser } = require('../controllers/auth');
 const { validate } = require('../validators');
 const {
   registerWithEmailAndPasswordCheckRules,
-  loginWithEmailAndPasswordCheckRules
+  loginWithEmailAndPasswordCheckRules,
+  updatePasswordCheckRules
 } = require('../validators/auth/auth-check-rules');
+
+// middleware
+const { protect } = require('../middlewares/auth');
 
 // controller
 const {
   registerWithEmailAndPassword,
   loginWithEmailAndPassword,
+  updatePassword,
   logout
 } = require('../controllers/auth');
 
@@ -140,6 +145,13 @@ router.get('/profile', (req, res) => {
   res.send(user);
 });
 
-router.get('/logout', logout);
+router.get('/auth/logout', logout);
+
+router.post(
+  '/auth/update-password',
+  protect,
+  [updatePasswordCheckRules, validate],
+  updatePassword
+);
 
 module.exports = router;
