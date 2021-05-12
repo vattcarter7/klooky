@@ -130,3 +130,60 @@ exports.logout = async (req, res, next) => {
     user: {}
   });
 };
+
+exports.updatePassword = async (req, res, next) => {
+  try {
+    const { rows } = await pool.query(
+      `SELECT * FROM users WHERE id=$1 AND banned=$2 AND signin_method=$3;`,
+      [req.user.userId, false, SIGNIN_METHOD.EMAIL]
+    );
+
+    // check if there is the user
+    if (!rows[0])
+      return res
+        .status(404)
+        .json({ errorMsg: 'No user found to update password' });
+
+    // check if the posted current password is correct
+    if (
+      !(await comparePassword(
+        req.body.current_password,
+        rows[0].login_password
+      ))
+    ) {
+      return res.status(400).json({
+        errorMsg: 'Your current password is wrong'
+      });
+    }
+
+    // hash password before inserting into database
+    const newHashedPassword = await hashPassword(req.body.new_password);
+
+    const NOW = Date.now();
+
+    // if the password is correct update the password
+    const response = await pool.query(
+      `UPDATE users SET 
+          login_password = $1, 
+          password_changed_at = to_timestamp($2), 
+          updated_at = to_timestamp($3)
+       WHERE id = $4 RETURNING *;
+      `,
+      [
+        newHashedPassword,
+        toPgTimestamp(NOW),
+        toPgTimestamp(NOW),
+        req.user.userId
+      ]
+    );
+
+    const user = response.rows[0];
+    sendEmailTokenResponse(user, res);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+      errorMsg: 'unable to update password'
+    });
+  }
+};
