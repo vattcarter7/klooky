@@ -19,3 +19,17 @@ exports.loginWithEmailAndPasswordCheckRules = (() => {
     check('login_password').not().isEmpty().withMessage('password is required')
   ];
 })();
+
+exports.updatePasswordCheckRules = (() => {
+  return [
+    check('current_password')
+      .not()
+      .isEmpty()
+      .withMessage('current password is required'),
+
+    check('new_password')
+      .not()
+      .isEmpty()
+      .withMessage('new password is required')
+  ];
+})();
