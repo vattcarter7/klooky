@@ -32,6 +32,10 @@ postgresql://dbuser:secretpassword@database.server.com:3211/mydb
 ##### test users for facebook
 test_otexcsg_sopheak@tfbnw.net (123456!@#)
 
+##### epoch time converter
+> https://www.epochconverter.com/
+> https://www.epochconverter.com/programming/#javascript
+
 
 
 ###### price_model JSONB constraint commands
