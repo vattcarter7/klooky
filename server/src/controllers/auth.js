@@ -1,9 +1,9 @@
-const { promisify } = require('util');
+const crypto = require('crypto');
 
 const pool = require('../pool');
 const { toPgTimestamp } = require('../utils/time-util');
 const { hashPassword, comparePassword } = require('../utils/auth-util');
-
+const Email = require('./../utils/email');
 const { sendEmailTokenResponse } = require('../utils/auth-util');
 const { SIGNIN_METHOD } = require('../constants/signin-method');
 
@@ -184,6 +184,72 @@ exports.updatePassword = async (req, res, next) => {
     res.status(400).json({
       err: err.message,
       errorMsg: 'unable to update password'
+    });
+  }
+};
+
+exports.forgotPassword = async (req, res, next) => {
+  //  Get user based on POSTed email
+  try {
+    const userQuery = `SELECT * FROM users WHERE login_email = $1 AND banned = $2;`;
+    const values = [req.body.login_email, false];
+    const userResponse = await pool.query(userQuery, values);
+
+    if (!userResponse.rows[0]) {
+      return res.status(404).json({
+        err: err.message,
+        errorMsg: 'No user found'
+      });
+    }
+
+    //  Generate the random reset token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+
+    const passwordResetToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
+
+    const passwordResetExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+
+    //  save passwordResetToken and passwordResetExpires in the database
+    const updateUserTokenQuery = `UPDATE users SET 
+                                    password_reset_token      = $1,
+                                    password_reset_expires    = to_timestamp($2),
+                                    updated_at                = to_timestamp($3)
+                                  WHERE login_email = $4 RETURNING *;`;
+    const updateUserTokenValues = [
+      passwordResetToken,
+      toPgTimestamp(passwordResetExpires),
+      toPgTimestamp(Date.now()),
+      userResponse.rows[0].login_email
+    ];
+
+    await pool.query(updateUserTokenQuery, updateUserTokenValues);
+
+    //  Send it to user's email
+    const resetURL = `${req.protocol}://${req.get(
+      'host'
+    )}/api/auth/reset-password/${resetToken}`;
+
+    const user = userResponse.rows[0];
+    await new Email(user, resetURL).sendPasswordReset();
+    return res.status(200).json({
+      success: true,
+      msg: 'Email sent'
+    });
+  } catch (err) {
+    //  save passwordResetToken=null and passwordResetExpires=null in the database
+    await pool.query(
+      `UPDATE users SET 
+        password_reset_token = $1, 
+        password_reset_expires = $2
+      WHERE login_email = $3`,
+      [null, null, req.body.login_email]
+    );
+    return res.status(400).json({
+      err: err.message,
+      errMsg: 'unable to send email to change password'
     });
   }
 };
