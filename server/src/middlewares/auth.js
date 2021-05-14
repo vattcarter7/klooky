@@ -43,24 +43,25 @@ exports.protect = async (req, res, next) => {
           });
         }
         // check if a user has changed a new password by checking password_changed_at > decoded.iat
-        // if password_changed_at > decoded.iat === true should let the user sign in again
-        // time format of password_changed_at should be similar like 2021-05-12T15:40:00.562Z
-        // but time format of decoded.iat shold be similar like 1620846538
+        // time format of password_changed_at should be similar like: 2021-05-12T15:40:00.562Z
+        // but time format of decoded.iat shold be similar like: 1620846538
         const passwordChangedAt = rows[0].password_changed_at;
 
-        // since decoded.iat is an epoch time we need to convert passwordChangedAt to epoch time as well
-        const passwordChangedAtTimestamp = parseInt(
-          new Date(passwordChangedAt).getTime() / 1000.0,
-          10
-        );
+        if (passwordChangedAt) {
+          // since decoded.iat is an epoch time we need to convert passwordChangedAt to epoch time as well
+          const passwordChangedAtTimestamp = parseInt(
+            new Date(passwordChangedAt).getTime() / 1000.0,
+            10
+          );
 
-        if (passwordChangedAtTimestamp > decoded.iat) {
-          return res.status(403).json({
-            errMsg: 'you need to sigin in again'
-          });
+          if (passwordChangedAtTimestamp > decoded.iat) {
+            return res.status(403).json({
+              errMsg: 'you need to sigin in again'
+            });
+          }
         }
 
-        // GRANT ACCESS TO PROTECTED ROUTE
+        // grant access to protected routes
         req.user = decoded;
         console.log('req.user:', req.user);
         next();
