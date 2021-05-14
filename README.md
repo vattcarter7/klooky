@@ -36,6 +36,10 @@ test_otexcsg_sopheak@tfbnw.net (123456!@#)
 > https://www.epochconverter.com/
 > https://www.epochconverter.com/programming/#javascript
 
+##### utilities
+> sendgrid - https://sendgrid.com/
+> mailtrap - https://mailtrap.io/ (vsp007)
+
 
 
 ###### price_model JSONB constraint commands
