@@ -14,7 +14,8 @@ const { validate } = require('../validators');
 const {
   registerWithEmailAndPasswordCheckRules,
   loginWithEmailAndPasswordCheckRules,
-  updatePasswordCheckRules
+  updatePasswordCheckRules,
+  forgotPasswordCheckRules
 } = require('../validators/auth/auth-check-rules');
 
 // middleware
@@ -25,7 +26,8 @@ const {
   registerWithEmailAndPassword,
   loginWithEmailAndPassword,
   updatePassword,
-  logout
+  logout,
+  forgotPassword
 } = require('../controllers/auth');
 
 // passport strategies social network user obj
@@ -100,6 +102,9 @@ router.post(
   loginWithEmailAndPassword
 );
 
+// @desc      check a user via google
+// @route     POST /api/auth/google
+// @access    Public
 router.get(
   '/auth/google',
   passport.authenticate(SIGNIN_METHOD.GOOGLE, {
@@ -107,6 +112,9 @@ router.get(
   })
 );
 
+// @desc      Redirect a user via google
+// @route     POST /api/auth/google/redirect
+// @access    Public
 router.get(
   '/auth/google/redirect',
   passport.authenticate(SIGNIN_METHOD.GOOGLE, { session: false }),
@@ -123,8 +131,14 @@ router.get(
   }
 );
 
+// @desc      check a user via facebook
+// @route     POST /api/auth/facebook
+// @access    Public
 router.get('/auth/facebook', passport.authenticate(SIGNIN_METHOD.FACEBOOK));
 
+// @desc      Redirect a user via facebook
+// @route     POST /api/auth/facebook
+// @access    Public
 router.get(
   '/auth/facebook/redirect',
   passport.authenticate(SIGNIN_METHOD.FACEBOOK, { session: false }),
@@ -141,17 +155,35 @@ router.get(
   }
 );
 
+// @desc      get a user profile after authenticate with a social network passportjs
+// @route     POST /api/profile
+// @access    Public
 router.get('/profile', (req, res) => {
   res.send(user);
 });
 
-router.get('/auth/logout', logout);
+// @desc      Logout a user
+// @route     POST /api/auth/logout
+// @access    Private
+router.get('/auth/logout', protect, logout);
 
+// @desc      Update a user password
+// @route     POST /api/auth/update-password
+// @access    Private
 router.post(
   '/auth/update-password',
   protect,
   [updatePasswordCheckRules, validate],
   updatePassword
+);
+
+// @desc      forgot password
+// @route     POST /api/auth/forgot-password
+// @access    Public
+router.post(
+  '/auth/forgot-password',
+  [forgotPasswordCheckRules, validate],
+  forgotPassword
 );
 
 module.exports = router;
