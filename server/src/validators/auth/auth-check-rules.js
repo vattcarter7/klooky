@@ -33,3 +33,11 @@ exports.updatePasswordCheckRules = (() => {
       .withMessage('new password is required')
   ];
 })();
+
+exports.forgotPasswordCheckRules = (() => {
+  return [
+    check('login_email')
+      .isEmail()
+      .withMessage('please provide a valid email address')
+  ];
+})();
