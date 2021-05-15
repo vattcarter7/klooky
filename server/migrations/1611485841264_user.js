@@ -31,11 +31,12 @@ exports.up = (pgm) => {
 
     ALTER TABLE users ADD CONSTRAINT signin_method_social_network_user_id UNIQUE (signin_method, social_network_user_id);
 
+    -- comment on hashed password is 123456
     INSERT INTO users (login_email, login_password, fullname, gender, signin_method, user_role) 
-    VALUES ('sopheak@gmail.com', '123456', 'vatt sopheak', 'male', 'email', 'admin'),
-           ('katie@gmail.com', '123456', 'katie pocha', 'female', 'email', 'guide'),
-           ('david@gmail.com', '123456', 'david miles', 'female', 'facebook', 'establisher'),
-           ('kon@gmail.com', '123456', 'kon york', 'male', 'facebook', 'subscriber');
+    VALUES ('sopheak@gmail.com', '$2b$10$tHJ.kWYT.Azha2pBtQUMH..CZu02VBm.w86uyfT0eyFHfKokBEXo2', 'vatt sopheak', 'male', 'email', 'admin'),
+           ('katie@gmail.com', '$2b$10$tHJ.kWYT.Azha2pBtQUMH..CZu02VBm.w86uyfT0eyFHfKokBEXo2', 'katie pocha', 'female', 'email', 'guide'),
+           ('david@gmail.com', '$2b$10$tHJ.kWYT.Azha2pBtQUMH..CZu02VBm.w86uyfT0eyFHfKokBEXo2', 'david miles', 'female', 'facebook', 'establisher'),
+           ('kon@gmail.com', '$2b$10$tHJ.kWYT.Azha2pBtQUMH..CZu02VBm.w86uyfT0eyFHfKokBEXo2', 'kon york', 'male', 'facebook', 'subscriber');
 
   `);
 };
