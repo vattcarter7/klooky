@@ -4,7 +4,11 @@ exports.registerWithEmailAndPasswordCheckRules = (() => {
   return [
     check('login_email').isEmail().withMessage('a valid email is required'),
 
-    check('login_password').not().isEmpty().withMessage('password is required'),
+    check('login_password')
+      .not()
+      .isEmpty()
+      .isLength({ min: 6 })
+      .withMessage('password is required with at least 6 characters'),
 
     check('fullname').isString().withMessage('a valid fullname is required'),
 
@@ -30,7 +34,8 @@ exports.updatePasswordCheckRules = (() => {
     check('new_password')
       .not()
       .isEmpty()
-      .withMessage('new password is required')
+      .isLength({ min: 6 })
+      .withMessage('new password is required with at least 6 characters')
   ];
 })();
 
@@ -39,5 +44,15 @@ exports.forgotPasswordCheckRules = (() => {
     check('login_email')
       .isEmail()
       .withMessage('please provide a valid email address')
+  ];
+})();
+
+exports.resetPasswordCheckRules = (() => {
+  return [
+    check('new_password')
+      .not()
+      .isEmpty()
+      .isLength({ min: 6 })
+      .withMessage('new password is required with at least 6 characters')
   ];
 })();
