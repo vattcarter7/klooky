@@ -45,6 +45,8 @@ exports.registerWithEmailAndPassword = async (req, res) => {
     }
 
     const user = rows[0];
+    const url = `${req.protocol}://${req.get('host')}/me`;
+    await new Email(user, url).sendWelcome();
     sendEmailTokenResponse(user, res);
   } catch (err) {
     console.log(err);
@@ -162,15 +164,20 @@ exports.updatePassword = async (req, res, next) => {
     const NOW = Date.now();
 
     // if the password is correct update the password
+    // make sure password_reset_token and password_reset_expires are set to null
     const response = await pool.query(
       `UPDATE users SET 
           login_password = $1, 
-          password_changed_at = to_timestamp($2), 
-          updated_at = to_timestamp($3)
-       WHERE id = $4 RETURNING *;
+          password_reset_token = $2,
+          password_reset_expires = $3,
+          password_changed_at = to_timestamp($4), 
+          updated_at = to_timestamp($5)
+       WHERE id = $6 RETURNING *;
       `,
       [
         newHashedPassword,
+        null,
+        null,
         toPgTimestamp(NOW),
         toPgTimestamp(NOW),
         req.user.userId
@@ -197,7 +204,6 @@ exports.forgotPassword = async (req, res, next) => {
 
     if (!userResponse.rows[0]) {
       return res.status(404).json({
-        err: err.message,
         errorMsg: 'No user found'
       });
     }
@@ -210,6 +216,7 @@ exports.forgotPassword = async (req, res, next) => {
       .update(resetToken)
       .digest('hex');
 
+    // set expiration of passwordResetExpires for 10 minutes
     const passwordResetExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
 
     //  save passwordResetToken and passwordResetExpires in the database
@@ -236,9 +243,10 @@ exports.forgotPassword = async (req, res, next) => {
     await new Email(user, resetURL).sendPasswordReset();
     return res.status(200).json({
       success: true,
-      msg: 'Email sent'
+      msg: 'Email sent. Please check you email inbox. Please check in your spam folder if you do not find it'
     });
   } catch (err) {
+    console.log(err);
     //  save passwordResetToken=null and passwordResetExpires=null in the database
     await pool.query(
       `UPDATE users SET 
@@ -248,8 +256,74 @@ exports.forgotPassword = async (req, res, next) => {
       [null, null, req.body.login_email]
     );
     return res.status(400).json({
-      err: err.message,
       errMsg: 'unable to send email to change password'
+    });
+  }
+};
+
+exports.resetPassword = async (req, res, next) => {
+  try {
+    // Get user based on the token
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(req.params.token)
+      .digest('hex');
+
+    const userResponse = await pool.query(
+      `SELECT * FROM users 
+        WHERE password_reset_token = $1 
+        AND password_reset_expires > to_timestamp($2)
+        AND banned = $3;`,
+      [hashedToken, toPgTimestamp(Date.now()), false]
+    );
+
+    // If token has not expired, and there is user, set the new password
+    if (!userResponse.rows[0]) {
+      return res.status(400).json({
+        errMsg: 'Token is invalid or has expired'
+      });
+    }
+
+    // hash password before inserting into database
+    const newHashedPassword = await hashPassword(req.body.new_password);
+
+    const NOW = Date.now();
+
+    // make sure set password_reset_token and password_reset_expires to null
+    const updateUserResponse = await pool.query(
+      `UPDATE users SET 
+          login_password = $1, 
+          password_reset_token = $2,
+          password_reset_expires = $3,
+          password_changed_at = to_timestamp($4), 
+          updated_at = to_timestamp($5)
+       WHERE login_email = $6 RETURNING *;
+      `,
+      [
+        newHashedPassword,
+        null,
+        null,
+        toPgTimestamp(NOW),
+        toPgTimestamp(NOW),
+        userResponse.rows[0].login_email
+      ]
+    );
+
+    // check if updateUserResponse is failed
+    if (!updateUserResponse.rows[0]) {
+      return res.status(400).json({
+        errMsg: 'Unable to reset password'
+      });
+    }
+
+    const user = updateUserResponse.rows[0];
+
+    // send email token to client
+    sendEmailTokenResponse(user, res);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({
+      errMsg: 'Unable to reset password'
     });
   }
 };
