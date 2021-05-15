@@ -15,7 +15,8 @@ const {
   registerWithEmailAndPasswordCheckRules,
   loginWithEmailAndPasswordCheckRules,
   updatePasswordCheckRules,
-  forgotPasswordCheckRules
+  forgotPasswordCheckRules,
+  resetPasswordCheckRules
 } = require('../validators/auth/auth-check-rules');
 
 // middleware
@@ -27,7 +28,8 @@ const {
   loginWithEmailAndPassword,
   updatePassword,
   logout,
-  forgotPassword
+  forgotPassword,
+  resetPassword
 } = require('../controllers/auth');
 
 // passport strategies social network user obj
@@ -168,9 +170,9 @@ router.get('/profile', (req, res) => {
 router.get('/auth/logout', protect, logout);
 
 // @desc      Update a user password
-// @route     POST /api/auth/update-password
+// @route     PUT /api/auth/update-password
 // @access    Private
-router.post(
+router.put(
   '/auth/update-password',
   protect,
   [updatePasswordCheckRules, validate],
@@ -184,6 +186,15 @@ router.post(
   '/auth/forgot-password',
   [forgotPasswordCheckRules, validate],
   forgotPassword
+);
+
+// @desc      reset password
+// @route     PUT /api/auth/reset-password/:token
+// @access    Public
+router.put(
+  '/auth/reset-password/:token',
+  [resetPasswordCheckRules, validate],
+  resetPassword
 );
 
 module.exports = router;
