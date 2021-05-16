@@ -12,11 +12,10 @@ const { readdirSync } = require('fs');
 
 const errorHandler = require('./middlewares/error');
 
-const app = express();
-
 module.exports = () => {
+  const app = express();
   // Development logging
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV !== 'production') {
     app.use(morgan('dev'));
   }
   // Body parser, reading data from body into req.body
