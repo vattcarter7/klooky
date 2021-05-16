@@ -10,7 +10,6 @@ exports.up = (pgm) => {
       product_location JSONB,
       product_free_cancelation_max_day INT NOT NULL DEFAULT 0,
       product_validity_period INT NOT NULL DEFAULT 0,
-      published BOOLEAN NOT NULL DEFAULT FALSE,
       is_pickup BOOLEAN NOT NULL DEFAULT FALSE,
       is_fixed_date_ticket BOOLEAN NOT NULL DEFAULT FALSE,
       is_collect_physical_ticket BOOLEAN NOT NULL DEFAULT FALSE,
