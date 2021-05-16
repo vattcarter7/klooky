@@ -22,11 +22,11 @@ exports.up = (pgm) => {
 
     CREATE INDEX package_price_locale_language_id_idx ON package_price_locale(language_id);
 
-    INSERT INTO package_price_locale (package_id, language_id, package_price_name, price)
-    VALUES (1, 1, 'adult', 15.75),
-           (1, 1, 'kid', 7),
-           (1, 2, '성인', 15.75),
-           (1, 2, '아동', 7);
+    INSERT INTO package_price_locale (package_id, language_id, package_price_name, price, min_age, max_age, min_pax, max_pax)
+    VALUES (1, 1, 'adult', 15.75, 18, 100, 5, 10),
+           (1, 1, 'kid', 7, 3, 11, 5, 10),
+           (1, 2, '성인', 15.75, 18, 100, 5, 10),
+           (1, 2, '아동', 7, 3, 11, 5, 10);
           
   `);
 };
