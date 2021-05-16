@@ -2,6 +2,10 @@
 
 exports.shorthands = undefined;
 
+//** package_price_name */
+//ex: Adult=$57.85 || Child (4-12)=$43.5    || Senior (60+)=$32.75
+//ex: 성인=$57.85   || 아동 (만 4-12세)=$43.5   || 시니어 (만 60세 이상)=$32.75
+
 exports.up = (pgm) => {
   pgm.sql(`
     CREATE TABLE package_price_locale (

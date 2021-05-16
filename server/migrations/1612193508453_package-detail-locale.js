@@ -2,6 +2,10 @@
 
 exports.shorthands = undefined;
 
+//** package_name */
+// ex: Private Tour (Group of 4-6) || Private Tour (Group of 7-10)
+// ex: 프라이빗 투어 (4-6인 그룹)       || 프라이빗 투어 (7-10인 그룹)
+
 exports.up = (pgm) => {
   pgm.sql(`
     CREATE TABLE package_detail_locale (

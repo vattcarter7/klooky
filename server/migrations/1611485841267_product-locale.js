@@ -7,6 +7,9 @@ exports.up = (pgm) => {
   // greater than 0 = the voucher can be used for amount of day.
   // for example product_validity_period = 30 means the voucher is valid for 30 days  )
 
+  //** product_name */
+  //ex: Angkor Sunrise Tour || 앙코르 선라이즈 투어
+
   pgm.sql(`
     CREATE TABLE product_locale (
       id SERIAL PRIMARY KEY,
