@@ -12,6 +12,7 @@ exports.up = (pgm) => {
       max_age INT NOT NULL,
       min_pax INT NOT NULL,
       max_pax INT NOT NULL,
+      is_with_adult_required BOOLEAN DEFAULT FALSE,
       package_price_name VARCHAR NOT NULL,
       price REAL NOT NULL,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -22,11 +23,11 @@ exports.up = (pgm) => {
 
     CREATE INDEX package_price_locale_language_id_idx ON package_price_locale(language_id);
 
-    INSERT INTO package_price_locale (package_id, language_id, package_price_name, price, min_age, max_age, min_pax, max_pax)
-    VALUES (1, 1, 'adult', 15.75, 18, 100, 5, 10),
-           (1, 1, 'kid', 7, 3, 11, 5, 10),
-           (1, 2, '성인', 15.75, 18, 100, 5, 10),
-           (1, 2, '아동', 7, 3, 11, 5, 10);
+    INSERT INTO package_price_locale (package_id, language_id, package_price_name, price, min_age, max_age, min_pax, max_pax, is_with_adult_required)
+    VALUES (1, 1, 'adult', 15.75, 18, 100, 5, 10, false),
+           (1, 1, 'kid', 7, 3, 11, 5, 10, true),
+           (1, 2, '성인', 15.75, 18, 100, 5, 10, false),
+           (1, 2, '아동', 7, 3, 11, 5, 10, true);
           
   `);
 };
