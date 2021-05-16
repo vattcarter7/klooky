@@ -17,6 +17,7 @@ exports.up = (pgm) => {
       product_highlights JSONB NOT NULL,
       product_prohibition_limitation JSONB,
       product_additional_info JSONB,
+      published BOOLEAN DEFAULT FALSE,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );

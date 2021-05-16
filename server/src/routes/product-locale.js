@@ -33,4 +33,8 @@ router.put(
   editProductLocale
 );
 
+router.get('/product-locale', async (req, res, next) => {
+  console.log(req.query);
+});
+
 module.exports = router;

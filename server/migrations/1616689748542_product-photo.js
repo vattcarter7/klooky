@@ -9,6 +9,7 @@ exports.up = (pgm) => {
       product_id INT REFERENCES product(id) NOT NULL,
       user_id INT REFERENCES users(id) NOT NULL,
       photo_url TEXT NOT NULL,
+      published BOOLEAN DEFAULT FALSE,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );

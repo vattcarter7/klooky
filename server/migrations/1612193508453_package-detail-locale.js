@@ -14,6 +14,7 @@ exports.up = (pgm) => {
       package_itinerary JSONB NOT NULL,
       package_pickup_info JSONB,
       package_additional_info JSONB,
+      published BOOLEAN DEFAULT FALSE,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );

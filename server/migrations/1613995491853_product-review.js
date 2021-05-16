@@ -11,6 +11,7 @@ exports.up = (pgm) => {
       host_id INT REFERENCES users(id) NOT NULL,
       rating SMALLINT NOT NULL,
       comment VARCHAR,
+      published BOOLEAN DEFAULT FALSE,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );

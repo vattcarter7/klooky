@@ -17,6 +17,7 @@ exports.up = (pgm) => {
       is_location_meetup BOOLEAN NOT NULL DEFAULT FALSE,
       is_joined_and_private_available BOOLEAN NOT NULL DEFAULT FALSE,
       is_hotel_pickup BOOLEAN NOT NULL DEFAULT FALSE,
+      published BOOLEAN DEFAULT FALSE,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
