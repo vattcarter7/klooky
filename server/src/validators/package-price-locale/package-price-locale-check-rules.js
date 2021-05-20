@@ -9,6 +9,22 @@ exports.createPackagePriceLocaleCheckRules = (() => {
     check('package_price_name')
       .isString()
       .withMessage('a valid package price name is required'),
+    check('min_age')
+      .optional()
+      .isInt()
+      .withMessage('a valid minimum age is required'),
+    check('max_age')
+      .optional()
+      .isInt()
+      .withMessage('a valid maximum age is required'),
+    check('min_pax')
+      .optional()
+      .isInt()
+      .withMessage('a valid minimum pax is required'),
+    check('max_pax')
+      .optional()
+      .isInt()
+      .withMessage('a valid maximum pax is required'),
     check('price').isNumeric().withMessage('a valid package price is required')
   ];
 })();
@@ -22,6 +38,22 @@ exports.editPackagePriceLocaleCheckRules = (() => {
     check('price')
       .optional()
       .isNumeric()
-      .withMessage('a valid package price is required')
+      .withMessage('a valid package price is required'),
+    check('min_age')
+      .optional()
+      .isInt()
+      .withMessage('a valid minimum age is required'),
+    check('max_age')
+      .optional()
+      .isInt()
+      .withMessage('a valid maximum age is required'),
+    check('min_pax')
+      .optional()
+      .isInt()
+      .withMessage('a valid minimum pax is required'),
+    check('max_pax')
+      .optional()
+      .isInt()
+      .withMessage('a valid maximum pax is required')
   ];
 })();
