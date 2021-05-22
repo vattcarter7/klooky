@@ -15,7 +15,7 @@ export const SignInTitle = styled.h2`
   margin: 10px 0 20px 0;
 `;
 
-export const SignupLinkContainer = styled.div`
+export const SignUpLinkContainer = styled.div`
   padding-top: 20px;
   display: flex;
 `;
