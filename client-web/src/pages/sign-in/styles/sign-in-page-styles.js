@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 
-import { MEDIUM_BLUE, DARK_BLUE } from '../../../constants/colors';
+import { BLUE_MEDIUM, BLUE_DARK } from '../../../constants/colors';
 
 export const SignInContainer = styled.div`
   width: 380px;
@@ -24,10 +24,10 @@ export const SignUpLink = styled(Link)`
   margin-left: 5px;
   margin-right: 5px;
   cursor: pointer;
-  color: ${MEDIUM_BLUE};
+  color: ${BLUE_MEDIUM};
   text-decoration: underline;
 
   &:hover {
-    color: ${DARK_BLUE};
+    color: ${BLUE_DARK};
   }
 `;
