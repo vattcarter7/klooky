@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
 
-export const HomePageContainer = styled.div`
+export const HomeContainer = styled.div`
   display: flex;
 `;
