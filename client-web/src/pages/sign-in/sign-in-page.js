@@ -6,7 +6,7 @@ import {
   SignInContainer,
   SignInTitle,
   SignUpLink,
-  SignupLinkContainer
+  SignUpLinkContainer
 } from './styles/sign-in-page-styles';
 
 const SignInPage = ({ googleSignInStart }) => {
@@ -54,10 +54,10 @@ const SignInPage = ({ googleSignInStart }) => {
           Sign in{' '}
         </CustomButton>
       </form>
-      <SignupLinkContainer>
-        Don't have an accout? <SignUpLink to='signup'> Sign up</SignUpLink>{' '}
+      <SignUpLinkContainer>
+        Don't have an account? <SignUpLink to='signup'> Sign up</SignUpLink>{' '}
         instead
-      </SignupLinkContainer>
+      </SignUpLinkContainer>
     </SignInContainer>
   );
 };
