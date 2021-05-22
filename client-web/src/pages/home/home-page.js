@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { HomePageContainer } from './styles/home-page-styles';
+import { HomeContainer } from './styles/home-page-styles';
 
 const HomePage = () => {
-  return <HomePageContainer>Home Page</HomePageContainer>;
+  return <HomeContainer>Home Page</HomeContainer>;
 };
 
 export default HomePage;
