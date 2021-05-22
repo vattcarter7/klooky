@@ -1,12 +1,12 @@
 import styled, { css } from 'styled-components/macro';
-import { MEDIUM_BLUE } from '../../../constants/colors';
+import { BLUE_MEDIUM } from '../../../constants/colors';
 
 const buttonStyles = css`
   background-color: black;
   ${(props) =>
     props.primary &&
     css`
-      background: ${MEDIUM_BLUE};
+      background: ${BLUE_MEDIUM};
       color: black;
     `}
   color: white;
