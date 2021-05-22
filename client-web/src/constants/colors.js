@@ -1,4 +1,4 @@
 // Colors
-export const DARK_BLUE = '#023e8a';
-export const MEDIUM_BLUE = '#3a86ff';
-export const LIGHT_BLUE = '#48cae4';
+export const BLUE_DARK = '#023e8a';
+export const BLUE_MEDIUM = '#3a86ff';
+export const BLUE_LIGHT = '#48cae4';
