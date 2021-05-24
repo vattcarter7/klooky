@@ -37,7 +37,7 @@ export const SocialSignInContainer = styled.div`
   box-sizing: border-box;
   width: 350px;
   height: 500px;
-  background: url('angkorwat-new.png');
+  background: url('angkorwat.png');
   background-size: cover;
   background-position: center;
   border-radius: 2px 0 0 2px;

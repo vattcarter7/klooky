@@ -46,11 +46,13 @@ const SignInPage = ({ googleSignInStart }) => {
             facebook
             onClick={() => console.log('click on facebook button')}
           >
-            Sign in with facebook
+            <i className='fa fa-facebook fa-fw'></i> Sign in with facebook
           </SocialNetworkButton>
-          <SocialNetworkButton google>Sign in with google</SocialNetworkButton>
+          <SocialNetworkButton google>
+            <i className='fa fa-google fa-fw'></i> Sign in with google
+          </SocialNetworkButton>
           <SocialNetworkButton twitter>
-            Sign in with twitter
+            <i class='fa fa-twitter fa-fw'></i> Sign in with twitter
           </SocialNetworkButton>
         </SocialSignInInner>
       </SocialSignInContainer>
