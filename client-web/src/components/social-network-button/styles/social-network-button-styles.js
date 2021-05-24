@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components/macro';
 
+import { FACEBOOK, GOOGLE, TWITTER } from '../../../constants/colors';
+
 export const SocialNetworkButtonContainer = styled.button`
   width: 230px;
   background-color: black;
@@ -16,18 +18,18 @@ export const SocialNetworkButtonContainer = styled.button`
   ${(props) =>
     props.facebook &&
     css`
-      background: #3b5998;
+      background: ${FACEBOOK};
     `}
 
   ${(props) =>
     props.google &&
     css`
-      background: #dd4b39;
+      background: ${GOOGLE};
     `}
 
   ${(props) =>
     props.twitter &&
     css`
-      background: #55acee;
+      background: ${TWITTER};
     `}
 `;
