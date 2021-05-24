@@ -4,9 +4,17 @@ import { FormInput, CustomButton } from '../../components';
 
 import {
   SignInContainer,
+  EmailSignInContainer,
+  EmailSignInInner,
   SignInTitle,
+  SignInSubTitle,
   SignUpLink,
-  SignUpLinkContainer
+  SignUpLinkContainer,
+  SocialSignInContainer,
+  SocialSignInInner,
+  FormInputContainer,
+  ForgotPasswordLink,
+  Or
 } from './styles/sign-in-page-styles';
 
 const SignInPage = ({ googleSignInStart }) => {
@@ -29,36 +37,51 @@ const SignInPage = ({ googleSignInStart }) => {
     setCredentials({ ...userCredentials, [name]: value });
   };
   return (
-    <SignInContainer>
-      <SignInTitle>SIGN IN</SignInTitle>
-      <span>Sign in with your email and password</span>
-      <form onSubmit={handleSubmit}>
-        <FormInput
-          name='email'
-          type='email'
-          handleChange={handleChange}
-          value={email}
-          label='email'
-          required
-        />
-        <FormInput
-          name='password'
-          type='password'
-          value={password}
-          handleChange={handleChange}
-          label='password'
-          required
-        />
-        <CustomButton primary type='submit'>
-          {' '}
-          Sign in{' '}
-        </CustomButton>
-      </form>
-      <SignUpLinkContainer>
-        Don't have an account? <SignUpLink to='signup'> Sign up</SignUpLink>{' '}
-        instead
-      </SignUpLinkContainer>
-    </SignInContainer>
+    <form onSubmit={handleSubmit}>
+      <SignInContainer>
+        <SocialSignInContainer>
+          <SocialSignInInner>
+            <SignInTitle social>Sign In With Social Network</SignInTitle>
+          </SocialSignInInner>
+        </SocialSignInContainer>
+        <Or>OR</Or>
+        <EmailSignInContainer>
+          <EmailSignInInner>
+            <SignInTitle>SIGN IN</SignInTitle>
+            <SignInSubTitle>with email and password</SignInSubTitle>
+            <FormInputContainer>
+              <FormInput
+                name='email'
+                type='email'
+                handleChange={handleChange}
+                value={email}
+                label='email'
+                required
+              />
+              <FormInput
+                name='password'
+                type='password'
+                value={password}
+                handleChange={handleChange}
+                label='password'
+                required
+              />
+              <CustomButton primary type='submit'>
+                {' '}
+                Sign in{' '}
+              </CustomButton>
+            </FormInputContainer>
+            <SignUpLinkContainer>
+              Don't have an account?{' '}
+              <SignUpLink to='signup'> Sign up</SignUpLink>
+            </SignUpLinkContainer>
+            <ForgotPasswordLink to='forgot-password'>
+              Forgot your password?
+            </ForgotPasswordLink>
+          </EmailSignInInner>
+        </EmailSignInContainer>
+      </SignInContainer>
+    </form>
   );
 };
 

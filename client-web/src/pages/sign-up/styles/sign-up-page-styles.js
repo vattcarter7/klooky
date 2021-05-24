@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 
-import { BLUE_MEDIUM, BLUE_DARK } from '../../../constants/colors';
+import { BLUE_MEDIUM, BLUE_DARK, GREY_LIGHT } from '../../../constants/colors';
 
 export const SignUpContainer = styled.div`
   display: flex;
@@ -9,6 +9,8 @@ export const SignUpContainer = styled.div`
   width: 380px;
   margin-right: auto;
   margin-left: auto;
+  background-color: ${GREY_LIGHT};
+  padding: 30px;
 `;
 
 export const SignUpTitle = styled.h2`

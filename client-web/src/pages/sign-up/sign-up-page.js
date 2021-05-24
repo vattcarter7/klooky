@@ -47,6 +47,7 @@ const SignUpPage = ({ signUpStart }) => {
           value={displayName}
           onChange={handleChange}
           label='Display Name'
+          backgroundGrey
           required
         />
         <FormInput
@@ -55,6 +56,7 @@ const SignUpPage = ({ signUpStart }) => {
           value={email}
           onChange={handleChange}
           label='Email'
+          backgroundGrey
           required
         />
         <FormInput
@@ -63,6 +65,7 @@ const SignUpPage = ({ signUpStart }) => {
           value={password}
           onChange={handleChange}
           label='Password'
+          backgroundGrey
           required
         />
         <FormInput
@@ -71,6 +74,7 @@ const SignUpPage = ({ signUpStart }) => {
           value={confirmPassword}
           onChange={handleChange}
           label='Confirm Password'
+          backgroundGrey
           required
         />
         <CustomButton primary type='submit'>
