@@ -9,6 +9,14 @@ const buttonStyles = css`
       background: ${BLUE_MEDIUM};
       color: black;
     `}
+  ${(props) =>
+    props.facebook &&
+    css`
+      background: ${BLUE_MEDIUM};
+      color: white;
+      min-width: 250px;
+      font-size: 14px;
+    `}
   color: white;
   border: none;
   &:hover {

@@ -37,11 +37,10 @@ export const SocialSignInContainer = styled.div`
   box-sizing: border-box;
   width: 350px;
   height: 500px;
-  background: url('angkorwat.png');
+  background: url('angkorwat-new.png');
   background-size: cover;
   background-position: center;
   border-radius: 2px 0 0 2px;
-  opacity: 0.7;
 `;
 
 export const SocialSignInInner = styled.div`
@@ -73,6 +72,7 @@ export const SignInTitle = styled.h1`
     css`
       color: white;
       font-size: 23px;
+      width: 180px;
     `}
 `;
 

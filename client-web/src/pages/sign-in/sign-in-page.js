@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { FormInput, CustomButton } from '../../components';
+import { FormInput, CustomButton, SocialNetworkButton } from '../../components';
 
 import {
   SignInContainer,
@@ -36,15 +36,26 @@ const SignInPage = ({ googleSignInStart }) => {
 
     setCredentials({ ...userCredentials, [name]: value });
   };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <SignInContainer>
-        <SocialSignInContainer>
-          <SocialSignInInner>
-            <SignInTitle social>Sign In With Social Network</SignInTitle>
-          </SocialSignInInner>
-        </SocialSignInContainer>
-        <Or>OR</Or>
+    <SignInContainer>
+      <SocialSignInContainer>
+        <SocialSignInInner>
+          <SignInTitle social>Sign In With Social Network</SignInTitle>
+          <SocialNetworkButton
+            facebook
+            onClick={() => console.log('click on facebook button')}
+          >
+            Sign in with facebook
+          </SocialNetworkButton>
+          <SocialNetworkButton google>Sign in with google</SocialNetworkButton>
+          <SocialNetworkButton twitter>
+            Sign in with twitter
+          </SocialNetworkButton>
+        </SocialSignInInner>
+      </SocialSignInContainer>
+      <Or>OR</Or>
+      <form onSubmit={handleSubmit}>
         <EmailSignInContainer>
           <EmailSignInInner>
             <SignInTitle>SIGN IN</SignInTitle>
@@ -71,6 +82,7 @@ const SignInPage = ({ googleSignInStart }) => {
                 Sign in{' '}
               </CustomButton>
             </FormInputContainer>
+
             <SignUpLinkContainer>
               Don't have an account?{' '}
               <SignUpLink to='signup'> Sign up</SignUpLink>
@@ -80,8 +92,8 @@ const SignInPage = ({ googleSignInStart }) => {
             </ForgotPasswordLink>
           </EmailSignInInner>
         </EmailSignInContainer>
-      </SignInContainer>
-    </form>
+      </form>
+    </SignInContainer>
   );
 };
 
