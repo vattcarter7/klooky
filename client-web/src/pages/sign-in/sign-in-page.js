@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { FormInput, CustomButton, SocialNetworkButton } from '../../components';
+import { FormInput, SocialNetworkButton } from '../../components';
 
 import {
   SignInContainer,
@@ -12,9 +12,9 @@ import {
   SignUpLinkContainer,
   SocialSignInContainer,
   SocialSignInInner,
-  FormInputContainer,
   ForgotPasswordLink,
-  Or
+  Or,
+  SignInButton
 } from './styles/sign-in-page-styles';
 
 const SignInPage = ({ googleSignInStart }) => {
@@ -41,7 +41,8 @@ const SignInPage = ({ googleSignInStart }) => {
     <SignInContainer>
       <SocialSignInContainer>
         <SocialSignInInner>
-          <SignInTitle social>Sign In With Social Network</SignInTitle>
+          <SignInTitle social>SIGN IN</SignInTitle>
+          <SignInSubTitle social>with social network</SignInSubTitle>
           <SocialNetworkButton
             facebook
             onClick={() => console.log('click on facebook button')}
@@ -52,43 +53,42 @@ const SignInPage = ({ googleSignInStart }) => {
             <i className='fa fa-google fa-fw'></i> Sign in with google
           </SocialNetworkButton>
           <SocialNetworkButton twitter>
-            <i class='fa fa-twitter fa-fw'></i> Sign in with twitter
+            <i className='fa fa-twitter fa-fw'></i> Sign in with twitter
           </SocialNetworkButton>
         </SocialSignInInner>
       </SocialSignInContainer>
+
       <Or>OR</Or>
+
       <form onSubmit={handleSubmit}>
         <EmailSignInContainer>
           <EmailSignInInner>
             <SignInTitle>SIGN IN</SignInTitle>
             <SignInSubTitle>with email and password</SignInSubTitle>
-            <FormInputContainer>
-              <FormInput
-                name='email'
-                type='email'
-                handleChange={handleChange}
-                value={email}
-                label='email'
-                required
-              />
-              <FormInput
-                name='password'
-                type='password'
-                value={password}
-                handleChange={handleChange}
-                label='password'
-                required
-              />
-              <CustomButton primary type='submit'>
-                {' '}
-                Sign in{' '}
-              </CustomButton>
-            </FormInputContainer>
+            <FormInput
+              name='email'
+              type='email'
+              handleChange={handleChange}
+              value={email}
+              label='email'
+              required
+            />
+            <FormInput
+              name='password'
+              type='password'
+              value={password}
+              handleChange={handleChange}
+              label='password'
+              required
+            />
+
+            <SignInButton>SIGN IN</SignInButton>
 
             <SignUpLinkContainer>
               Don't have an account?{' '}
               <SignUpLink to='signup'> Sign up</SignUpLink>
             </SignUpLinkContainer>
+            <br />
             <ForgotPasswordLink to='forgot-password'>
               Forgot your password?
             </ForgotPasswordLink>

@@ -4,20 +4,27 @@ import {
   SignUpContainer,
   SignUpTitle,
   SignInLink,
-  SignInLinkContainer
+  SignInLinkContainer,
+  SocialSignUpContainer,
+  SocialSignUpInner,
+  SignUpSubTitle,
+  Or,
+  EmailSignUpContainer,
+  EmailSignUpInner,
+  SignUpButton
 } from './styles/sign-up-page-styles';
 
-import { FormInput, CustomButton } from '../../components';
+import { FormInput, SocialNetworkButton } from '../../components';
 
 const SignUpPage = ({ signUpStart }) => {
   const [userCredentials, setUserCredentials] = useState({
-    displayName: '',
+    fullname: '',
     email: '',
     password: '',
     confirmPassword: ''
   });
 
-  const { displayName, email, password, confirmPassword } = userCredentials;
+  const { fullname, email, password, confirmPassword } = userCredentials;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,7 +34,7 @@ const SignUpPage = ({ signUpStart }) => {
       return;
     }
 
-    signUpStart({ displayName, email, password });
+    signUpStart({ fullname, email, password });
   };
 
   const handleChange = (event) => {
@@ -38,53 +45,72 @@ const SignUpPage = ({ signUpStart }) => {
 
   return (
     <SignUpContainer>
-      <SignUpTitle>SIGN UP</SignUpTitle>
-      <span>Sign up with your email and password</span>
+      <SocialSignUpContainer>
+        <SocialSignUpInner>
+          <SignUpTitle social>SIGN UP</SignUpTitle>
+          <SignUpSubTitle social>with social network</SignUpSubTitle>
+          <SocialNetworkButton
+            facebook
+            onClick={() => console.log('click on facebook button')}
+          >
+            <i className='fa fa-facebook fa-fw'></i> Sign up with facebook
+          </SocialNetworkButton>
+          <SocialNetworkButton google>
+            <i className='fa fa-google fa-fw'></i> Sign up with google
+          </SocialNetworkButton>
+          <SocialNetworkButton twitter>
+            <i className='fa fa-twitter fa-fw'></i> Sign up with twitter
+          </SocialNetworkButton>
+        </SocialSignUpInner>
+      </SocialSignUpContainer>
+
+      <Or>OR</Or>
+
       <form onSubmit={handleSubmit}>
-        <FormInput
-          type='text'
-          name='displayName'
-          value={displayName}
-          onChange={handleChange}
-          label='Display Name'
-          backgroundGrey
-          required
-        />
-        <FormInput
-          type='email'
-          name='email'
-          value={email}
-          onChange={handleChange}
-          label='Email'
-          backgroundGrey
-          required
-        />
-        <FormInput
-          type='password'
-          name='password'
-          value={password}
-          onChange={handleChange}
-          label='Password'
-          backgroundGrey
-          required
-        />
-        <FormInput
-          type='password'
-          name='confirmPassword'
-          value={confirmPassword}
-          onChange={handleChange}
-          label='Confirm Password'
-          backgroundGrey
-          required
-        />
-        <CustomButton primary type='submit'>
-          SIGN UP
-        </CustomButton>
+        <EmailSignUpContainer>
+          <EmailSignUpInner>
+            <SignUpTitle>SIGN UP</SignUpTitle>
+            <SignUpSubTitle>with email and password</SignUpSubTitle>
+            <FormInput
+              type='text'
+              name='fullname'
+              value={fullname}
+              onChange={handleChange}
+              label='Full name'
+              required
+            />
+            <FormInput
+              type='email'
+              name='email'
+              value={email}
+              onChange={handleChange}
+              label='Email'
+              required
+            />
+            <FormInput
+              type='password'
+              name='password'
+              value={password}
+              onChange={handleChange}
+              label='Password'
+              required
+            />
+            <FormInput
+              type='password'
+              name='confirmPassword'
+              value={confirmPassword}
+              onChange={handleChange}
+              label='Confirm password'
+              required
+            />
+            <SignUpButton>SIGN UP</SignUpButton>
+            <SignInLinkContainer>
+              Already have an account?{' '}
+              <SignInLink to='signin'> Sign in</SignInLink>
+            </SignInLinkContainer>
+          </EmailSignUpInner>
+        </EmailSignUpContainer>
       </form>
-      <SignInLinkContainer>
-        Already have an account? <SignInLink to='signin'> Sign in</SignInLink>{' '}
-        instead
-      </SignInLinkContainer>
     </SignUpContainer>
   );
 };

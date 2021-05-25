@@ -24,10 +24,12 @@ export const EmailSignInContainer = styled.div`
 `;
 
 export const EmailSignInInner = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 300px;
+  width: 280px;
+  height: 200px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 30px;
+  text-align: center;
 `;
 
 export const SocialSignInContainer = styled.div`
@@ -56,39 +58,41 @@ export const SocialSignInInner = styled.div`
   margin-top: 125px;
 `;
 
-export const FormInputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 290px;
-  justify-content: center;
-`;
-
-export const SignInTitle = styled.h1`
-  margin: 10px 0 20px 0;
-
+export const SignInTitle = styled.h2`
   color: ${GREY_MEDIUM};
+
   ${(props) =>
     props.social &&
     css`
       color: white;
       font-size: 23px;
-      width: 180px;
+      line-height: 30px;
+      margin-bottom: 8px;
+      width: 220px;
     `}
 `;
 
 export const SignInSubTitle = styled.h4`
-  margin: 10px 0 20px 0;
+  margin: -10px 0 0 0;
   color: ${GREY_MEDIUM};
+
+  ${(props) =>
+    props.social &&
+    css`
+      color: white;
+      margin-bottom: 15px;
+      line-height: 30px;
+      width: 220px;
+    `}
 `;
 
 export const SignUpLinkContainer = styled.div`
-  display: flex;
   margin-top: 20px;
 `;
 
 export const SignUpLink = styled(Link)`
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: auto;
+  margin-right: auto;
   cursor: pointer;
   color: ${BLUE_MEDIUM};
 
@@ -98,9 +102,8 @@ export const SignUpLink = styled(Link)`
 `;
 
 export const ForgotPasswordLink = styled(Link)`
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-top: 25px;
+  margin-right: auto;
+  margin-left: auto;
   cursor: pointer;
   color: ${BLUE_MEDIUM};
 
@@ -115,9 +118,23 @@ export const Or = styled.div`
   left: 330px;
   width: 40px;
   height: 40px;
-  background: #ddd;
+  background: white;
   border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
   line-height: 40px;
   text-align: center;
+`;
+
+export const SignInButton = styled.button`
+  background-color: ${BLUE_MEDIUM};
+  height: 40px;
+  width: 100%;
+  color: white;
+  border: none;
+  cursor: pointer;
+  opacity: 0.85;
+
+  &:hover {
+    opacity: 1;
+  }
 `;

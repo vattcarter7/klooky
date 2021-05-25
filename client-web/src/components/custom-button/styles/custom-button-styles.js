@@ -9,14 +9,6 @@ const buttonStyles = css`
       background: ${BLUE_MEDIUM};
       color: black;
     `}
-  ${(props) =>
-    props.facebook &&
-    css`
-      background: ${BLUE_MEDIUM};
-      color: white;
-      min-width: 250px;
-      font-size: 14px;
-    `}
   color: white;
   border: none;
   &:hover {
@@ -37,22 +29,7 @@ const invertedButtonStyles = css`
   }
 `;
 
-const googleSignInStyles = css`
-  background-color: #db4a39;
-  min-width: 250px;
-  font-size: 14px;
-  color: white;
-  &:hover {
-    background-color: #db4a40;
-    border: none;
-  }
-`;
-
-const getButtonStyles = ({ isGoogleSignIn, inverted }) => {
-  if (isGoogleSignIn) {
-    return googleSignInStyles;
-  }
-
+const getButtonStyles = ({ inverted }) => {
   return inverted ? invertedButtonStyles : buttonStyles;
 };
 
@@ -63,7 +40,6 @@ export const CustomButtonContainer = styled.button`
   letter-spacing: 0.5px;
   line-height: 50px;
   padding: 0 35px 0 35px;
-  text-transform: uppercase;
   font-family: 'Open Sans Condensed';
   font-weight: bolder;
   cursor: pointer;
