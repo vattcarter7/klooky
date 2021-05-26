@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 import {
   SignUpContainer,
@@ -11,38 +13,27 @@ import {
   Or,
   EmailSignUpContainer,
   EmailSignUpInner,
-  SignUpButton
+  SignUpButton,
+  SignUpInputError
 } from './styles/sign-up-page-styles';
 
 import { FormInput, SocialNetworkButton } from '../../components';
 
+const validationSchema = Yup.object({
+  fullname: Yup.string().required('Full name is required'),
+  email: Yup.string()
+    .required('Email is required')
+    .email('Please provide a valid email'),
+  password: Yup.string()
+    .min(8, 'Must be at least 8 characters')
+    .required('Password is required'),
+  confirmPassword: Yup.string().oneOf(
+    [Yup.ref('password'), null],
+    'Passwords do not match'
+  )
+});
+
 const SignUpPage = ({ signUpStart }) => {
-  const [userCredentials, setUserCredentials] = useState({
-    fullname: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  });
-
-  const { fullname, email, password, confirmPassword } = userCredentials;
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (password !== confirmPassword) {
-      alert("passwords don't match");
-      return;
-    }
-
-    signUpStart({ fullname, email, password });
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setUserCredentials({ ...userCredentials, [name]: value });
-  };
-
   return (
     <SignUpContainer>
       <SocialSignUpContainer>
@@ -66,51 +57,98 @@ const SignUpPage = ({ signUpStart }) => {
 
       <Or>OR</Or>
 
-      <form onSubmit={handleSubmit}>
-        <EmailSignUpContainer>
-          <EmailSignUpInner>
-            <SignUpTitle>SIGN UP</SignUpTitle>
-            <SignUpSubTitle>with email and password</SignUpSubTitle>
-            <FormInput
-              type='text'
-              name='fullname'
-              value={fullname}
-              onChange={handleChange}
-              label='Full name'
-              required
-            />
-            <FormInput
-              type='email'
-              name='email'
-              value={email}
-              onChange={handleChange}
-              label='Email'
-              required
-            />
-            <FormInput
-              type='password'
-              name='password'
-              value={password}
-              onChange={handleChange}
-              label='Password'
-              required
-            />
-            <FormInput
-              type='password'
-              name='confirmPassword'
-              value={confirmPassword}
-              onChange={handleChange}
-              label='Confirm password'
-              required
-            />
-            <SignUpButton>SIGN UP</SignUpButton>
-            <SignInLinkContainer>
-              Already have an account?{' '}
-              <SignInLink to='signin'> Sign in</SignInLink>
-            </SignInLinkContainer>
-          </EmailSignUpInner>
-        </EmailSignUpContainer>
-      </form>
+      <Formik
+        initialValues={{
+          fullname: '',
+          email: '',
+          password: '',
+          confirmPassword: ''
+        }}
+        validationSchema={validationSchema}
+        onSubmit={(values, { setSubmitting }) => {
+          // dispatch(signup(values));
+          setSubmitting(false);
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+          isValid
+        }) => (
+          <form onSubmit={handleSubmit}>
+            <EmailSignUpContainer>
+              <EmailSignUpInner>
+                <SignUpTitle>SIGN UP</SignUpTitle>
+                <SignUpSubTitle>with email and password</SignUpSubTitle>
+                <FormInput
+                  type='text'
+                  name='fullname'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.fullname}
+                  label='Full name'
+                />
+                {errors.fullname && touched.fullname && (
+                  <SignUpInputError>{errors.fullname}</SignUpInputError>
+                )}
+
+                <FormInput
+                  type='email'
+                  name='email'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                  label='Email'
+                />
+                {errors.email && touched.email && (
+                  <SignUpInputError>{errors.email}</SignUpInputError>
+                )}
+
+                <FormInput
+                  type='password'
+                  name='password'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                  label='Password'
+                />
+                {errors.password && touched.password && (
+                  <SignUpInputError>{errors.password}</SignUpInputError>
+                )}
+
+                <FormInput
+                  type='password'
+                  name='confirmPassword'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.confirmPassword}
+                  label='Confirm password'
+                />
+                {errors.confirmPassword && touched.confirmPassword && (
+                  <SignUpInputError>{errors.confirmPassword}</SignUpInputError>
+                )}
+
+                <SignUpButton type='button' disabled={!isValid || isSubmitting}>
+                  {!isSubmitting ? (
+                    'SIGN UP'
+                  ) : (
+                    <i className='fa fa-spinner fa-spin fa-2x fa-fw'></i>
+                  )}
+                </SignUpButton>
+                <SignInLinkContainer>
+                  Already have an account?{' '}
+                  <SignInLink to='signin'> Sign in</SignInLink>
+                </SignInLinkContainer>
+              </EmailSignUpInner>
+            </EmailSignUpContainer>
+          </form>
+        )}
+      </Formik>
     </SignUpContainer>
   );
 };
