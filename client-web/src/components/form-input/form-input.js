@@ -6,14 +6,14 @@ import {
   FormInputLabel
 } from './styles/form-input-styles';
 
-const FormInput = ({ handleChange, label, ...props }) => (
+const FormInput = ({ label, ...props }) => (
   <GroupContainer>
-    <FormInputContainer onChange={handleChange} {...props} />
-    {label ? (
+    <FormInputContainer {...props} />
+    {label && (
       <FormInputLabel className={props.value.length ? 'shrink' : ''}>
         {label}
       </FormInputLabel>
-    ) : null}
+    )}
   </GroupContainer>
 );
 

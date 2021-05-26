@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 import { FormInput, SocialNetworkButton } from '../../components';
 
@@ -14,29 +16,20 @@ import {
   SocialSignInInner,
   ForgotPasswordLink,
   Or,
-  SignInButton
+  SignInButton,
+  SignInInputError
 } from './styles/sign-in-page-styles';
 
+const validationSchema = Yup.object({
+  email: Yup.string()
+    .required('Email is required')
+    .email('Please provide a valid email'),
+  password: Yup.string()
+    // .min(8, 'Must be at least 8 characters')
+    .required('Password is required')
+});
+
 const SignInPage = ({ googleSignInStart }) => {
-  const [userCredentials, setCredentials] = useState({
-    email: '',
-    password: ''
-  });
-
-  const { email, password } = userCredentials;
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    // emailSignInStart(email, password);
-  };
-
-  const handleChange = (event) => {
-    const { value, name } = event.target;
-
-    setCredentials({ ...userCredentials, [name]: value });
-  };
-
   return (
     <SignInContainer>
       <SocialSignInContainer>
@@ -60,41 +53,69 @@ const SignInPage = ({ googleSignInStart }) => {
 
       <Or>OR</Or>
 
-      <form onSubmit={handleSubmit}>
-        <EmailSignInContainer>
-          <EmailSignInInner>
-            <SignInTitle>SIGN IN</SignInTitle>
-            <SignInSubTitle>with email and password</SignInSubTitle>
-            <FormInput
-              name='email'
-              type='email'
-              handleChange={handleChange}
-              value={email}
-              label='email'
-              required
-            />
-            <FormInput
-              name='password'
-              type='password'
-              value={password}
-              handleChange={handleChange}
-              label='password'
-              required
-            />
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={validationSchema}
+        onSubmit={(values, { setSubmitting }) => {
+          // dispatch(login(values));
+          setSubmitting(false);
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+          isValid
+        }) => (
+          <form onSubmit={handleSubmit}>
+            <EmailSignInContainer>
+              <EmailSignInInner>
+                <SignInTitle>SIGN IN</SignInTitle>
+                <SignInSubTitle>with email and password</SignInSubTitle>
+                <FormInput
+                  name='email'
+                  type='email'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                  label='email'
+                />
+                {errors.email && touched.email && (
+                  <SignInInputError>{errors.email}</SignInInputError>
+                )}
+                <FormInput
+                  name='password'
+                  type='password'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                  label='password'
+                />
+                {errors.password && touched.password && (
+                  <SignInInputError>{errors.password}</SignInInputError>
+                )}
 
-            <SignInButton>SIGN IN</SignInButton>
+                <SignInButton disabled={!isValid || isSubmitting}>
+                  SIGN IN
+                </SignInButton>
 
-            <SignUpLinkContainer>
-              Don't have an account?{' '}
-              <SignUpLink to='signup'> Sign up</SignUpLink>
-            </SignUpLinkContainer>
-            <br />
-            <ForgotPasswordLink to='forgot-password'>
-              Forgot your password?
-            </ForgotPasswordLink>
-          </EmailSignInInner>
-        </EmailSignInContainer>
-      </form>
+                <SignUpLinkContainer>
+                  Don't have an account?{' '}
+                  <SignUpLink to='signup'> Sign up</SignUpLink>
+                </SignUpLinkContainer>
+                <br />
+                <ForgotPasswordLink to='forgot-password'>
+                  Forgot your password?
+                </ForgotPasswordLink>
+              </EmailSignInInner>
+            </EmailSignInContainer>
+          </form>
+        )}
+      </Formik>
     </SignInContainer>
   );
 };

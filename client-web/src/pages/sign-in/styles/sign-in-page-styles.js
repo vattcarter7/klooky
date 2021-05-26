@@ -134,7 +134,21 @@ export const SignInButton = styled.button`
   cursor: pointer;
   opacity: 0.85;
 
+  ${(props) =>
+    props.disabled &&
+    css`
+      cursor: not-allowed;
+    `}
+
   &:hover {
     opacity: 1;
   }
+`;
+
+export const SignInInputError = styled.div`
+  padding: 0;
+  margin-top: -20px;
+  float: left;
+  font-size: 12px;
+  color: red;
 `;

@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components/macro';
 
-import { GREY_LIGHT, GREY_MEDIUM, BLACK_DARK } from '../../../constants/colors';
+import { GREY_MEDIUM, BLACK_DARK } from '../../../constants/colors';
 
 const shrinkLabelStyles = css`
-  top: -14px;
+  top: -6px;
   font-size: 12px;
   color: ${BLACK_DARK};
 `;
@@ -34,11 +34,6 @@ export const FormInputContainer = styled.input`
   &:focus ~ label {
     ${shrinkLabelStyles}
   }
-  ${(props) =>
-    props.backgroundGrey &&
-    css`
-      background: ${GREY_LIGHT};
-    `}
 `;
 
 export const FormInputLabel = styled.label`
@@ -53,4 +48,12 @@ export const FormInputLabel = styled.label`
   &.shrink {
     ${shrinkLabelStyles}
   }
+`;
+
+export const FormInputError = styled.span`
+  color: red;
+  float: left;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-left: 5px;
 `;
