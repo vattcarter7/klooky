@@ -99,8 +99,12 @@ const SignInPage = ({ googleSignInStart }) => {
                   <SignInInputError>{errors.password}</SignInInputError>
                 )}
 
-                <SignInButton disabled={!isValid || isSubmitting}>
-                  SIGN IN
+                <SignInButton type='button' disabled={!isValid || isSubmitting}>
+                  {!isSubmitting ? (
+                    'SIGN IN'
+                  ) : (
+                    <i className='fa fa-spinner fa-spin fa-2x fa-fw'></i>
+                  )}
                 </SignInButton>
 
                 <SignUpLinkContainer>
