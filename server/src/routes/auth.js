@@ -35,6 +35,8 @@ const {
 
 // passport strategies social network user obj
 let user = {};
+const FAILURE_REDIRECT_CLIENT_URL = 'http://localhost:3000/login/error';
+const SUCCESS_REDIRECT_CLIENT_URL = 'http://localhost:3000/login/success';
 
 passport.serializeUser((user, cb) => {
   cb(null, user);
@@ -123,20 +125,9 @@ router.get(
   passport.authenticate(SIGNIN_METHOD.GOOGLE, {
     session: false,
     failureMessage: 'Cannot login with google. Please try again later',
-    failureRedirect: 'http://localhost:3000/login/error',
-    successRedirect: 'http://localhost:3000/login/success'
-  }),
-  async (req, res) => {
-    console.log('::::: user in the redirect', req.user);
-    try {
-      sendSocialTokenResponse(req.user, res);
-    } catch (err) {
-      console.log(err);
-      res.status(403).json({
-        errMsg: 'Unable to authenticate with google account'
-      });
-    }
-  }
+    failureRedirect: FAILURE_REDIRECT_CLIENT_URL,
+    successRedirect: SUCCESS_REDIRECT_CLIENT_URL
+  })
 );
 
 // @desc      check a user via facebook
@@ -153,6 +144,7 @@ router.get(
   async (req, res) => {
     console.log('::::: user in the redirect', req.user);
     try {
+      // Here seems doesn't send the token
       sendSocialTokenResponse(req.user, res);
     } catch (err) {
       console.log(err);
@@ -163,17 +155,18 @@ router.get(
   }
 );
 
-// @desc      get a user profile after authenticate with a social network passportjs
+// @desc      get a user profile after authenticate with a social network passportjs. and user data is received from above
 // @route     POST /api/profile
 // @access    Public
-router.get('/profile', (req, res) => {
-  res.send(user);
+router.get('/auth/profile', (req, res) => {
+  if (!user) return res.status(401).json({ errMsg: 'Unable to get profile' });
+  sendSocialTokenResponse(user, res);
 });
 
 // @desc      get a user profile from jwt and database
 // @route     POST /api/auth/user
 // @access    Private
-router.get('/auth/user', protect, getMe);
+router.get('/auth/me', protect, getMe);
 
 // @desc      Logout a user
 // @route     POST /api/auth/logout

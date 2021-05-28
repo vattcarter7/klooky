@@ -47,7 +47,7 @@ const SignInPage = () => {
 
   const fetchAuthUser = async () => {
     const response = await axios
-      .get(`${AUTH_URL}/user`, { withCredentials: true })
+      .get(`${AUTH_URL}/profile`, { withCredentials: true })
       .catch((err) => {
         console.log('Not properly authenticated');
         dispatch({ type: AUTH_FAIL });
@@ -63,7 +63,7 @@ const SignInPage = () => {
 
   const redirectToGoogleSSO = async () => {
     let timer;
-    const googleLoginURL = 'http://localhost:4000/api/auth/google';
+    const googleLoginURL = `http://localhost:4000/api/auth/google`;
     const newWindow = window.open(
       googleLoginURL,
       '_blank',
