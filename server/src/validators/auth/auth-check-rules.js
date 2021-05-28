@@ -10,9 +10,7 @@ exports.registerWithEmailAndPasswordCheckRules = (() => {
       .isLength({ min: 6 })
       .withMessage('password is required with at least 6 characters'),
 
-    check('fullname').isString().withMessage('a valid fullname is required'),
-
-    check('gender').isString().withMessage('gender is required')
+    check('fullname').isString().withMessage('a valid fullname is required')
   ];
 })();
 

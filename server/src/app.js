@@ -1,12 +1,12 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const compression = require('compression');
-const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const { readdirSync } = require('fs');
 
@@ -18,12 +18,14 @@ module.exports = () => {
   if (process.env.NODE_ENV !== 'production') {
     app.use(morgan('dev'));
   }
-  // Body parser, reading data from body into req.body
-  app.use(express.json({ limit: '10kb' }));
-  app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
+  // Body parser
+  app.use(express.json());
+
+  // Cookie parser
   app.use(cookieParser());
 
+  // Enable CORS
   app.use(cors());
 
   app.enable('trust proxy');

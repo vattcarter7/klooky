@@ -327,3 +327,19 @@ exports.resetPassword = async (req, res, next) => {
     });
   }
 };
+
+exports.getMe = async (req, res, next) => {
+  const query = `SELECT * FROM users WHERE id = $1 AND banned = $2`;
+  const param = [req.user.userId, false];
+  const { rows } = await pool.query(query, param);
+  if (!rows[0]) {
+    return res.status(404).json({
+      errMsg: 'No user found'
+    });
+  }
+  const user = rows[0];
+  user.login_password = undefined;
+  return res.status(200).json({
+    user
+  });
+};

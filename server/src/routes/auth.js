@@ -8,7 +8,6 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const keys = require('../config/social-network-keys');
 const { SIGNIN_METHOD } = require('../constants/signin-method');
 const { sendSocialTokenResponse } = require('../utils/auth-util');
-const { findOrCreateSocialUser } = require('../controllers/auth');
 
 const { validate } = require('../validators');
 const {
@@ -29,7 +28,9 @@ const {
   updatePassword,
   logout,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  findOrCreateSocialUser,
+  getMe
 } = require('../controllers/auth');
 
 // passport strategies social network user obj
@@ -119,7 +120,12 @@ router.get(
 // @access    Public
 router.get(
   '/auth/google/redirect',
-  passport.authenticate(SIGNIN_METHOD.GOOGLE, { session: false }),
+  passport.authenticate(SIGNIN_METHOD.GOOGLE, {
+    session: false,
+    failureMessage: 'Cannot login with google. Please try again later',
+    failureRedirect: 'http://localhost:3000/login/error',
+    successRedirect: 'http://localhost:3000/login/success'
+  }),
   async (req, res) => {
     console.log('::::: user in the redirect', req.user);
     try {
@@ -163,6 +169,11 @@ router.get(
 router.get('/profile', (req, res) => {
   res.send(user);
 });
+
+// @desc      get a user profile from jwt and database
+// @route     POST /api/auth/user
+// @access    Private
+router.get('/auth/user', protect, getMe);
 
 // @desc      Logout a user
 // @route     POST /api/auth/logout

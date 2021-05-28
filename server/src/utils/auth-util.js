@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
 exports.sendEmailTokenResponse = (user, res) => {
   const token = generateSignedJwtToken(user.id, user.signin_method);
-  user.password = undefined;
+  user.login_password = undefined;
   user.password_reset_token = undefined;
   user.password_reset_expires = undefined;
 
@@ -44,8 +44,11 @@ exports.sendEmailTokenResponse = (user, res) => {
 
 exports.sendSocialTokenResponse = (user, res) => {
   const token = generateSignedJwtToken(user.id, user.signin_method);
-  res.cookie('jwt', token, cookieOptions);
-  res.redirect('/api/profile');
+  return res.cookie('jwt', token, user, cookieOptions).json({
+    token,
+    user
+  });
+  // res.redirect('/api/profile');
 };
 
 exports.generateSignedJwtToken = generateSignedJwtToken;

@@ -1,5 +1,7 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { Formik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
 import {
@@ -18,6 +20,7 @@ import {
 } from './styles/sign-up-page-styles';
 
 import { FormInput, SocialNetworkButton } from '../../components';
+import { registerWithEmailAndPassword } from '../../redux/user/user-action';
 
 const validationSchema = Yup.object({
   fullname: Yup.string().required('Full name is required'),
@@ -27,13 +30,18 @@ const validationSchema = Yup.object({
   password: Yup.string()
     .min(8, 'Must be at least 8 characters')
     .required('Password is required'),
-  confirmPassword: Yup.string().oneOf(
-    [Yup.ref('password'), null],
-    'Passwords do not match'
-  )
+  confirmPassword: Yup.string()
+    .required('confirm password is required')
+    .oneOf([Yup.ref('password'), null], 'Passwords do not match')
 });
 
-const SignUpPage = ({ signUpStart }) => {
+const SignUpPage = () => {
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state) => state.user);
+
+  if (isAuthenticated) {
+    return <Redirect to='/dashboard' />;
+  }
   return (
     <SignUpContainer>
       <SocialSignUpContainer>
@@ -66,7 +74,7 @@ const SignUpPage = ({ signUpStart }) => {
         }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
-          // dispatch(signup(values));
+          dispatch(registerWithEmailAndPassword(values));
           setSubmitting(false);
         }}
       >
@@ -133,12 +141,8 @@ const SignUpPage = ({ signUpStart }) => {
                   <SignUpInputError>{errors.confirmPassword}</SignUpInputError>
                 )}
 
-                <SignUpButton type='button' disabled={!isValid || isSubmitting}>
-                  {!isSubmitting ? (
-                    'SIGN UP'
-                  ) : (
-                    <i className='fa fa-spinner fa-spin fa-2x fa-fw'></i>
-                  )}
+                <SignUpButton type='submit' disabled={isSubmitting || !isValid}>
+                  SIGN UP
                 </SignUpButton>
                 <SignInLinkContainer>
                   Already have an account?{' '}

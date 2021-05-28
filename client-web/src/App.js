@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import { HomePage, SignInPage, SignUpPage } from './pages';
 
-import { Header } from './components';
+import { Header, LoginSuccess } from './components';
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
         <Route exact path='/' component={HomePage} />
         <Route exact path='/signin' component={SignInPage} />
         <Route exact path='/signup' component={SignUpPage} />
+        <Route exact path='/login/success' component={LoginSuccess} />
       </Switch>
     </div>
   );
