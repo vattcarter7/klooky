@@ -62,6 +62,7 @@ passport.use(
         profile.photos[0].value,
         profile.displayName
       ]);
+      console.log('USER:', user);
       cb(null, user);
     }
   )
@@ -87,24 +88,6 @@ passport.use(
       cb(null, user);
     }
   )
-);
-
-// @desc      register a user
-// @route     POST /api/auth/email/register
-// @access    Private
-router.post(
-  '/auth/email/register',
-  [registerWithEmailAndPasswordCheckRules, validate],
-  registerWithEmailAndPassword
-);
-
-// @desc      login a user
-// @route     POST /api/auth/email/login
-// @access    Private
-router.post(
-  '/auth/email/login',
-  [loginWithEmailAndPasswordCheckRules, validate],
-  loginWithEmailAndPassword
 );
 
 // @desc      check a user via google
@@ -133,35 +116,69 @@ router.get(
 // @desc      check a user via facebook
 // @route     POST /api/auth/facebook
 // @access    Public
-router.get('/auth/facebook', passport.authenticate(SIGNIN_METHOD.FACEBOOK));
+router.get(
+  '/auth/facebook',
+  passport.authenticate(SIGNIN_METHOD.FACEBOOK, {
+    // scope: ['profile', 'email']
+  })
+);
 
 // @desc      Redirect a user via facebook
 // @route     POST /api/auth/facebook
 // @access    Public
 router.get(
   '/auth/facebook/redirect',
-  passport.authenticate(SIGNIN_METHOD.FACEBOOK, { session: false }),
-  async (req, res) => {
-    console.log('::::: user in the redirect', req.user);
-    try {
-      // Here seems doesn't send the token
-      sendSocialTokenResponse(req.user, res);
-    } catch (err) {
-      console.log(err);
-      res.status(403).json({
-        errMsg: 'Unable to authenticate with facebook account'
-      });
-    }
-  }
+  passport.authenticate(SIGNIN_METHOD.FACEBOOK, {
+    session: false,
+    failureMessage: 'Cannot login with google. Please try again later',
+    failureRedirect: FAILURE_REDIRECT_CLIENT_URL,
+    successRedirect: SUCCESS_REDIRECT_CLIENT_URL
+  })
 );
 
-// @desc      get a user profile after authenticate with a social network passportjs. and user data is received from above
-// @route     POST /api/profile
+// @desc      get a user profile after authenticate with google strategy above
+// @route     POST /api/ocial-network-profile/google
 // @access    Public
-router.get('/auth/profile', (req, res) => {
-  if (!user) return res.status(401).json({ errMsg: 'Unable to get profile' });
-  sendSocialTokenResponse(user, res);
+router.get('/auth/social-network-profile/google', (req, res) => {
+  if (user.id && user.signin_method === SIGNIN_METHOD.GOOGLE) {
+    sendSocialTokenResponse(user, res);
+  } else {
+    return res
+      .status(401)
+      .json({ errMsg: 'Unable to get social network user profile' });
+  }
 });
+
+// @desc      get a user profile after authenticate with facebook strategy above
+// @route     POST /api/ocial-network-profile/facebook
+// @access    Public
+router.get('/auth/social-network-profile/facebook', (req, res) => {
+  if (user.id && user.signin_method === SIGNIN_METHOD.FACEBOOK) {
+    sendSocialTokenResponse(user, res);
+  } else {
+    return res
+      .status(401)
+      .json({ errMsg: 'Unable to get social network user profile' });
+  }
+});
+
+// @desc      register a user
+// @route     POST /api/auth/email/register
+// @access    Private
+router.post(
+  '/auth/email/register',
+  [registerWithEmailAndPasswordCheckRules, validate],
+  registerWithEmailAndPassword
+);
+
+// @desc      login a user
+// @route     POST /api/auth/email/login
+// @access    Private
+router.post(
+  '/auth/email/login',
+  [loginWithEmailAndPasswordCheckRules, validate],
+  loginWithEmailAndPassword
+);
 
 // @desc      get a user profile from jwt and database
 // @route     POST /api/auth/user

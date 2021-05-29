@@ -35,6 +35,7 @@ exports.sendEmailTokenResponse = (user, res) => {
   user.login_password = undefined;
   user.password_reset_token = undefined;
   user.password_reset_expires = undefined;
+  user.password_changed_at = undefined;
 
   return res.cookie('jwt', token, cookieOptions).json({
     token,
@@ -48,7 +49,6 @@ exports.sendSocialTokenResponse = (user, res) => {
     token,
     user
   });
-  // res.redirect('/api/profile');
 };
 
 exports.generateSignedJwtToken = generateSignedJwtToken;

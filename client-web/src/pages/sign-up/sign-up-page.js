@@ -9,8 +9,6 @@ import {
   SignUpTitle,
   SignInLink,
   SignInLinkContainer,
-  SocialSignUpContainer,
-  SocialSignUpInner,
   SignUpSubTitle,
   Or,
   EmailSignUpContainer,
@@ -19,7 +17,7 @@ import {
   SignUpInputError
 } from './styles/sign-up-page-styles';
 
-import { FormInput, SocialNetworkButton } from '../../components';
+import { FormInput, SocialNetwork } from '../../components';
 import { registerWithEmailAndPassword } from '../../redux/user/user-action';
 
 const validationSchema = Yup.object({
@@ -44,27 +42,8 @@ const SignUpPage = () => {
   }
   return (
     <SignUpContainer>
-      <SocialSignUpContainer>
-        <SocialSignUpInner>
-          <SignUpTitle social>SIGN UP</SignUpTitle>
-          <SignUpSubTitle social>with social network</SignUpSubTitle>
-          <SocialNetworkButton
-            facebook
-            onClick={() => console.log('click on facebook button')}
-          >
-            <i className='fa fa-facebook fa-fw'></i> Sign up with facebook
-          </SocialNetworkButton>
-          <SocialNetworkButton google>
-            <i className='fa fa-google fa-fw'></i> Sign up with google
-          </SocialNetworkButton>
-          <SocialNetworkButton twitter>
-            <i className='fa fa-twitter fa-fw'></i> Sign up with twitter
-          </SocialNetworkButton>
-        </SocialSignUpInner>
-      </SocialSignUpContainer>
-
+      <SocialNetwork />
       <Or>OR</Or>
-
       <Formik
         initialValues={{
           fullname: '',
@@ -75,7 +54,6 @@ const SignUpPage = () => {
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
           dispatch(registerWithEmailAndPassword(values));
-          setSubmitting(false);
         }}
       >
         {({
@@ -142,7 +120,11 @@ const SignUpPage = () => {
                 )}
 
                 <SignUpButton type='submit' disabled={isSubmitting || !isValid}>
-                  SIGN UP
+                  {!isSubmitting ? (
+                    'SIGN UP'
+                  ) : (
+                    <i className='fa fa-spinner fa-spin fa-2x fa-fw'></i>
+                  )}
                 </SignUpButton>
                 <SignInLinkContainer>
                   Already have an account?{' '}
