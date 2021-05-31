@@ -25,7 +25,7 @@ exports.createCartItem = async (req, res) => {
     console.log(err);
     res.status(400).json({
       err: err.message,
-      errorMsg: 'unable to add a cart item'
+      errMessage: 'unable to add a cart item'
     });
   }
 };

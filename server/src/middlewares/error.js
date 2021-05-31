@@ -12,7 +12,7 @@ const errorHandler = (err, req, res, next) => {
   }
 
   res.status(error.statusCode || 500).json({
-    errMsg: error.message || 'Server Error'
+    errMessage: error.message || 'Server Error'
   });
 };
 

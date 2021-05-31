@@ -3,9 +3,7 @@ const { toPgTimestamp } = require('../utils/time-util');
 
 exports.createReview = async (req, res) => {
   try {
-    const {
-      rows
-    } = await pool.query(
+    const { rows } = await pool.query(
       'INSERT INTO product_reviews (rating, comment, photos) VALUES ($1, $2, $3) RETURNING *;',
       [req.body.rating, req.body.comment, JSON.stringify(req.body.photos)]
     );
@@ -25,7 +23,7 @@ exports.editReview = async (req, res) => {
     const response = await pool.query(textQuery, [req.params.id]);
     if (!response.rows[0]) {
       return res.status(404).json({
-        errorMsg: 'package not found'
+        errMessage: 'package not found'
       });
     }
 
@@ -49,7 +47,7 @@ exports.editReview = async (req, res) => {
     if (!rows[0]) {
       return res.status(400).json({
         err: err.message,
-        errorMsg: 'unable to update review rating'
+        errMessage: 'unable to update review rating'
       });
     }
 
@@ -64,16 +62,14 @@ exports.editReview = async (req, res) => {
 
 exports.deleteReview = async (req, res) => {
   try {
-    const {
-      rows
-    } = await pool.query(
+    const { rows } = await pool.query(
       'DELETE FROM product_reviews WHERE id=$1 returning *',
       [req.params.id]
     );
 
     if (!rows[0])
       return res.status(404).json({
-        errorMsg: 'cannot delete that product review'
+        errMessage: 'cannot delete that product review'
       });
 
     res.send(rows[0]);

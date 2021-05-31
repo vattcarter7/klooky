@@ -4,7 +4,6 @@ const pool = require('../pool');
 // Protect routes
 exports.protect = async (req, res, next) => {
   let token;
-  console.log(req.cookies.jwt);
 
   if (
     req.headers.authorization &&
@@ -22,13 +21,13 @@ exports.protect = async (req, res, next) => {
   if (!token) {
     return res
       .status(403)
-      .json({ errorMsg: 'Not authorized to access this route' });
+      .json({ errMessage: 'Not authorized to access this route' });
   }
 
   jwt.verify(token, process.env.JWT_PRIVATE_KEY, async (error, decoded) => {
     if (error) {
       return res.status(403).json({
-        errMsg: 'Token is not valid. Not authorized to access this route'
+        errMessage: 'Token is not valid. Not authorized to access this route'
       });
     } else {
       try {
@@ -39,7 +38,8 @@ exports.protect = async (req, res, next) => {
         );
         if (!rows[0]) {
           return res.status(403).json({
-            errMsg: 'Token is not valid. Not authorized to access this route'
+            errMessage:
+              'Token is not valid. Not authorized to access this route'
           });
         }
         // check if a user has changed a new password by checking password_changed_at > decoded.iat
@@ -56,7 +56,7 @@ exports.protect = async (req, res, next) => {
 
           if (passwordChangedAtTimestamp > decoded.iat) {
             return res.status(403).json({
-              errMsg: 'you need to sigin in again'
+              errMessage: 'you need to sigin in again'
             });
           }
         }
@@ -67,7 +67,7 @@ exports.protect = async (req, res, next) => {
         next();
       } catch (err) {
         return res.status(403).json({
-          errMsg: 'Token is not valid. Not authorized to access this route'
+          errMessage: 'Token is not valid. Not authorized to access this route'
         });
       }
     }
@@ -79,7 +79,7 @@ exports.authorize = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.user_role)) {
       return res.status(403).json({
-        errorMsg: `User role ${req.user.user_role} is not authorized to this route`
+        errMessage: `User role ${req.user.user_role} is not authorized to this route`
       });
     }
     next();

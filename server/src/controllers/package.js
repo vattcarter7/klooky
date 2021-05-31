@@ -20,7 +20,7 @@ exports.createPackage = async (req, res) => {
     if (!packageResponse.rows[0]) {
       await pool.query('ROLLBACK');
       return res.status(400).json({
-        errMsg: 'Unable to create a package'
+        errMessage: 'Unable to create a package'
       });
     }
 
@@ -69,7 +69,7 @@ exports.createPackage = async (req, res) => {
     console.log(err);
     res.status(400).json({
       err: err.message,
-      errMsg: 'Unable to create a package'
+      errMessage: 'Unable to create a package'
     });
   }
 };
@@ -81,7 +81,7 @@ exports.editPackage = async (req, res) => {
     const response = await pool.query(textQuery, [req.params.id]);
     if (!response.rows[0]) {
       return res.status(404).json({
-        errorMsg: 'package not found'
+        errMessage: 'package not found'
       });
     }
 
@@ -104,7 +104,7 @@ exports.editPackage = async (req, res) => {
     const { rows } = await pool.query(updateQuery, updateValues);
     if (!rows[0]) {
       return res.status(400).json({
-        errorMsg: 'unable to update package'
+        errMessage: 'unable to update package'
       });
     }
 
@@ -113,7 +113,7 @@ exports.editPackage = async (req, res) => {
     console.log(err);
     res.status(400).json({
       err: err.message,
-      errorMsg: 'unable to update package'
+      errMessage: 'unable to update package'
     });
   }
 };
@@ -162,7 +162,8 @@ exports.createPackageDetail = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).json({
-      err: err.message
+      err: err.message,
+      errMessage: 'unable to create package detail'
     });
   }
 };
@@ -173,7 +174,7 @@ exports.editPackageDetail = async (req, res) => {
     const response = await pool.query(textQuery, [req.params.id]);
     if (!response.rows[0]) {
       return res.status(404).json({
-        errorMsg: 'package not found'
+        errMessage: 'package not found'
       });
     }
 
@@ -232,7 +233,7 @@ exports.editPackageDetail = async (req, res) => {
     if (!rows[0]) {
       return res.status(400).json({
         err: err.message,
-        errorMsg: 'unable to update package detail'
+        errMessage: 'unable to update package detail'
       });
     }
 
@@ -240,22 +241,21 @@ exports.editPackageDetail = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).json({
-      errorMsg: err.message
+      errMessage: err.message
     });
   }
 };
 
 exports.deletePackage = async (req, res) => {
   try {
-    const {
-      rows
-    } = await pool.query('DELETE FROM packages WHERE id=$1 returning *', [
-      req.params.id
-    ]);
+    const { rows } = await pool.query(
+      'DELETE FROM packages WHERE id=$1 returning *',
+      [req.params.id]
+    );
 
     if (!rows[0])
       return res.status(404).json({
-        errorMsg: 'cannot delete that package'
+        errMessage: 'cannot delete that package'
       });
 
     res.send(rows[0]);

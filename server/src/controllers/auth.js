@@ -18,7 +18,7 @@ exports.registerWithEmailAndPassword = async (req, res) => {
     if (response.rows[0]) {
       return res
         .status(403)
-        .json({ errorMsg: 'email already exists. Try using another one' });
+        .json({ errMessage: 'email already exists. Try using another one' });
     }
 
     // hash password before inserting into database
@@ -41,7 +41,7 @@ exports.registerWithEmailAndPassword = async (req, res) => {
 
     const { rows } = await pool.query(registerUserQuery, registerUserValues);
     if (!rows[0]) {
-      return res.status(400).json({ errorMsg: 'unable to register a user' });
+      return res.status(400).json({ errMessage: 'unable to register a user' });
     }
 
     const user = rows[0];
@@ -52,7 +52,7 @@ exports.registerWithEmailAndPassword = async (req, res) => {
     console.log(err);
     res.status(400).json({
       err: err.message,
-      errorMsg: 'unable to register a user'
+      errMessage: 'unable to register a user'
     });
   }
 };
@@ -65,14 +65,14 @@ exports.loginWithEmailAndPassword = async (req, res) => {
     ]);
     if (!rows[0]) {
       return res.status(400).json({
-        errorMsg: 'Invalid credentials'
+        errMessage: 'Invalid credentials'
       });
     }
     if (
       !(await comparePassword(req.body.login_password, rows[0].login_password))
     ) {
       return res.status(400).json({
-        errorMsg: 'Invalid credentials'
+        errMessage: 'Invalid credentials'
       });
     }
 
@@ -82,7 +82,7 @@ exports.loginWithEmailAndPassword = async (req, res) => {
     console.log(err);
     res.status(400).json({
       err: err.message,
-      errorMsg: 'unable to log in'
+      errMessage: 'unable to log in'
     });
   }
 };
@@ -144,7 +144,7 @@ exports.updatePassword = async (req, res, next) => {
     if (!rows[0])
       return res
         .status(404)
-        .json({ errorMsg: 'No user found to update password' });
+        .json({ errMessage: 'No user found to update password' });
 
     // check if the posted current password is correct
     if (
@@ -154,7 +154,7 @@ exports.updatePassword = async (req, res, next) => {
       ))
     ) {
       return res.status(400).json({
-        errorMsg: 'Your current password is wrong'
+        errMessage: 'Your current password is wrong'
       });
     }
 
@@ -190,7 +190,7 @@ exports.updatePassword = async (req, res, next) => {
     console.log(err);
     res.status(400).json({
       err: err.message,
-      errorMsg: 'unable to update password'
+      errMessage: 'unable to update password'
     });
   }
 };
@@ -204,7 +204,7 @@ exports.forgotPassword = async (req, res, next) => {
 
     if (!userResponse.rows[0]) {
       return res.status(404).json({
-        errorMsg: 'No user found'
+        errMessage: 'No user found'
       });
     }
 
@@ -243,10 +243,10 @@ exports.forgotPassword = async (req, res, next) => {
     await new Email(user, resetURL).sendPasswordReset();
     return res.status(200).json({
       success: true,
-      msg: 'Email sent. Please check you email inbox. Please check in your spam folder if you do not find it'
+      successMessage:
+        'Email sent. Please check you email inbox. Please check in your spam folder if you do not find it'
     });
   } catch (err) {
-    console.log(err);
     //  save passwordResetToken=null and passwordResetExpires=null in the database
     await pool.query(
       `UPDATE users SET 
@@ -256,7 +256,7 @@ exports.forgotPassword = async (req, res, next) => {
       [null, null, req.body.login_email]
     );
     return res.status(400).json({
-      errMsg: 'unable to send email to change password'
+      errMessage: 'unable to send email to change password'
     });
   }
 };
@@ -280,7 +280,7 @@ exports.resetPassword = async (req, res, next) => {
     // If token has not expired, and there is user, set the new password
     if (!userResponse.rows[0]) {
       return res.status(400).json({
-        errMsg: 'Token is invalid or has expired'
+        errMessage: 'Token is invalid or has expired'
       });
     }
 
@@ -312,7 +312,7 @@ exports.resetPassword = async (req, res, next) => {
     // check if updateUserResponse is failed
     if (!updateUserResponse.rows[0]) {
       return res.status(400).json({
-        errMsg: 'Unable to reset password'
+        errMessage: 'Unable to reset password'
       });
     }
 
@@ -323,7 +323,7 @@ exports.resetPassword = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     return res.status(400).json({
-      errMsg: 'Unable to reset password'
+      errMessage: 'Unable to reset password'
     });
   }
 };
@@ -334,7 +334,7 @@ exports.getMe = async (req, res, next) => {
   const { rows } = await pool.query(query, param);
   if (!rows[0]) {
     return res.status(404).json({
-      errMsg: 'No user found'
+      errMessage: 'No user found'
     });
   }
   const user = rows[0];

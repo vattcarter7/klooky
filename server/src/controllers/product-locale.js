@@ -31,7 +31,7 @@ exports.createProductLocale = async (req, res) => {
     console.log(err);
     res.status(400).json({
       err: err.message,
-      errorMsg: 'unable to add a product locale'
+      errMessage: 'unable to add a product locale'
     });
   }
 };
@@ -43,7 +43,7 @@ exports.editProductLocale = async (req, res) => {
     const response = await pool.query(textQuery, [req.params.id]);
     if (!response.rows[0]) {
       return res.status(404).json({
-        errorMsg: 'product locale not found'
+        errMessage: 'product locale not found'
       });
     }
 
@@ -97,7 +97,7 @@ exports.editProductLocale = async (req, res) => {
     const { rows } = await pool.query(updateQuery, updateValues);
     if (!rows[0]) {
       return res.status(400).json({
-        errorMsg: 'unable to update product'
+        errMessage: 'unable to update product'
       });
     }
 
@@ -106,7 +106,7 @@ exports.editProductLocale = async (req, res) => {
     console.log(err);
     res.status(400).json({
       err: err.message,
-      errorMsg: 'unable to update product'
+      errMessage: 'unable to update product'
     });
   }
 };

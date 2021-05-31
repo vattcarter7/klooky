@@ -145,7 +145,7 @@ router.get('/auth/social-network-profile/google', (req, res) => {
   } else {
     return res
       .status(401)
-      .json({ errMsg: 'Unable to get social network user profile' });
+      .json({ errMessage: 'Unable to get social network user profile' });
   }
 });
 
@@ -158,7 +158,7 @@ router.get('/auth/social-network-profile/facebook', (req, res) => {
   } else {
     return res
       .status(401)
-      .json({ errMsg: 'Unable to get social network user profile' });
+      .json({ errMessage: 'Unable to get social network user profile' });
   }
 });
 

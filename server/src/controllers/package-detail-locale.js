@@ -33,7 +33,7 @@ exports.createPackageDetailLocale = async (req, res) => {
     console.log(err);
     res.status(400).json({
       err: err.message,
-      errorMsg:
+      errMessage:
         err.message ===
         'duplicate key value violates unique constraint "package_detail_locale_unique"'
           ? 'this package detail with the given language already existed'
@@ -49,7 +49,7 @@ exports.editPackageDetailLocale = async (req, res) => {
     const response = await pool.query(textQuery, [req.params.id]);
     if (!response.rows[0]) {
       return res.status(404).json({
-        errorMsg: 'product detail locale not found'
+        errMessage: 'product detail locale not found'
       });
     }
 
@@ -107,7 +107,7 @@ exports.editPackageDetailLocale = async (req, res) => {
     const { rows } = await pool.query(updateQuery, updateValues);
     if (!rows[0]) {
       return res.status(400).json({
-        errorMsg: 'unable to update package detail locale'
+        errMessage: 'unable to update package detail locale'
       });
     }
 
@@ -116,7 +116,7 @@ exports.editPackageDetailLocale = async (req, res) => {
     console.log(err);
     res.status(400).json({
       err: err.message,
-      errorMsg: 'unable to update package detail locale'
+      errMessage: 'unable to update package detail locale'
     });
   }
 };

@@ -22,7 +22,7 @@ exports.createPurchase = async (req, res) => {
 
     if (!cartItemResponse.rows || cartItemResponse.rows.length === 0) {
       return res.status(404).json({
-        errMsg: 'No cart items found to purchase'
+        errMessage: 'No cart items found to purchase'
       });
     }
 
@@ -75,7 +75,7 @@ exports.createPurchase = async (req, res) => {
     await pool.query('ROLLBACK');
     res.status(400).json({
       err: err.message,
-      errMsg: 'unable to make a purchase'
+      errMessage: 'unable to make a purchase'
     });
   }
 };

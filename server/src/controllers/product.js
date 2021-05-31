@@ -79,7 +79,7 @@ exports.createProduct = async (req, res) => {
     await pool.query('ROLLBACK');
     res.status(400).json({
       err: err.message,
-      errorMsg:
+      errMessage:
         err.message ===
         'duplicate key value violates unique constraint "product_locale_product_name_key"'
           ? 'product name must be unique. please change another name'
@@ -94,7 +94,7 @@ exports.editProduct = async (req, res) => {
     const response = await pool.query(textQuery, [req.params.id]);
     if (!response.rows[0]) {
       return res.status(404).json({
-        errorMsg: 'product not found'
+        errMessage: 'product not found'
       });
     }
 
@@ -166,7 +166,7 @@ exports.editProduct = async (req, res) => {
     const { rows } = await pool.query(updateQuery, updateValues);
     if (!rows[0]) {
       return res.status(400).json({
-        errorMsg: 'unable to update product'
+        errMessage: 'unable to update product'
       });
     }
 
@@ -175,7 +175,7 @@ exports.editProduct = async (req, res) => {
     console.log(err);
     res.status(400).json({
       err: err.message,
-      errorMsg: 'unable to update product'
+      errMessage: 'unable to update product'
     });
   }
 };
