@@ -62,7 +62,7 @@ export const loginWithEmailAndPassword =
     }
   };
 
-export const getAuth = () => async (dispatch) => {
+export const verifyAuth = () => async (dispatch) => {
   try {
     const res = await axios.get(`${AUTH_URL}/me`);
     dispatch({
