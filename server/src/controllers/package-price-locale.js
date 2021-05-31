@@ -33,7 +33,7 @@ exports.createPackagePriceLocale = async (req, res) => {
     console.log(err);
     res.status(400).json({
       err: err.message,
-      errorMsg: 'unable to add a package price locale'
+      errMessage: 'unable to add a package price locale'
     });
   }
 };
@@ -45,7 +45,7 @@ exports.editPackagePriceLocale = async (req, res) => {
     const response = await pool.query(textQuery, [req.params.id]);
     if (!response.rows[0]) {
       return res.status(404).json({
-        errorMsg: 'package price locale not found'
+        errMessage: 'package price locale not found'
       });
     }
 
@@ -101,7 +101,7 @@ exports.editPackagePriceLocale = async (req, res) => {
     const { rows } = await pool.query(updateQuery, updateValues);
     if (!rows[0]) {
       return res.status(400).json({
-        errorMsg: 'unable to update package price locale'
+        errMessage: 'unable to update package price locale'
       });
     }
 
@@ -110,7 +110,7 @@ exports.editPackagePriceLocale = async (req, res) => {
     console.log(err);
     res.status(400).json({
       err: err.message,
-      errorMsg: 'unable to update package price locale'
+      errMessage: 'unable to update package price locale'
     });
   }
 };

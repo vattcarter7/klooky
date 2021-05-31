@@ -3,13 +3,18 @@ import {
   REGISTER_FAIL,
   LOGIN_FAIL,
   AUTH_FAIL,
-  LOGOUT_USER
+  LOGOUT_USER,
+  FORGOT_PASSWORD_SENT_FAIL,
+  FORGOT_PASSWORD_SENT_SUCCESS,
+  RESET_MESSAGE
 } from './user-types';
 
 const INITIAL_STATE = {
   isAuthenticated: null,
   loading: true,
-  user: null
+  user: null,
+  successMessage: null,
+  errorMessage: null
 };
 const userReducer = (state = INITIAL_STATE, action) => {
   const { payload, type } = action;
@@ -19,7 +24,9 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isAuthenticated: true,
         loading: false,
-        user: payload
+        user: payload,
+        successMessage: null,
+        errorMessage: null
       };
     case REGISTER_FAIL:
     case LOGIN_FAIL:
@@ -29,7 +36,33 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isAuthenticated: false,
         loading: false,
-        user: null
+        user: null,
+        successMessage: null,
+        errorMessage: null
+      };
+    case FORGOT_PASSWORD_SENT_FAIL:
+      return {
+        ...state,
+        isAuthenticated: false,
+        loading: false,
+        user: null,
+        successMessage: null,
+        errorMessage: payload
+      };
+    case FORGOT_PASSWORD_SENT_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: false,
+        loading: false,
+        user: null,
+        successMessage: payload,
+        errorMessage: null
+      };
+    case RESET_MESSAGE:
+      return {
+        ...state,
+        successMessage: null,
+        errorMessage: null
       };
     default:
       return state;

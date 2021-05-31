@@ -60,30 +60,11 @@ export const SocialSignInInner = styled.div`
 
 export const SignInTitle = styled.h2`
   color: ${GREY_MEDIUM};
-
-  ${(props) =>
-    props.social &&
-    css`
-      color: white;
-      font-size: 23px;
-      line-height: 30px;
-      margin-bottom: 8px;
-      width: 220px;
-    `}
 `;
 
 export const SignInSubTitle = styled.h4`
   margin: -10px 0 0 0;
   color: ${GREY_MEDIUM};
-
-  ${(props) =>
-    props.social &&
-    css`
-      color: white;
-      margin-bottom: 15px;
-      line-height: 30px;
-      width: 220px;
-    `}
 `;
 
 export const SignUpLinkContainer = styled.div`
