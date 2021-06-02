@@ -42,4 +42,9 @@ export const OptionLink = styled(Link)`
   cursor: pointer;
 `;
 
-OptionLink.displayName = 'OptionLink';
+export const Avatar = styled.img`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 0.2px solid grey;
+`;
