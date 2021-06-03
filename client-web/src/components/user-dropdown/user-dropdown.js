@@ -30,7 +30,9 @@ const useOutsideHandler = (ref) => {
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
         // Hide the user dropdown menu
-        dispatch(hideUserDropdown());
+        setTimeout(() => {
+          dispatch(hideUserDropdown());
+        }, 250);
       }
     };
 

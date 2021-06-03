@@ -27,7 +27,9 @@ const Header = () => {
   };
 
   const handleShowUserDropdown = () => {
-    dispatch(showUserDropdown());
+    setTimeout(() => {
+      dispatch(showUserDropdown());
+    }, 250);
   };
 
   return (
