@@ -7,7 +7,9 @@ import {
   LOGOUT_USER,
   FORGOT_PASSWORD_SENT_FAIL,
   FORGOT_PASSWORD_SENT_SUCCESS,
-  RESET_MESSAGE
+  RESET_MESSAGE,
+  SHOW_USER_DROPDOWN,
+  HIDE_USER_DROPDOWN
 } from './user-types';
 
 export const registerWithEmailAndPassword =
@@ -121,4 +123,12 @@ export const forgotPassword =
 
 export const resetMessage = () => (dispatch) => {
   dispatch({ type: RESET_MESSAGE });
+};
+
+export const showUserDropdown = () => (dispatch) => {
+  dispatch({ type: SHOW_USER_DROPDOWN });
+};
+
+export const hideUserDropdown = () => (dispatch) => {
+  dispatch({ type: HIDE_USER_DROPDOWN });
 };

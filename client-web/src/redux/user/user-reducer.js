@@ -6,7 +6,9 @@ import {
   LOGOUT_USER,
   FORGOT_PASSWORD_SENT_FAIL,
   FORGOT_PASSWORD_SENT_SUCCESS,
-  RESET_MESSAGE
+  RESET_MESSAGE,
+  SHOW_USER_DROPDOWN,
+  HIDE_USER_DROPDOWN
 } from './user-types';
 
 const INITIAL_STATE = {
@@ -14,7 +16,8 @@ const INITIAL_STATE = {
   loading: true,
   user: null,
   successMessage: null,
-  errorMessage: null
+  errorMessage: null,
+  userDropdown: false
 };
 const userReducer = (state = INITIAL_STATE, action) => {
   const { payload, type } = action;
@@ -63,6 +66,16 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         successMessage: null,
         errorMessage: null
+      };
+    case SHOW_USER_DROPDOWN:
+      return {
+        ...state,
+        userDropdown: true
+      };
+    case HIDE_USER_DROPDOWN:
+      return {
+        ...state,
+        userDropdown: false
       };
     default:
       return state;
