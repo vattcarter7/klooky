@@ -1,8 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { hideUserDropdown } from '../../redux/user/user-action';
 import { UserDropdownContainer } from './styles/user-dropdown-styles';
+import { hideUserDropdown } from '../../redux/user/user-action';
+import { useOutsideHandler } from '../../hooks/use-outside';
 
 const DROPDOWN_ITEMS = [
   { icon: 'fa fa-bookmark-o', text: 'Booking', link: '#' },
@@ -23,37 +24,20 @@ const UserDropdownItem = () => {
   ));
 };
 
-const useOutsideHandler = (ref) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        // Hide the user dropdown menu
-        setTimeout(() => {
-          dispatch(hideUserDropdown());
-        }, 250);
-      }
-    };
-
-    // Bind the event listener
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [ref, dispatch]);
-};
-
 const UserDropdown = () => {
+  const dispatch = useDispatch();
   const wrapperRef = useRef(null);
-  useOutsideHandler(wrapperRef);
+  const handleHideUserDropdown = () => {
+    dispatch(hideUserDropdown());
+  };
+
+  // hide user dropdown in 200ms when click outside element
+  useOutsideHandler(wrapperRef, handleHideUserDropdown, 200);
+
   return (
-    <div ref={wrapperRef}>
-      <UserDropdownContainer>
-        <UserDropdownItem />
-      </UserDropdownContainer>
-    </div>
+    <UserDropdownContainer ref={wrapperRef}>
+      <UserDropdownItem />
+    </UserDropdownContainer>
   );
 };
 
