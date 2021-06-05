@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { UserDropdownItem } from '../../components';
 import {
   UserDropdownContainer,
+  ArrowUp,
   LogOutButton
 } from './styles/user-dropdown-styles';
 import { hideUserDropdown } from '../../redux/user/user-action';
@@ -23,6 +24,7 @@ const UserDropdown = () => {
     <UserDropdownContainer ref={wrapperRef}>
       <UserDropdownItem />
       <LogOutButton>Log out</LogOutButton>
+      <ArrowUp />
     </UserDropdownContainer>
   );
 };
