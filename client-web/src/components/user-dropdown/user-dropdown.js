@@ -7,7 +7,7 @@ import {
   ArrowUp,
   LogOutButton
 } from './styles/user-dropdown-styles';
-import { hideUserDropdown } from '../../redux/user/user-action';
+import { hideUserDropdown, logOut } from '../../redux/user/user-action';
 import { useOutsideHandler } from '../../hooks/use-outside';
 
 const UserDropdown = () => {
@@ -16,6 +16,9 @@ const UserDropdown = () => {
   const handleHideUserDropdown = () => {
     dispatch(hideUserDropdown());
   };
+  const handleLogout = () => {
+    dispatch(logOut());
+  };
 
   // hide user dropdown in 200ms when click outside element
   useOutsideHandler(wrapperRef, handleHideUserDropdown, 200);
@@ -23,7 +26,7 @@ const UserDropdown = () => {
   return (
     <UserDropdownContainer ref={wrapperRef}>
       <UserDropdownItem />
-      <LogOutButton>Log out</LogOutButton>
+      <LogOutButton onClick={handleLogout}>Log out</LogOutButton>
       <ArrowUp />
     </UserDropdownContainer>
   );
