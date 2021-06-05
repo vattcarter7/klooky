@@ -17,6 +17,7 @@ const UserDropdown = () => {
     dispatch(hideUserDropdown());
   };
   const handleLogout = () => {
+    dispatch(hideUserDropdown());
     dispatch(logOut());
   };
 
