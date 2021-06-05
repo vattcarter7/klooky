@@ -72,7 +72,6 @@ const SocialNetwork = () => {
     if (newWindow) {
       timer = setInterval(() => {
         if (newWindow.closed) {
-          console.log("Yay we're authenticated");
           fetchAuthUser(socialNetwork);
           if (timer) clearInterval(timer);
         }
