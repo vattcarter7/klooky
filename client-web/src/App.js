@@ -7,7 +7,7 @@ import {
   ForgotPasswordPage,
   GiftCardsPage,
   HomePage,
-  ReviewsPage,
+  MyReviewsPage,
   RewardsPage,
   SettingsPage,
   SignInPage,
@@ -38,7 +38,7 @@ function App() {
         <Route exact path='/bookings' component={BookingsPage} />
         <Route exact path='/gift-cards' component={GiftCardsPage} />
         <Route exact path='/wishlist' component={WishlistPage} />
-        <Route exact path='/reviews' component={ReviewsPage} />
+        <Route exact path='/my-reviews' component={MyReviewsPage} />
         <Route exact path='/rewards' component={RewardsPage} />
         <Route exact path='/settings' component={SettingsPage} />
       </Switch>

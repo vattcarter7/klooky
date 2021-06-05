@@ -5,6 +5,6 @@ export { default as ForgotPasswordPage } from './forgot-password/forgot-password
 export { default as BookingsPage } from './bookings/bookings-page';
 export { default as GiftCardsPage } from './gift-cards/gift-cards-page';
 export { default as WishlistPage } from './wishlist/wishlist-page';
-export { default as ReviewsPage } from './reviews/reviews-page';
+export { default as MyReviewsPage } from './my-reviews/my-reviews-page';
 export { default as RewardsPage } from './rewards/rewards-page';
 export { default as SettingsPage } from './settings/settings-page';
