@@ -4,3 +4,4 @@ export { default as SocialNetworkButton } from './social-network-button/social-n
 export { default as LoginSuccess } from './login-success/login-success';
 export { default as SocialNetwork } from './social-network/social-network';
 export { default as UserDropdown } from './user-dropdown/user-dropdown';
+export { default as UserDropdownItem } from './user-dropdown-item/user-dropdown-item';

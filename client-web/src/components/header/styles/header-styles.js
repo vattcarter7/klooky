@@ -46,5 +46,8 @@ export const Avatar = styled.img`
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 0.2px solid grey;
+
+  &:hover {
+    border: 0.1px solid grey;
+  }
 `;
