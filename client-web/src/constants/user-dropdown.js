@@ -1,8 +1,8 @@
 export const DROPDOWN_ITEMS = [
-  { icon: 'fa fa-bookmark-o', text: 'Bookings', link: '#' },
-  { icon: 'fa fa-gift', text: 'Gift cards', link: '#' },
-  { icon: 'fa fa-heart-o', text: 'Wishlist', link: '#' },
-  { icon: 'fa fa-pencil-square-o', text: 'Reviews', link: '#' },
-  { icon: 'fa fa-magic', text: 'Rewards', link: '#' },
-  { icon: 'fa fa-sliders', text: 'Settings', link: '#' }
+  { icon: 'fa fa-bookmark-o', text: 'Bookings', link: 'bookings' },
+  { icon: 'fa fa-gift', text: 'Gift Cards', link: 'gift-cards' },
+  { icon: 'fa fa-heart-o', text: 'Wishlist', link: 'wishlist' },
+  { icon: 'fa fa-pencil-square-o', text: 'Reviews', link: 'reviews' },
+  { icon: 'fa fa-magic', text: 'Rewards', link: 'rewards' },
+  { icon: 'fa fa-sliders', text: 'Settings', link: 'settings' }
 ];
