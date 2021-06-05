@@ -3,16 +3,16 @@ import { Switch, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import {
-  HomePage,
-  SignInPage,
-  SignUpPage,
-  ForgotPasswordPage,
   BookingsPage,
+  ForgotPasswordPage,
   GiftCardsPage,
-  WishlistPage,
+  HomePage,
   ReviewsPage,
   RewardsPage,
-  SettingsPage
+  SettingsPage,
+  SignInPage,
+  SignUpPage,
+  WishlistPage
 } from './pages';
 
 import { Header, LoginSuccess } from './components';
