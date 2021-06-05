@@ -45,7 +45,7 @@ exports.sendEmailTokenResponse = (user, res) => {
 
 exports.sendSocialTokenResponse = (user, res) => {
   const token = generateSignedJwtToken(user.id, user.signin_method);
-  return res.cookie('jwt', token, user, cookieOptions).json({
+  return res.cookie('jwt', token, cookieOptions).json({
     token,
     user
   });
