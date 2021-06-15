@@ -6,14 +6,14 @@ export const DashboardProfileLayoutContainer = styled.div`
   padding: 40px;
 `;
 
-export const ProfileSidebarLayoutContainer = styled.div`
-  width: 25%;
-  background: white;
+export const SidebarLayoutContainer = styled.div`
+  min-width: 280px;
   height: 600px;
 `;
 
 export const ContentLayoutContainer = styled.div`
-  width: 75%;
+  width: 100%;
+  min-width: 300px;
   background: white;
   height: 800px;
   margin-left: 20px;
