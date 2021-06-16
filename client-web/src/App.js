@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import {
+  MyProfilePage,
   BookingsPage,
   ForgotPasswordPage,
   GiftCardsPage,
@@ -35,12 +36,13 @@ function App() {
         <Route exact path='/signup' component={SignUpPage} />
         <Route exact path='/login/success' component={LoginSuccess} />
         <Route exact path='/forgot-password' component={ForgotPasswordPage} />
+        <Route exact path='/my-profile' component={MyProfilePage} />
         <Route exact path='/bookings' component={BookingsPage} />
         <Route exact path='/gift-cards' component={GiftCardsPage} />
         <Route exact path='/wishlist' component={WishlistPage} />
         <Route exact path='/my-reviews' component={MyReviewsPage} />
         <Route exact path='/rewards' component={RewardsPage} />
-        <Route exact path='/settings' component={SettingsPage} />
+        <Route exact path='/account-setting' component={SettingsPage} />
       </Switch>
     </div>
   );

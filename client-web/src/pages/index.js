@@ -8,3 +8,4 @@ export { default as WishlistPage } from './wishlist/wishlist-page';
 export { default as MyReviewsPage } from './my-reviews/my-reviews-page';
 export { default as RewardsPage } from './rewards/rewards-page';
 export { default as SettingsPage } from './settings/settings-page';
+export { default as MyProfilePage } from './my-profile/my-profile-page';
