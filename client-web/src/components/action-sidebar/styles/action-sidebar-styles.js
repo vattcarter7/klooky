@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-import { Link } from 'react-router-dom';
-import { BLUE_LIGHT, BLUE_MEDIUM } from '../../../constants/colors';
+import { BLUE_DARK } from '../../../constants/colors';
 
 export const Container = styled.div`
   height: 340px;
@@ -22,6 +21,10 @@ export const ActionSidebarItemContainer = styled.div`
 
   &:hover {
     opacity: 1;
+  }
+
+  &:active {
+    color: ${BLUE_DARK};
   }
 
   &:first-child {
