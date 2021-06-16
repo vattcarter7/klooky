@@ -13,13 +13,12 @@ const ProfileSidebar = () => {
 
   return (
     <Container>
-      <>
-        {user && user.avatar ? (
-          <Avatar src={user.avatar} />
-        ) : (
-          <Avatar src={emptyUser} />
-        )}
-      </>
+      {user && user.avatar ? (
+        <Avatar src={user.avatar} />
+      ) : (
+        <Avatar src={emptyUser} />
+      )}
+
       {user && user.fullname && <h2>{user.fullname}</h2>}
       <ProfileLink to='/my-profile'>My Profile</ProfileLink>
     </Container>

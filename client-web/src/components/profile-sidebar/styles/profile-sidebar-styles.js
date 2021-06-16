@@ -12,6 +12,7 @@ export const Container = styled.div`
   height: 220px;
   background: white;
   padding: 15px;
+  margin-bottom: 2px;
 `;
 
 export const Avatar = styled.img`
@@ -20,10 +21,6 @@ export const Avatar = styled.img`
   width: 90px;
   height: 90px;
   border-radius: 50%;
-
-  &:hover {
-    border: 0.1px solid grey;
-  }
 `;
 
 export const ProfileLink = styled(Link)`

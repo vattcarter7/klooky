@@ -6,3 +6,5 @@ export { default as SocialNetwork } from './social-network/social-network';
 export { default as UserDropdown } from './user-dropdown/user-dropdown';
 export { default as UserDropdownItem } from './user-dropdown-item/user-dropdown-item';
 export { default as ProfileSidebar } from './profile-sidebar/profile-sidebar';
+export { default as ActionSidebar } from './action-sidebar/action-sidebar';
+export { default as Sidebar } from './action-sidebar/action-sidebar';

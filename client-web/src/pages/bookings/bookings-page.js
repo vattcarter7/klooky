@@ -5,15 +5,16 @@ import {
   ContentLayoutContainer
 } from '../../layouts';
 
-import { ProfileSidebar } from '../../components';
+import { ProfileSidebar, ActionSidebar } from '../../components';
 
 const BookingsPage = () => {
   return (
     <DashboardProfileLayoutContainer>
       <SidebarLayoutContainer>
         <ProfileSidebar />
+        <ActionSidebar />
       </SidebarLayoutContainer>
-      <ContentLayoutContainer>Content</ContentLayoutContainer>
+      <ContentLayoutContainer>Booking Page Content</ContentLayoutContainer>
     </DashboardProfileLayoutContainer>
   );
 };
