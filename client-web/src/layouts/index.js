@@ -1,8 +1,10 @@
 import styled from 'styled-components/macro';
 
+import { GREY_LIGHT_EXTRA } from '../constants/colors';
+
 export const DashboardProfileLayoutContainer = styled.div`
   display: flex;
-  background: #f5f5f5;
+  background: ${GREY_LIGHT_EXTRA};
   padding: 40px;
 `;
 
