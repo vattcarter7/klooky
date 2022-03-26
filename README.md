@@ -13,7 +13,7 @@ postgresql://dbuser:secretpassword@database.server.com:3211/mydb
 > suppertest
 
 ##### Frontend Tesing 
-> cypress 
+> E2E testing with cypress 
 > Reference: 
 > https://github.com/cypress-io/cypress-example-todomvc-redux [with redux]
 > https://www.youtube.com/watch?v=dVRivkL5eGc&ab_channel=BasaratAli [set up cypress testing from youtube]
