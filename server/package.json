@@ -8,9 +8,7 @@
     "migrate": "node-pg-migrate",
     "migrate:up": "DATABASE_URL=postgres://vattsopheak:@localhost:5432/klooky npm run migrate up",
     "migrate:down": "DATABASE_URL=postgres://vattsopheak:@localhost:5432/klooky npm run migrate down",
-    "dev": "nodemon index.js",
-    "start:prod": "NODE_ENV=production nodemon index.js",
-    "test": "jest --no-cache --runInBand"
+    "dev": "nodemon index.js"
   },
   "author": "vatt sopheak",
   "license": "ISC",
