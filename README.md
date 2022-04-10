@@ -10,9 +10,9 @@ postgresql://dbuser:secretpassword@database.server.com:3211/mydb
 
 
 ##### Backend Testing
-> suppertest
+> SuperTest
 
-##### Frontend Tesing 
+##### Frontend Testing 
 > E2E testing with cypress 
 > Reference: 
 > https://github.com/cypress-io/cypress-example-todomvc-redux [with redux]
