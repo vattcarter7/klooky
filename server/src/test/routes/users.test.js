@@ -20,10 +20,12 @@ afterAll(() => {
 it('create a user', async () => {
   const startingCount = await UserRepo.count();
 
-  await request(buildApp())
-    .post('/users')
-    .send({ username: 'testuser', bio: 'test bio' })
-    .expect(200);
+  //FIXME: 
+   
+  // await request(buildApp())
+  //   .post('/users')
+  //   .send({ username: 'testuser', bio: 'test bio' })
+  //   .expect(200);
 
   const finishCount = await UserRepo.count();
   expect(finishCount - startingCount).toEqual(1);
